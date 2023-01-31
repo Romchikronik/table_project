@@ -1,0 +1,65 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">{{ request.user.district }}, {{ title }}</h2>
+<div class="container overflow-auto">
+    <table class="table table-bordered table-striped">
+        <caption>{{ request.user.district }}, {{ title }}</caption>
+    <tr>
+<!--        <th class="table-info" rowspan="3">Район</th>-->
+        <th class="table-info" rowspan="3">Все проекты</th>
+        <th class="table-info" rowspan="3">Оценка(млрд долл)</th>
+        <th class="table-primary" rowspan="3">Рабочее место</th>
+        <th class="table-primary" colspan="9">Из них</th>
+        <th class="table-info table-info-time" rowspan="3">Time create</th>
+    </tr>
+        <tr>
+            <th class="table-info" colspan="3">Выбранные проекты</th>
+            <th class="table-info" colspan="3">В процессе</th>
+            <th class="table-info" colspan="3">Будут завершены к концу года</th>
+        </tr>
+        <tr>
+            <th class="table-info">Проекты</th>
+            <th class="table-info">Оценка</th>
+            <th class="table-info">Рабочее место</th>
+            <th class="table-info">Проекты</th>
+            <th class="table-info">Оценка (млрд долл)</th>
+            <th class="table-info">Рабочее место</th>
+            <th class="table-info">Проекты</th>
+            <th class="table-info">Оценка(миллиард долл)</th>
+            <th class="table-info">Рабочее место </th>
+        </tr>
+        <tr>
+            {% block form %}
+            {%endblock%}
+        </tr>
+            {% for data in page_obj %}
+        <tr>
+<!--            <td>{{ data.district }}</td>-->
+            <td>{{ data.all_projects }}</td>
+            <td>{{ data.grade }}</td>
+            <td>{{ data.workplace }}</td>
+            <td>{{ data.projects_selected_projects_from_all_projects }}</td>
+            <td>{{ data.grade_selected_projects_from_all_projects }}</td>
+            <td>{{ data.workplace_selected_projects_from_all_projects }}</td>
+            <td>{{ data.all_projects_at_work_from_all_projects }}</td>
+            <td>{{ data.grade_at_work_from_all_projects }}</td>
+            <td>{{ data.workplace_at_work_from_all_projects }}</td>
+            <td>{{ data.all_projects_will_be_completed_end_the_year_from_all_projects }}</td>
+            <td>{{ data.grade_will_be_completed_end_the_year_all_projects }}</td>
+            <td>{{ data.workplace_will_be_completed_end_the_year_all_projects }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+        </tr>
+            {%endfor%}
+
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{%endblock%}
+
+{% block add_data %}
+<a class="btn btn-success mb-5" href="{% url 'form_loiha12' %}">Добавить данные</a>
+{%endblock%}

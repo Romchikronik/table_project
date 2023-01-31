@@ -1,0 +1,14 @@
+{% extends 'mainapp/base.html' %}
+
+{% block tables %}
+<ul class="nav nav-tabs">
+    {% for table in fourth_department_tables_menu %}
+    <li class="nav-item">
+        <a class="nav-link {% if table.table_name == title %}active{% endif %}"
+           href="">
+            {{ table.table_name }}
+        </a>
+    </li>
+    {%endfor%}
+</ul>
+{% endblock %}

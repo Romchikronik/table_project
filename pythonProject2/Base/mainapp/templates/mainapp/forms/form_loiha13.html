@@ -1,0 +1,32 @@
+{% extends 'mainapp/data_table/table_loiha13.html' %}
+{% load static %}
+{% block form %}
+<form action="{% url 'form_loiha13'%}" method="post">
+    {% csrf_token %}
+    <div>{{ form.non_field_errors }}</div>
+    <tr>
+<!--        <td>{{ user.district }}</td>-->
+        <td>{{ form.project_name }}</td>
+        <td>{{ form.project_activity }}</td>
+        <td>{{ form.project_capacity }}</td>
+        <td>{{ form.grate_sources_of_financing }}</td>
+        <td>{{ form.foreign_financing_grate_sources_of_financing }}</td>
+        <td>{{ form.sources_sources_of_financing }}</td>
+        <td>{{ form.created_new_jobs }}</td>
+        <td>{{ form.time_create }}</td>
+    </tr>
+    {% endblock %}
+    {% block add_data %}
+    <input class="btn btn-success mb-5" type="submit" value="Добавить данные">
+    {%endblock%}
+</form>
+{% block export_table %}
+<a class="btn btn-primary" href="{% url 'table_loiha13' %}">Назад</a>
+{%endblock%}
+
+{% block view_data%}
+<input class="btn btn-danger" type="reset" value="Очистить данные">
+{%endblock%}
+
+{% block filter%}
+{%endblock%}

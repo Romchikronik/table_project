@@ -1,0 +1,69 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">{{ request.user.district }}, {{ title }}</h2>
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_loiha131' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_loiha131' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_loiha13.1' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+
+<div class="container overflow-auto">
+        <table class="table table-bordered table-striped">
+        <caption>Таблица Илова 13.1</caption>
+        <tr>
+<!--            <th class="table-info" rowspan="2">Район</th>-->
+            <th class="table-primary" rowspan="2">Известные проблемы</th>
+            <th class="table-primary" colspan="8">Из них</th>
+            <th class="table-info" rowspan="2">Решенные проблемы</th>
+            <th class="table-info table-info-time" rowspan="2">Time create</th>
+        </tr>
+        <tr>
+            <th class="table-info" >Банк</th>
+            <th class="table-info" >Земля и здание</th>
+            <th class="table-info" >Коммунальные</th>
+            <th class="table-info" >Таможня</th>
+            <th class="table-info" >Налог</th>
+            <th class="table-info" >Разрешения</th>
+            <th class="table-info" >Бюрокартический барьер</th>
+            <th class="table-info" >Другое</th>
+            <tr>
+                {% block form %}
+                {%endblock%}
+            </tr>
+        </tr>
+            {% for data in page_obj %}
+        <tr>
+<!--            <td>{{ data.district }}</td>-->
+            <td>{{ data.identified_problems }}</td>
+            <td>{{ data.bank_identified_problems }}</td>
+            <td>{{ data.land_and_building_identified_problems }}</td>
+            <td>{{ data.public_services_identified_problems }}</td>
+            <td>{{ data.customs_identified_problems }}</td>
+            <td>{{ data.tax_identified_problems }}</td>
+            <td>{{ data.permission_identified_problems }}</td>
+            <td>{{ data.bureaucratic_obstacles_identified_problems }}</td>
+            <td>{{ data.other_identified_problems }}</td>
+            <td>{{ data.resolved_problems_identified_problems }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+        </tr>
+            {%endfor%}
+
+    </table>
+</div>
+
+
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{% endblock %}
+
+
+{% block add_data %}
+<a class="btn btn-success mb-5" href="{% url 'form_loiha13.1' %}">Добавить данные</a>
+{% endblock %}

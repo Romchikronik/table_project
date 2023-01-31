@@ -1,0 +1,38 @@
+{% extends 'mainapp/data_table/table_loiha122.html' %}
+{% block form %}
+<form action="{% url 'form_loiha12.2' %}" method="post">
+    {% csrf_token %}
+    <div>{{ form.non_field_errors }}</div>
+    <tr>
+<!--        <td>{{ user.district }}</td>-->
+        <td>{{ form.formed_tips }}</td>
+        <td>{{ form.projects_at_work }}</td>
+        <td>{{ form.production_capacity_at_work }}</td>
+        <td>{{ form.grade_at_work }}</td>
+        <td>{{ form.own_funds_grade_at_work }}</td>
+        <td>{{ form.bank_loan_grade_at_work }}</td>
+        <td>{{ form.foreign_investments_grade_at_work }}</td>
+        <td>{{ form.workplace_at_work }}</td>
+        <td>{{ form.export_volume_at_work }}</td>
+        <td>{{ form.name_bank_financing }}</td>
+        <td>{{ form.name_country_financing }}</td>
+        <td>{{ form.organization_name_foreign_financing }}</td>
+        <td>{{ form.time_create }}</td>
+    </tr>
+    {% endblock %}
+    {% block add_data %}
+    <input class="btn btn-success mb-5" type="submit" value="Добавить данные">
+    {%endblock%}  
+    
+</form>
+</div>
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="{% url 'table_loiha12.2' %}">Назад</a>
+{%endblock%}
+
+{% block view_data%}
+<input class="btn btn-danger mb-5" type="reset" value="Очистить данные">
+{%endblock%}
+
+{% block filter%}
+{%endblock%}

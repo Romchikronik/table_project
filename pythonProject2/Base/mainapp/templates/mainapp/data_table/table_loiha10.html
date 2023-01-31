@@ -1,0 +1,78 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">{{ request.user.district }}, {{ title }}</h2>
+<div class="container overflow-auto">
+    <table class="table table-bordered table-striped">
+        <caption>{{ request.user.district }}, {{ title }}</caption>
+            <tr>
+<!--                <th class="table-info" rowspan="2">Район</th>-->
+                <th class="table-info" rowspan="2">насленный пункт (количество)</th>
+                <th class="table-primary" rowspan="2"> Жилые дома (количество)</th>
+                <th class="table-primary" colspan="2"> Из них</th>
+                <th class="table-primary" rowspan="2">дома занятые в секторе</th>
+                <th class="table-primary" colspan="12">Специализация</th>
+                <th class="table-info" rowspan="2">железная тетрадь оставшиеся</th>
+                <th class="table-info" rowspan="2">молодёжная тетрадь оставшиеся</th>
+                <th class="table-info" rowspan="2">женская тетрадь оставшиеся</th>
+                <th class="table-info table-info-time" rowspan="2">Time create</th>
+            </tr>
+            <tr>
+                <th class="table-info">Желающие заняться предпринимательством<br>(количество)</th>
+                <th class="table-info">процентное соотношение</th>
+                <th class="table-info">животноводство</th>
+                <th class="table-info">птицеводство </th>
+                <th class="table-info">кроликоведение </th>
+                <th class="table-info">пчеловодство </th>
+                <th class="table-info">фермерство </th>
+                <th class="table-info">садоводство </th>
+                <th class="table-info">парники </th>
+                <th class="table-info">преподование </th>
+                <th class="table-info">мелькое производство </th>
+                <th class="table-info">туризм </th>
+                <th class="table-info">услуги </th>
+                <th class="table-info">другие </th>
+            </tr>
+            <tr>
+                {% block form %}
+                {%endblock%}
+            </tr>
+
+            {% for data in page_obj %}
+        <tr>
+<!--            <td>{{ data.district }}</td>-->
+            <td>{{ data.locality_amount }}</td>
+            <td>{{ data.residential_buildings_amount }}</td>
+            <td>{{ data.who_want_to_do_business_residential_buildings }}</td>
+            <td>{{ data.percent_residential_buildings }}</td>
+            <td>{{ data.employed_in_the_sector }}</td>
+            <td>{{ data.animal_husbandry_speciality }}</td>
+            <td>{{ data.poultry_farming_specialty }}</td>
+            <td>{{ data.rabbing_breeding_specialty }}</td>
+            <td>{{ data.Beekeeping_specialty }}</td>
+            <td>{{ data.farm_specialty }}</td>
+            <td>{{ data.gardening_specialty }}</td>
+            <td>{{ data.greenhouses_specialty }}</td>
+            <td>{{ data.teaching_specialty }}</td>
+            <td>{{ data.small_production_specialty }}</td>
+            <td>{{ data.tourism_specialty }}</td>
+            <td>{{ data.services_specialty }}</td>
+            <td>{{ data.other_specialty }}</td>
+            <td>{{ dataremaining_on_the_iron_notebook }}</td>
+            <td>{{ data.remaining_on_the_youth_notebook }}</td>
+            <td>{{ data.remaining_on_the_womens_notebook }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+        </tr>
+            {%endfor%}
+
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{%endblock%}
+
+{% block add_data %}
+<a class="btn btn-success mb-5" href="{% url 'form_loiha10' %}">Добавить данные</a>
+{%endblock%}

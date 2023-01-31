@@ -1,0 +1,126 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+
+
+{% block table %}
+<h2 class="mb-3">{{ request.user.district }}, {{ title }}</h2>
+
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_loiha41' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_loiha41' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_loiha4.1' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+
+<div class="container overflow-auto">
+
+    <table class="table table-bordered table-striped"> <!--table-hover-->
+        <caption>{{ request.user.district }}, {{ title }}</caption>
+        <tr>
+<!--            <th rowspan="2" class="table-info">HUDUDLAR</th>-->
+            <th colspan="4" class="table-primary">SANOAT</th>
+            <th colspan="4" class="table-primary">QISHLOQ</th>
+            <th colspan="4" class="table-primary">QURILISH</th>
+            <th colspan="4" class="table-primary">XIZMATLAR</th>
+            <th colspan="4" class="table-primary">CHAKANA SAVDO</th>
+            <th colspan="2" class="table-primary">TASHQI SAVDO AYLANMASI</th>
+            <th colspan="2" class="table-primary">EKSPORT</th>
+            <th colspan="2" class="table-primary">IMPORT</th>
+            <th rowspan="2" class="table-info table-info-time">Time create</th>
+        </tr>
+        <tr>
+            <th class="table-info">mlrd. so'm</th>
+            <th class="table-info">o'shish sur'ti %</th>
+            <th class="table-info">prognoz</th>
+            <th class="table-info">farqi (-;+)</th>
+            <th class="table-info">mlrd. so'm</th>
+            <th class="table-info">o'shish sur'ti %</th>
+            <th class="table-info">prognoz</th>
+            <th class="table-info">farqi (-;+)</th>
+            <th class="table-info">mlrd. so'm</th>
+            <th class="table-info">o'shish sur'ti %</th>
+            <th class="table-info">prognoz</th>
+            <th class="table-info">farqi (-;+)</th>
+            <th class="table-info">mlrd. so'm</th>
+            <th class="table-info">o'shish sur'ti %</th>
+            <th class="table-info">prognoz</th>
+            <th class="table-info">farqi (-;+)</th>
+            <th class="table-info">mlrd. so'm</th>
+            <th class="table-info">o'shish sur'ti %</th>
+            <th class="table-info">prognoz</th>
+            <th class="table-info">farqi (-;+)</th>
+            <th class="table-info">ming. AQSh doll</th>
+            <th class="table-info">o'shish sur'ti %</th>
+            <th class="table-info">ming. AQSh doll</th>
+            <th class="table-info">o'shish sur'ti %</th>
+            <th class="table-info">ming. AQSh doll</th>
+            <th class="table-info">o'shish sur'ti %</th>
+        </tr>
+        <tr>
+            {% block form %}
+            {%endblock%}
+        </tr>
+        <tbody>
+        {% for data in page_obj %}
+        <tr>
+<!--            <td>{{data.district}}</td>-->
+            <td>{{data.bill_sum_industry}}</td>
+            <td>{{data.picture_of_growth_industry}}</td>
+            <td>{{ data.forecast_industry }}</td>
+            <td>{{ data.difference_industry }}</td>
+            <td>{{ data.bill_sum_locality }}</td>
+            <td>{{ data.picture_of_growth_locality }}</td>
+            <td>{{ data.forecast_locality }}</td>
+            <td>{{ data.difference_locality }}</td>
+            <td>{{ data.bill_sum_construction }}</td>
+            <td>{{ data.picture_of_growth_construction }}</td>
+            <td>{{ data.forecast_construction }}</td>
+            <td>{{ data.difference_construction }}</td>
+            <td>{{ data.bill_sum_services }}</td>
+            <td>{{ data.picture_of_growth_services }}</td>
+            <td>{{ data.forecast_services }}</td>
+            <td>{{ data.difference_services }}</td>
+            <td>{{ data.bill_sum_retail }}</td>
+            <td>{{ data.picture_of_growth_retail }}</td>
+            <td>{{ data.forecast_retail }}</td>
+            <td>{{ data.difference_retail }}</td>
+            <td>{{ data.thousand_dollar_international_trade }}</td>
+            <td>{{ data.picture_of_growth_international_trade }}</td>
+            <td>{{ data.thousand_dollar_export }}</td>
+            <td>{{ data.picture_of_growth_export }}</td>
+            <td>{{ data.thousand_dollar_import }}</td>
+            <td>{{ data.picture_of_growth_import }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% if not 'week' in request.get_full_path and not 'month' in request.get_full_path %}
+    {% block export_table %}
+        <a class="btn btn-primary mb-5" href="{% url 'export-excel' filter_slug='all' %}">Экспорт таблицы excel</a>
+    {% endblock %}
+{% elif 'week' in request.get_full_path %}
+    {% block export_table_week %}
+        <a class="btn btn-primary mb-5" href="{% url 'export-excel' filter_slug='week' %}">Экспорт таблицы excel</a>
+    {% endblock %}
+{% elif 'month' in request.get_full_path %}
+    {% block export_table_month %}
+        <a class="btn btn-primary mb-5" href="{% url 'export-excel' filter_slug='month' %}">Экспорт таблицы excel</a>
+    {% endblock %}
+{% endif %}
+
+{% block add_data %}
+<a class="btn btn-success mb-5" href="{% url 'form_loiha4.1' %}">Добавить данные</a>
+{%endblock%}
+
+
+
+
+
+
