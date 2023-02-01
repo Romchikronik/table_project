@@ -20,6 +20,7 @@ projects_department = [
 second_department_tables_menu = [
     {'table_name': 'Sanoat', 'url_form': 'form_sanoat', 'url_data_table': 'table_sanoat'},
     {'table_name': 'KX', 'url_form': 'form_kx', 'url_data_table': 'table_kx'},
+    {'table_name': 'Таблица 1', 'url_form': 'form_first_table', 'url_data_table': 'table_first'},
     # {'table_name': 'Отдел-2.3', 'url_form': 'form_sanoat', 'url_data_table': 'table_sanoat'},
     # {'table_name': 'Отдел-2.4', 'url_form': 'form_sanoat', 'url_data_table': 'table_sanoat'}
 ]
@@ -75,6 +76,7 @@ src = {
     'loiha14': 'mainapp/data_table/table_Loiha14.html',
     'sanoat': 'mainapp/data_table/second_departament/sanoat.html',
     'kx': 'mainapp/data_table/second_departament/kh.html',
+    'table_1': 'mainapp/data_table/second_departament/first_table.html',
 }
 
 # список моделей отдела -2

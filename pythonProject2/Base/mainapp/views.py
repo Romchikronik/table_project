@@ -803,7 +803,7 @@ def add_data_table_sanoat(request):
     table_data = show_data_table(request, Sanoat)
     page_obj = paginate_page(request, table_data)
     if request.method == 'POST':
-        form = TableSanoat(request.POST)
+        form = TableFormSanoat(request.POST)
         if form.is_valid():
             try:
                 Sanoat.objects.create(**form.cleaned_data, district=request.user.district)
@@ -811,7 +811,7 @@ def add_data_table_sanoat(request):
             except:
                 form.add_error(None, 'Ошибка добавления данных')
     else:
-        form = TableSanoat()
+        form = TableFormSanoat()
     context = make_context_by_form('Sanoat', form, second_department_tables_menu, page_obj)
     return render(request, 'mainapp/forms/form_sanoat.html', context)
 
@@ -846,7 +846,7 @@ def add_data_table_kx(request):
     table_data = show_data_table(request, KH)
     page_obj = paginate_page(request, table_data)
     if request.method == 'POST':
-        form = TableKX(request.POST)
+        form = TableFormKX(request.POST)
         if form.is_valid():
             try:
                 KH.objects.create(**form.cleaned_data, district=request.user.district)
@@ -854,6 +854,68 @@ def add_data_table_kx(request):
             except:
                 form.add_error(None, 'Ошибка добавления данных')
     else:
-        form = TableKX()
+        form = TableFormKX()
     context = make_context_by_form('KX', form, second_department_tables_menu, page_obj)
     return render(request, 'mainapp/forms/form_kx.html', context)
+
+
+def table_filter_kx(request, filter_slug):
+    # table = Loiha14.objects.filter(district=request.user.district)
+    table = show_data_table(request, KH)
+
+    # table_data = show_data_table(request, Loiha131)
+    if filter_slug == 'week':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+        table = table.filter(time_create__gte=now)
+    elif filter_slug == 'month':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+        table = table.filter(time_create__gte=now)
+
+    page_obj = paginate_page(request, table)
+    context = get_context_data(page_obj, 'KX', second_department_tables_menu, table)
+    return render(request, src['kx'], context)
+
+# first_table
+
+# KX
+
+def get_data_table_first_table(request):
+    table_data = show_data_table(request, FirstTable)
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, 'Таблица 1', second_department_tables_menu, table_data)
+    return render(request, src['table_1'], context)
+
+
+@login_required
+def add_data_table_1(request):
+    table_data = show_data_table(request, FirstTable)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = TableFirstForm(request.POST)
+        if form.is_valid():
+            try:
+                FirstTable.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect('table_first')
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = TableFirstForm()
+    context = make_context_by_form('Таблица 1', form, second_department_tables_menu, page_obj)
+    return render(request, 'mainapp/forms/form_table1.html', context)
+
+
+def table_filter_first_table(request, filter_slug):
+    # table = Loiha14.objects.filter(district=request.user.district)
+    table = show_data_table(request, FirstTable)
+
+    # table_data = show_data_table(request, Loiha131)
+    if filter_slug == 'week':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+        table = table.filter(time_create__gte=now)
+    elif filter_slug == 'month':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+        table = table.filter(time_create__gte=now)
+
+    page_obj = paginate_page(request, table)
+    context = get_context_data(page_obj, 'Таблица 1', second_department_tables_menu, table)
+    return render(request, src['table_1'], context)

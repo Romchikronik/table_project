@@ -206,7 +206,7 @@ class TableFormLoiha13(ModelForm):
         ]
 
 
-class TableSanoat(ModelForm):
+class TableFormSanoat(ModelForm):
     class Meta:
         model = Sanoat
         fields = [
@@ -232,7 +232,7 @@ class TableSanoat(ModelForm):
         ]
 
 
-class TableKX(ModelForm):
+class TableFormKX(ModelForm):
     class Meta:
         model = KH
 
@@ -257,4 +257,58 @@ class TableKX(ModelForm):
             'idn',
             'destination_country',
             'date_of_issue'
+        ]
+
+
+class TableFirstForm(ModelForm):
+    class Meta:
+        model = FirstTable
+
+        fields = [
+            'table_id',
+            'cell_name',
+            'region',
+            'date',
+            'total',
+            'total_total',
+            'total_prom',
+            'total_ton',
+            'total_sum',
+            'january_march_prom',
+            'january_march_ton',
+            'january_march_sum',
+            'january_prom',
+            'january_ton',
+            'january_sum',
+            'february_prom',
+            'february_ton',
+            'february_sum',
+            'march_prom',
+            'march_ton',
+            'march_sum',
+            'january_april_prom',
+            'january_april_ton',
+            'january_april_sum',
+            'january_may_prom',
+            'january_may_ton',
+            'january_may_sum',
+            'january_june_prom',
+            'january_june_ton',
+            'january_june_sum',
+            'january_july_prom',
+            'january_july_ton',
+            'january_july_sum',
+            'january_august_prom',
+            'january_august_ton',
+            'january_august_sum',
+            'january_september_prom',
+            'january_september_ton',
+            'january_september_sum',
+            'october_24_prom',
+            'october_24_ton',
+            'october_24_sum',
+            'october_prom',
+            'october_ton',
+            'october_sum',
+            'export',
         ]

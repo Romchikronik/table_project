@@ -1,0 +1,161 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">{{ request.user.district }}, {{ title }}</h2>
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_first_table' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_first_table' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_first' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+<div class="container overflow-auto">
+        <table class="table table-bordered table-striped">
+        <caption>{{ request.user.district }}, {{ title }}</caption>
+        <tr>
+            <th class="table-info" rowspan="3" colspan="2"></th>
+            <th class="table-info" rowspan="3">Область</th>
+            <th class="table-info" rowspan="3"></th>
+            <th class="table-primary" rowspan="3">Наименование организаций в разрезе регионов республики</th>
+            <th class="table-primary" colspan="4">Всего</th>
+            <th class="table-primary" colspan="3">Январь-март</th>
+            <th class="table-primary" colspan="3">Январь</th>
+            <th class="table-primary" colspan="3">Февраль</th>
+            <th class="table-primary" colspan="3">Март</th>
+            <th class="table-primary" colspan="3">Январь-Апрель</th>
+            <th class="table-primary" colspan="3">Январь-Май</th>
+            <th class="table-primary" colspan="3">Январь-Июнь</th>
+            <th class="table-primary" colspan="3">Январь-Июль</th>
+            <th class="table-primary" colspan="3">Январь-Август</th>
+            <th class="table-primary" colspan="3">Январь-Сентябрь</th>
+            <th class="table-primary" colspan="3">24-окт</th>
+            <th class="table-primary" colspan="3">Октябрь</th>
+            <th class="table-primary" rowspan="3">Ички экспорт</th>
+            <th class="table-info table-info-time" rowspan="3">Time create</th>
+        </tr>
+        <tr>
+            <th class="table-info" rowspan="2">Всего</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+            <th class="table-info" rowspan="2">пром</th>
+            <th style="text-align: center;" class="table-info" colspan="2">плод</th>
+        </tr>
+        <tr>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+            <td class="table-info">тонна</td>
+            <td class="table-info">сумма</td>
+        </tr>
+        <tr>
+            {% block form %}
+            {% endblock %}
+        </tr>
+            {% for data in page_obj %}
+        <tr>
+            <td>{{ data.table_id }}</td>
+            <td>{{ data.cell_name }}</td>
+            <td>{{ data.region }}</td>
+            <td>{{ data.date }}</td>
+            <td>{{ data.total }}</td>
+            <td>{{ data.total_total }}</td>
+            <td>{{ data.total_prom }}</td>
+            <td>{{ data.total_ton }}</td>
+            <td>{{ data.total_sum }}</td>
+            <td>{{ data.january_march_prom }}</td>
+            <td>{{ data.january_march_ton }}</td>
+            <td>{{ data.january_march_sum }}</td>
+            <td>{{ data.january_prom }}</td>
+            <td>{{ data.january_ton }}</td>
+            <td>{{ data.january_sum }}</td>
+            <td>{{ data.february_prom }}</td>
+            <td>{{ data.february_ton }}</td>
+            <td>{{ data.february_sum }}</td>
+            <td>{{ data.march_prom }}</td>
+            <td>{{ data.march_ton }}</td>
+            <td>{{ data.march_sum }}</td>
+            <td>{{ data.january_april_prom }}</td>
+            <td>{{ data.january_april_ton }}</td>
+            <td>{{ data.january_april_sum }}</td>
+            <td>{{ data.january_may_prom }}</td>
+            <td>{{ data.january_may_ton }}</td>
+            <td>{{ data.january_may_sum }}</td>
+            <td>{{ data.january_june_prom }}</td>
+            <td>{{ data.january_june_ton }}</td>
+            <td>{{ data.january_june_sum }}</td>
+            <td>{{ data.january_july_prom }}</td>
+            <td>{{ data.january_july_ton }}</td>
+            <td>{{ data.january_july_sum }}</td>
+            <td>{{ data.january_august_prom }}</td>
+            <td>{{ data.january_august_ton }}</td>
+            <td>{{ data.january_august_sum }}</td>
+            <td>{{ data.january_september_prom }}</td>
+            <td>{{ data.january_september_ton }}</td>
+            <td>{{ data.january_september_sum }}</td>
+            <td>{{ data.october_24_prom }}</td>
+            <td>{{ data.october_24_ton }}</td>
+            <td>{{ data.october_24_sum }}</td>
+            <td>{{ data.october_prom }}</td>
+            <td>{{ data.october_ton }}</td>
+            <td>{{ data.october_sum }}</td>
+            <td>{{ data.export }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+          </tr>
+            {%endfor%}
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{% endblock %}
+
+
+{% block add_data %}
+<a class="btn btn-success mb-5" href="{% url 'form_table1' %}">Добавить данные</a>
+{%endblock%}
