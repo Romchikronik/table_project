@@ -312,3 +312,14 @@ class TableFirstForm(ModelForm):
             'october_sum',
             'export',
         ]
+
+
+class TableKunliuForm(ModelForm):
+    class Meta:
+        model = Kunliu
+        fields = [
+            'sanoat',
+            'meva_sabz',
+            'overall',
+            'date_of_forecast',
+        ]

@@ -877,8 +877,6 @@ def table_filter_kx(request, filter_slug):
 
 # first_table
 
-# KX
-
 def get_data_table_first_table(request):
     table_data = show_data_table(request, FirstTable)
     page_obj = paginate_page(request, table_data)
@@ -919,3 +917,47 @@ def table_filter_first_table(request, filter_slug):
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Таблица 1', second_department_tables_menu, table)
     return render(request, src['table_1'], context)
+
+
+# Kunliu
+
+def get_data_table_kunliu(request):
+    table_data = show_data_table(request, Kunliu)
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, 'кунлиу', second_department_tables_menu, table_data)
+    return render(request, src['kunliu'], context)
+
+
+@login_required
+def add_data_table_kunliu(request):
+    table_data = show_data_table(request, Kunliu)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = TableKunliuForm(request.POST)
+        if form.is_valid():
+            try:
+                Kunliu.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect('table_kunliu')
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = TableKunliuForm()
+    context = make_context_by_form('кунлиу', form, second_department_tables_menu, page_obj)
+    return render(request, 'mainapp/forms/form_kunliu.html', context)
+
+
+def table_filter_kunliu(request, filter_slug):
+    # table = Loiha14.objects.filter(district=request.user.district)
+    table = show_data_table(request, Kunliu)
+
+    # table_data = show_data_table(request, Loiha131)
+    if filter_slug == 'week':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+        table = table.filter(time_create__gte=now)
+    elif filter_slug == 'month':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+        table = table.filter(time_create__gte=now)
+
+    page_obj = paginate_page(request, table)
+    context = get_context_data(page_obj, 'кунлиу', second_department_tables_menu, table)
+    return render(request, src['kunliu'], context)

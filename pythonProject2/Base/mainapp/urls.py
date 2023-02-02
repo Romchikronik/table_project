@@ -29,6 +29,7 @@ urlpatterns = [
     path('form/sanoat', views.add_data_table_sanoat, name='form_sanoat'),
     path('form/kx', views.add_data_table_kx, name='form_kx'),
     path('form/table_1', views.add_data_table_1, name='form_table1'),
+    path('form/kunliu', views.add_data_table_kunliu, name='form_kunliu'),
 
     # path('projects-department/table/<slug:table_slug>', views.get_data_table_Loiha41, name='table'),
 
@@ -47,6 +48,7 @@ urlpatterns = [
     path('exports-department/table/sanoat', views.get_data_table_sanoat, name='table_sanoat'),
     path('exports-department/table/kx', views.get_data_table_kh, name='table_kx'),
     path('exports-department/table/table_1', views.get_data_table_first_table, name='table_first'),
+    path('exports-department/table/kunliu', views.get_data_table_kunliu, name='table_kunliu'),
 
     path('projects-department/table/ilova-13.1/filter/<slug:filter_slug>', views.table_filter_loiha131, name='table_filter_loiha131'),
     path('projects-department/table/ilova-4.1/filter/<slug:filter_slug>', views.table_filter_loiha41, name='table_filter_loiha41'),
@@ -62,5 +64,6 @@ urlpatterns = [
     # 2 departament
     path('exports-department/table/sanoat/filter/<slug:filter_slug>', views.table_filter_sanoat, name="table_filter_sanoat"),
     path('exports-department/table/kx/filter/<slug:filter_slug>', views.table_filter_kx, name="table_filter_kx"),
-    path('exports-department/table/table_1/filter/<slug:filter_slug>', views.table_filter_first_table, name="table_filter_first_table")
+    path('exports-department/table/table_1/filter/<slug:filter_slug>', views.table_filter_first_table, name="table_filter_first_table"),
+    path('exports-department/table/kunliu/filter/<slug:filter_slug>', views.table_filter_kunliu, name="table_filter_kunliu")
 ]

@@ -1,0 +1,58 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">{{ request.user.district }}, {{ title }}</h2>
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100"
+                              href="{% url 'table_filter_kunliu' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100"
+                              href="{% url 'table_filter_kunliu' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_kunliu' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+<div class="container overflow-auto">
+    <table class="table table-bordered table-striped">
+        <caption>{{ request.user.district }}, {{ title }}</caption>
+        <!--        <tr>-->
+        <!--            <th class="table-info" rowspan="2">Район</th>-->
+        <!--            <th class="table-info" rowspan="2">Утвержденные холдинговые компании количество</th>-->
+        <!--            <th class="table-info" rowspan="2">Предложения предпринимателей(ф.и.о)</th>-->
+        <!--            <th class="table-primary" colspan="2">Приоритетные цели</th>-->
+        <!--            <th class="table-primary" colspan="7">Заявленные результаты</th>-->
+        <!--            <th class="table-info table-info-time" rowspan="2">Time create</th>-->
+        <!--        </tr>-->
+        <tr>
+            <th class="table-info">Дата прогноза</th>
+            <th class="table-info">Всего</th>
+            <th class="table-info">саноат маҳсулотлари</th>
+            <th class="table-info">мева-сабзавотлар</th>
+             <th class="table-info table-info-time">Дата создания записи</th>
+        </tr>
+        <tr>
+            {% block form %}
+            {% endblock %}
+        </tr>
+        {% for data in page_obj %}
+        <tr>
+            <td>{{ data.date_of_forecast }}</td>
+            <td>{{ data.overall }}</td>
+            <td>{{ data.sanoat }}</td>
+            <td>{{ data.meva_sabz }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{% endblock %}
+
+
+{% block add_data %}
+<a class="btn btn-success mb-5" href="{% url 'form_kunliu' %}">Добавить данные</a>
+{%endblock%}

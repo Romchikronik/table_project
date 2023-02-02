@@ -451,9 +451,18 @@ class Kunliu(models.Model):
     district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Район")
     sanoat = models.CharField(max_length=255, verbose_name="саноат маҳсулотлари")
     meva_sabz = models.CharField(max_length=255, verbose_name="мева-сабзавотлар")
+    overall = models.CharField(default="", max_length=255, verbose_name="всего")
     date_of_forecast = models.CharField(max_length=255, verbose_name="Дата прогноза")
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
     is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'Kунлиу'
+        verbose_name_plural = 'Kунлиу'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
 
     # general = models.FloatField(verbose_name="Жами")
