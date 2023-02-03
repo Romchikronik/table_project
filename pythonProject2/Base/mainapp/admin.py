@@ -21,6 +21,9 @@ class CustomUserAdmin(UserAdmin):
                 'user_permissions'
             )
         }),
+        ('Groups', {
+            'fields': ('groups',)
+        }),
         ('Important dates', {
             'fields': ('last_login', 'date_joined')
         }),

@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator
-
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 
 from .models import *
 
@@ -22,8 +24,6 @@ second_department_tables_menu = [
     {'table_name': 'KX', 'url_form': 'form_kx', 'url_data_table': 'table_kx'},
     {'table_name': 'Таблица 1', 'url_form': 'form_first_table', 'url_data_table': 'table_first'},
     {'table_name': 'кунлиу', 'url_form': 'form_kunliu', 'url_data_table': 'table_kunliu'},
-    # {'table_name': 'Отдел-2.3', 'url_form': 'form_sanoat', 'url_data_table': 'table_sanoat'},
-    # {'table_name': 'Отдел-2.4', 'url_form': 'form_sanoat', 'url_data_table': 'table_sanoat'}
 ]
 # url Таблиц и форм отдела 3
 third_department_tables_menu = [
@@ -101,6 +101,11 @@ def show_data_table(request, model):
     return model
 
 
+def show_data_table_to_departament(model):
+    model = model.objects.all()
+    return model
+
+
 def create_data(request, model, form):
     model = model.objects.create(**form.cleaned_data, district=request.user.district)
     return model
@@ -139,8 +144,12 @@ def paginate_page(request, table_data):
     return page_obj
 
 
-
-
-
-
+# department group
+# departament_group, created = Group.objects.get_or_create(name='departament_group')
+# ct = ContentType.objects.get_for_model(User)
+# permission = Permission.objects.get_or_create(
+#                                               codename='access_to_departament',
+#                                               name='Can access to departament',
+#                                               content_type=ct)
+# departament_group.permissions.add(permission)
 

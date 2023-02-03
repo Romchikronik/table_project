@@ -3,6 +3,11 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 
 
+# class Departament(models.Model):
+#     title = models.CharField(max_length=50, verbose_name="Департамент", blank=True, name=True)
+#     slug = models.SlugField(max_length=50, verbose_name='URL', blank=True, name=True)
+
+
 class District(models.Model):
     id = models.AutoField(primary_key=True)
     district = models.CharField(max_length=50, verbose_name="Район", blank=True, null=True)

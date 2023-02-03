@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, response
 from django.shortcuts import render, redirect
@@ -39,6 +39,13 @@ def mainPage(request):
     context = {'title': 'Главная старница'}
     return render(request, 'mainapp/index.html', context)
 
+
+# def departament_view(request):
+#     user = User
+    # request.user.has_perm('mainapp.departament_group'):
+#     if user.groups.filter(name='department_group').exists():
+
+    # if user in
 
 # @login_required
 # def get_department_projects(request, departament_slug):
@@ -206,102 +213,56 @@ def export_excel(request, filter_slug):
     # # datetime.utcfromtimestamp(int('time_create')).strftime('%Y-%m-%d %H:%M:%S')
     # date_style.num_format_str = '%d/%m/%y %h:%m:%s'
     # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        # 'district__district',
+        'bill_sum_industry',
+        'picture_of_growth_industry',
+        'forecast_industry',
+        'difference_industry',
+        'bill_sum_locality',
+        'picture_of_growth_locality',
+        'forecast_locality',
+        'difference_locality',
+        'bill_sum_construction',
+        'picture_of_growth_construction',
+        'forecast_construction',
+        'difference_construction',
+        'bill_sum_services',
+        'picture_of_growth_services',
+        'forecast_services',
+        'difference_services',
+        'bill_sum_retail',
+        'picture_of_growth_retail',
+        'forecast_retail',
+        'difference_retail',
+        'thousand_dollar_international_trade',
+        'picture_of_growth_international_trade',
+        'thousand_dollar_export',
+        'picture_of_growth_export',
+        'thousand_dollar_import',
+        'picture_of_growth_import',
+        # 'time_create'
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
 
     if filter_slug == 'week':
         now = timezone.now() - timedelta(minutes=60 * 24 * 7)
         rows = Loiha41.objects.filter(district=request.user.district, time_create__gte=now).values_list(
-            # 'district__district',
-            'bill_sum_industry',
-            'picture_of_growth_industry',
-            'forecast_industry',
-            'difference_industry',
-            'bill_sum_locality',
-            'picture_of_growth_locality',
-            'forecast_locality',
-            'difference_locality',
-            'bill_sum_construction',
-            'picture_of_growth_construction',
-            'forecast_construction',
-            'difference_construction',
-            'bill_sum_services',
-            'picture_of_growth_services',
-            'forecast_services',
-            'difference_services',
-            'bill_sum_retail',
-            'picture_of_growth_retail',
-            'forecast_retail',
-            'difference_retail',
-            'thousand_dollar_international_trade',
-            'picture_of_growth_international_trade',
-            'thousand_dollar_export',
-            'picture_of_growth_export',
-            'thousand_dollar_import',
-            'picture_of_growth_import',
-            # 'time_create'
-            )
+            *fields
+        )
     elif filter_slug == 'month':
         now = timezone.now() - timedelta(minutes=60 * 24 * 30)
         rows = Loiha41.objects.filter(district=request.user.district, time_create__gte=now).values_list(
-            # 'district__district',
-            'bill_sum_industry',
-            'picture_of_growth_industry',
-            'forecast_industry',
-            'difference_industry',
-            'bill_sum_locality',
-            'picture_of_growth_locality',
-            'forecast_locality',
-            'difference_locality',
-            'bill_sum_construction',
-            'picture_of_growth_construction',
-            'forecast_construction',
-            'difference_construction',
-            'bill_sum_services',
-            'picture_of_growth_services',
-            'forecast_services',
-            'difference_services',
-            'bill_sum_retail',
-            'picture_of_growth_retail',
-            'forecast_retail',
-            'difference_retail',
-            'thousand_dollar_international_trade',
-            'picture_of_growth_international_trade',
-            'thousand_dollar_export',
-            'picture_of_growth_export',
-            'thousand_dollar_import',
-            'picture_of_growth_import',
-            # 'time_create'
-            )
+            *fields
+        )
     else:
         rows = Loiha41.objects.filter(district=request.user.district).values_list(
-            # 'district__district',
-            'bill_sum_industry',
-            'picture_of_growth_industry',
-            'forecast_industry',
-            'difference_industry',
-            'bill_sum_locality',
-            'picture_of_growth_locality',
-            'forecast_locality',
-            'difference_locality',
-            'bill_sum_construction',
-            'picture_of_growth_construction',
-            'forecast_construction',
-            'difference_construction',
-            'bill_sum_services',
-            'picture_of_growth_services',
-            'forecast_services',
-            'difference_services',
-            'bill_sum_retail',
-            'picture_of_growth_retail',
-            'forecast_retail',
-            'difference_retail',
-            'thousand_dollar_international_trade',
-            'picture_of_growth_international_trade',
-            'thousand_dollar_export',
-            'picture_of_growth_export',
-            'thousand_dollar_import',
-            'picture_of_growth_import',
-            # 'time_create'
-            )
+            *fields
+        )
 
     for row in rows:
         row_num += 1
@@ -360,7 +321,13 @@ def export_excel(request, filter_slug):
 
 
 def get_data_table_Loiha41(request):
-    table_data = show_data_table(request, Loiha41)  # model
+    # user = get_user(request)
+    if request.user.groups.filter(name='departament_group').exists():
+        # print('I am department user')
+        table_data = show_data_table_to_departament(Loiha41)
+    else:
+        table_data = show_data_table(request, Loiha41)  # model
+
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Илова-4.1', projects_department, table_data)  # title
     return render(request, src['loiha41'], context)
