@@ -42,10 +42,10 @@ def mainPage(request):
 
 # def departament_view(request):
 #     user = User
-    # request.user.has_perm('mainapp.departament_group'):
+# request.user.has_perm('mainapp.departament_group'):
 #     if user.groups.filter(name='department_group').exists():
 
-    # if user in
+# if user in
 
 # @login_required
 # def get_department_projects(request, departament_slug):
@@ -57,11 +57,16 @@ def mainPage(request):
 
 @login_required
 def get_department_projects(request):
-    context = {
-        'title': 'Отдел - Лоиха',
-        'projects_department': projects_department
-    }
-    return render(request, 'mainapp/departments/projects_department.html', context)
+    if del_group_loiha_id(request):
+        # raise Exception('У вас нету доступа к этому департаменту')
+        messages.error(request, 'У вас нету доступа к этому департаменту')
+        return redirect('/')
+    else:
+        context = {
+            'title': 'Отдел - Лоиха',
+            'projects_department': projects_department
+        }
+        return render(request, 'mainapp/departments/projects_department.html', context)
 
 
 @login_required
@@ -162,47 +167,69 @@ def export_excel(request, filter_slug):
     # cell_style = xlwt.easyxf("align: vert centre, horiz center")
 
     # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
-    ws.write_merge(0, 0, 0, 25, 'Чирчик тумани, Илова-4.1', cell_title)
-    ws.write_merge(1, 1, 0, 3, 'SANOAT', cell_style)
-    ws.write_merge(1, 1, 4, 7, 'QISHLOQ', cell_style)
-    ws.write_merge(1, 1, 8, 11, 'QURILISH', cell_style)
-    ws.write_merge(1, 1, 12, 15, 'XIZMATLAR', cell_style)
-    ws.write_merge(1, 1, 16, 19, 'CHAKANA SAVDO', cell_style)
-    ws.write_merge(1, 1, 20, 21,  'TASHQI SAVDO AYLANMASI', cell_style)
-    ws.write_merge(1, 1, 22, 23, 'EKSPORT', cell_style)
-    ws.write_merge(1, 1, 24, 25, 'IMPORT', cell_style)
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 25, 'Чирчик тумани, Илова-4.1', cell_title)
+        ws.write_merge(1, 1, 0, 3, 'SANOAT', cell_style)
+        ws.write_merge(1, 1, 4, 7, 'QISHLOQ', cell_style)
+        ws.write_merge(1, 1, 8, 11, 'QURILISH', cell_style)
+        ws.write_merge(1, 1, 12, 15, 'XIZMATLAR', cell_style)
+        ws.write_merge(1, 1, 16, 19, 'CHAKANA SAVDO', cell_style)
+        ws.write_merge(1, 1, 20, 21, 'TASHQI SAVDO AYLANMASI', cell_style)
+        ws.write_merge(1, 1, 22, 23, 'EKSPORT', cell_style)
+        ws.write_merge(1, 1, 24, 25, 'IMPORT', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 26, 'Илова-4.1', cell_title)
+        # ws.write_merge(1, 2, 0, 1, 'Район', cell_style)
+        ws.write_merge(1, 1, 1, 4, 'SANOAT', cell_style)
+        ws.write_merge(1, 1, 5, 8, 'QISHLOQ', cell_style)
+        ws.write_merge(1, 1, 9, 12, 'QURILISH', cell_style)
+        ws.write_merge(1, 1, 13, 16, 'XIZMATLAR', cell_style)
+        ws.write_merge(1, 1, 17, 20, 'CHAKANA SAVDO', cell_style)
+        ws.write_merge(1, 1, 21, 22, 'TASHQI SAVDO AYLANMASI', cell_style)
+        ws.write_merge(1, 1, 23, 24, 'EKSPORT', cell_style)
+        ws.write_merge(1, 1, 25, 26, 'IMPORT', cell_style)
 
     # ws.col(0).width = 4500
     # ws.col(21).width = 5000
 
     # "Район",
-    columns = ["mlrd. so'm",
-               "o'shish sur'ti %",
-               "prognoz",
-               "farqi (-;+)",
-               "mlrd. so'm",
-               "o'shish sur'ti %",
-               "prognoz",
-               "farqi (-;+)",
-               "mlrd. so'm",
-               "o'shish sur'ti%",
-               "prognoz",
-               "farqi (-;+)",
-               "mlrd. so'm",
-               "o'shish sur'ti%",
-               "prognoz",
-               "farqi (-;+)",
-               "mlrd. so'm",
-               "o'shish sur'ti%",
-               "prognoz",
-               "farqi (-;+)",
-               "ming. AQSh doll",
-               "o'shish sur'ti%",
-               "ming. AQSh doll",
-               "o'shish sur'ti%",
-               "ming. AQSh doll",
-               "o'shish sur'ti%"
-               ]
+    columns_list = ["mlrd. so'm",
+                    "o'shish sur'ti %",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "mlrd. so'm",
+                    "o'shish sur'ti %",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "mlrd. so'm",
+                    "o'shish sur'ti%",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "mlrd. so'm",
+                    "o'shish sur'ti%",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "mlrd. so'm",
+                    "o'shish sur'ti%",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "ming. AQSh doll",
+                    "o'shish sur'ti%",
+                    "ming. AQSh doll",
+                    "o'shish sur'ti%",
+                    "ming. AQSh doll",
+                    "o'shish sur'ti%"
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
 
     for col_num in range(len(columns)):
         ws.col(col_num).width = 3800
@@ -210,8 +237,6 @@ def export_excel(request, filter_slug):
 
     font_style = xlwt.XFStyle()
     # date_style = xlwt.XFStyle()
-    # # datetime.utcfromtimestamp(int('time_create')).strftime('%Y-%m-%d %H:%M:%S')
-    # date_style.num_format_str = '%d/%m/%y %h:%m:%s'
     # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
     fields = [
         # 'district__district',
@@ -251,18 +276,21 @@ def export_excel(request, filter_slug):
 
     if filter_slug == 'week':
         now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        rows = Loiha41.objects.filter(district=request.user.district, time_create__gte=now).values_list(
-            *fields
-        )
+        if not get_group_loiha_id(request):
+            rows = show_data_table(request, Loiha41).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(Loiha41).filter(time_create__gte=now).values_list(*department_fields)
     elif filter_slug == 'month':
         now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        rows = Loiha41.objects.filter(district=request.user.district, time_create__gte=now).values_list(
-            *fields
-        )
+        if not get_group_loiha_id(request):
+            rows = show_data_table(request, Loiha41).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(Loiha41).filter(time_create__gte=now).values_list(*department_fields)
     else:
-        rows = Loiha41.objects.filter(district=request.user.district).values_list(
-            *fields
-        )
+        if not get_group_loiha_id(request):
+            rows = show_data_table(request, Loiha41).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(Loiha41).values_list(*department_fields)
 
     for row in rows:
         row_num += 1
@@ -322,7 +350,7 @@ def export_excel(request, filter_slug):
 
 def get_data_table_Loiha41(request):
     # user = get_user(request)
-    if request.user.groups.filter(name='departament_group').exists():
+    if get_group_loiha_id(request):
         # print('I am department user')
         table_data = show_data_table_to_departament(Loiha41)
     else:
@@ -334,56 +362,82 @@ def get_data_table_Loiha41(request):
 
 
 def get_data_table_Loiha52(request):
-    table_data = show_data_table(request, Loiha52)
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(Loiha52)
+    else:
+        table_data = show_data_table(request, Loiha52)
+
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Илова-5.2', projects_department, table_data)
     return render(request, src['loiha52'], context)
 
 
 def get_data_table_Loiha14(request):
-    table_data = show_data_table(request, Loiha14)
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(Loiha14)
+    else:
+        table_data = show_data_table(request, Loiha14)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Илова-14', projects_department, table_data)
     return render(request, src['loiha14'], context)
 
 
 def get_data_table_Loiha131(request):
-    table_data = show_data_table(request, Loiha131)
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(Loiha131)
+    else:
+        table_data = show_data_table(request, Loiha131)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Илова-13.1', projects_department, table_data)
     return render(request, src['loiha131'], context)
 
 
 def get_data_table_Loiha122(request):
-    table_data = show_data_table(request, Loiha122)
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(Loiha122)
+    else:
+        table_data = show_data_table(request, Loiha122)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Илова-12.2', projects_department, table_data)
     return render(request, src['loiha122'], context)
 
 
 def get_data_table_Loiha121(request):
-    table_data = show_data_table(request, Loiha121)
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(Loiha121)
+    else:
+        table_data = show_data_table(request, Loiha121)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Илова-12.1', projects_department, table_data)
     return render(request, src['loiha121'], context)
 
 
 def get_data_table_Loiha12(request):
-    table_data = show_data_table(request, Loiha12)
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(Loiha12)
+    else:
+        table_data = show_data_table(request, Loiha12)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Илова-12', projects_department, table_data)
     return render(request, src['loiha12'], context)
 
 
 def get_data_table_Loiha10(request):
-    table_data = show_data_table(request, Loiha10)
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(Loiha10)
+    else:
+        table_data = show_data_table(request, Loiha10)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Илова-10', projects_department, table_data)
     return render(request, src['loiha10'], context)
 
 
 def get_data_table_Loiha6(request):
-    table_data = show_data_table(request, Loiha6)
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(Loiha6)
+    else:
+        table_data = show_data_table(request, Loiha6)
+    # table_data = show_data_table(request, Loiha6)
     page_obj = paginate_page(request, table_data)
 
     # user_district = District.objects.get(id=user.id)
@@ -392,7 +446,10 @@ def get_data_table_Loiha6(request):
 
 
 def get_data_table_Loiha13(request):
-    table_data = show_data_table(request, Loiha13)
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(Loiha13)
+    else:
+        table_data = show_data_table(request, Loiha13)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Илова-13', projects_department, table_data)
     return render(request, src['loiha13'], context)
@@ -401,6 +458,8 @@ def get_data_table_Loiha13(request):
 def logoutUser(request):
     logout(request)
     return render(request, 'mainapp/logout.html')
+
+
 # TODO потом изменить кнопку назад, изменить дату в excel файле.
 # TODO прочитать статью Django про итеграцию с телеграм ботом. Костамизация админкиз
 
@@ -585,15 +644,12 @@ def add_data_table_Loiha13(request):
 
 
 def table_filter_loiha131(request, filter_slug):
-    table = show_data_table(request, Loiha131)
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha131)
+    else:
+        table = show_data_table_to_departament(Loiha131)
 
-    # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = datetime.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = datetime.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Илова-13.1', projects_department, table)
@@ -601,15 +657,20 @@ def table_filter_loiha131(request, filter_slug):
 
 
 def table_filter_loiha41(request, filter_slug):
-    table = show_data_table(request, Loiha41)
 
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha41)
+    else:
+        table = show_data_table_to_departament(Loiha41)
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
+
+    # if filter_slug == 'week':
+    #     now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+    #     table = table.filter(time_create__gte=now)
+    # elif filter_slug == 'month':
+    #     now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+    #     table = table.filter(time_create__gte=now)
     # elif filter_slug == 'all':
     #     table = table
 
@@ -620,15 +681,13 @@ def table_filter_loiha41(request, filter_slug):
 
 def table_filter_loiha52(request, filter_slug):
     # table = Loiha52.objects.filter(district=request.user.district)
-    table = show_data_table(request, Loiha52)
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha52)
+    else:
+        table = show_data_table_to_departament(Loiha52)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Илова-5.2', projects_department, table)
@@ -637,15 +696,13 @@ def table_filter_loiha52(request, filter_slug):
 
 def table_filter_loiha14(request, filter_slug):
     # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, Loiha14)
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha14)
+    else:
+        table = show_data_table_to_departament(Loiha14)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Илова-14', projects_department, table)
@@ -653,16 +710,13 @@ def table_filter_loiha14(request, filter_slug):
 
 
 def table_filter_loiha122(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, Loiha122)
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha122)
+    else:
+        table = show_data_table_to_departament(Loiha122)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Илова-12.2', projects_department, table)
@@ -670,16 +724,13 @@ def table_filter_loiha122(request, filter_slug):
 
 
 def table_filter_loiha121(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, Loiha121)
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha121)
+    else:
+        table = show_data_table_to_departament(Loiha121)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Илова-12.1', projects_department, table)
@@ -687,16 +738,13 @@ def table_filter_loiha121(request, filter_slug):
 
 
 def table_filter_loiha12(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, Loiha12)
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha12)
+    else:
+        table = show_data_table_to_departament(Loiha12)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Илова-12', projects_department, table)
@@ -705,15 +753,14 @@ def table_filter_loiha12(request, filter_slug):
 
 def table_filter_loiha10(request, filter_slug):
     # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, Loiha10)
+    # table = show_data_table(request, Loiha10)
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha10)
+    else:
+        table = show_data_table_to_departament(Loiha10)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Илова-10', projects_department, table)
@@ -722,15 +769,13 @@ def table_filter_loiha10(request, filter_slug):
 
 def table_filter_loiha6(request, filter_slug):
     # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, Loiha6)
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha6)
+    else:
+        table = show_data_table_to_departament(Loiha6)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Илова-6', projects_department, table)
@@ -739,15 +784,13 @@ def table_filter_loiha6(request, filter_slug):
 
 def table_filter_loiha13(request, filter_slug):
     # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, Loiha13)
+    if not get_group_loiha_id(request):
+        table = show_data_table(request, Loiha13)
+    else:
+        table = show_data_table_to_departament(Loiha13)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Илова-13', projects_department, table)
@@ -788,16 +831,12 @@ def table_filter_sanoat(request, filter_slug):
     table = show_data_table(request, Sanoat)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Sanoat', second_department_tables_menu, table)
     return render(request, src['sanoat'], context)
+
 
 # KX
 
@@ -831,16 +870,12 @@ def table_filter_kx(request, filter_slug):
     table = show_data_table(request, KH)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'KX', second_department_tables_menu, table)
     return render(request, src['kx'], context)
+
 
 # first_table
 
@@ -874,12 +909,7 @@ def table_filter_first_table(request, filter_slug):
     table = show_data_table(request, FirstTable)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'Таблица 1', second_department_tables_menu, table)
@@ -918,12 +948,7 @@ def table_filter_kunliu(request, filter_slug):
     table = show_data_table(request, Kunliu)
 
     # table_data = show_data_table(request, Loiha131)
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        table = table.filter(time_create__gte=now)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        table = table.filter(time_create__gte=now)
+    table = filter_tables(filter_slug, table)
 
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'кунлиу', second_department_tables_menu, table)

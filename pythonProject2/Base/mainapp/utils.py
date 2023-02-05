@@ -1,7 +1,9 @@
 from django.core.paginator import Paginator
-from django.contrib.auth.models import Group, Permission
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
+from datetime import timedelta
+from django.utils import timezone
+# from django.contrib.auth.models import Group, Permission
+# from django.contrib.contenttypes.models import ContentType
+# from django.contrib.auth.models import User
 
 from .models import *
 
@@ -126,6 +128,14 @@ def get_context_data(page_obj, title, menu, table_data):
 #     context = {str(arg): arg for arg in args}
 #     return {**context, **kwargs}
 
+def get_group_loiha_id(request):
+    return request.user.groups.filter(id=3).exists() and request.user.groups.filter(id=1)
+
+
+def del_group_loiha_id(request):
+    return request.user.groups.filter(id=3).exists() and not request.user.groups.filter(id=1)
+
+
 
 def make_context_by_form(data, form, menu, page_obj):
     context = {
@@ -143,6 +153,18 @@ def paginate_page(request, table_data):
     page_obj = paginator.get_page(page_number)
     return page_obj
 
+
+def filter_tables(filter_slug, table_p):
+    if filter_slug == 'week':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+        table = table_p.filter(time_create__gte=now)
+    elif filter_slug == 'month':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+        table = table_p.filter(time_create__gte=now)
+
+    return table
+
+# perm = Permission.objects.create(content_type__app_label='user', content_type__model='user', codename='loiha_access')
 
 # department group
 # departament_group, created = Group.objects.get_or_create(name='departament_group')

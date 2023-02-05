@@ -1,12 +1,19 @@
 {% extends 'mainapp/departments/projects_department.html' %}
 {% block table %}
-<h2 class="mb-3">{{ request.user.district }}, {{ title }}</h2>
+<h2 class="mb-3">
+    {% if request.user.district != None %}
+    {{ request.user.district }},
+    {% endif %}
+    {{ title }}
+</h2>
 
 {% block filter %}
 <div class="container mb-3">
     <div class="row">
-        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_loiha14' filter_slug='week' %}">неделя</a></div>
-        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_loiha14' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100"
+                              href="{% url 'table_filter_loiha14' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100"
+                              href="{% url 'table_filter_loiha14' filter_slug='month' %}">месяц</a></div>
         <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_loiha14' %}">все</a></div>
     </div>
 </div>
@@ -14,9 +21,18 @@
 
 <div class="container overflow-auto">
     <table class="table table-bordered table-striped">
-        <caption>{{ request.user.district }}, Илова 14</caption>
+        <caption>
+            {% if request.user.district != None %}
+                {{ request.user.district }},
+            {% endif %}
+            Илова 14
+        </caption>
         <tr>
-<!--            <th class="table-info" rowspan="3">Район</th>-->
+            {% for group in request.user.groups.all %}
+            {% if group.id == 3 %}
+            <th rowspan="3" class="table-info">HUDUDLAR</th>
+            {% endif %}
+            {% endfor %}
             <th class="table-primary" colspan="3">Доступная информация</th>
             <th class="table-primary" colspan="7">Процесс реализации запланированных проектов</th>
             <th class="table-primary" colspan="3">Финансирование</th>
@@ -47,7 +63,11 @@
         </tr>
         {% for data in page_obj %}
         <tr>
-<!--            <td>{{data.district }}</td>-->
+            {% for group in request.user.groups.all %}
+            {% if group.id == 3 %}
+            <td>{{data.district}}</td>
+            {% endif %}
+            {% endfor %}
             <td>{{data.organization_available_information }}</td>
             <td>{{data.kind_of_activity_available_information }}</td>
             <td>{{data.available_jobs_available_information }}</td>
@@ -75,5 +95,7 @@
 
 
 {% block add_data %}
+{% if not request.user.groups.all and not request.user.is_superuser %}
 <a class="btn btn-success mb-5" href="{% url 'form_loiha14' %}">Добавить данные</a>
+{% endif %}
 {%endblock%}

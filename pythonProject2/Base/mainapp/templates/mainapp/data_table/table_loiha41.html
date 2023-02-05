@@ -3,7 +3,7 @@
 
 {% block table %}
 <h2 class="mb-3">
-        {% if not request.user.groups.all and not request.user.is_superuser %}
+        {% if request.user.district != None %}
             {{ request.user.district }},
         {% endif %}
         {{ title }}
@@ -23,14 +23,16 @@
 
     <table class="table table-bordered table-striped"> <!--table-hover-->
         <caption>
-            {% if not request.user.groups.all and not request.user.is_superuser %}
+            {% comment %}{% if not request.user.groups.all and not request.user.is_superuser %}{% endcomment %}
+
+            {% if request.user.district != None %}
                 {{ request.user.district }},
             {% endif %}
             {{ title }}
         </caption>
         <tr>
             {% for group in request.user.groups.all %}
-                {% if group.name == 'departament_group' %}
+                {% if group.id == 3 %}
                 <th rowspan="2" class="table-info">HUDUDLAR</th>
                 {% endif %}
             {% endfor %}
@@ -80,7 +82,7 @@
         {% for data in page_obj %}
         <tr>
             {% for group in request.user.groups.all %}
-                {% if group.name == 'departament_group' %}
+                {% if group.id == 3 %}
                    <td>{{data.district}}</td>
                 {% endif %}
             {% endfor %}

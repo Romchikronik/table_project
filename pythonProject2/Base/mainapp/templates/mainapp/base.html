@@ -22,16 +22,8 @@
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <img
-                                alt="image"
-                                class="rounded-circle"
-                                src="img/profile_small.jpg"
-                        />
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="block m-t-xs font-bold">{{ request.user.username|upper }}</span>
-                            <span class="text-muted text-xs block">
-                      Art Director<b class="caret"></b>
-                  </span>
                         </a>
                         <!--                <ul class="dropdown-menu animated fadeInRight m-t-xs">-->
                         <!--                  <li>-->
@@ -47,7 +39,7 @@
                         <!--                  <li><a class="dropdown-item" href="login.html">Logout</a></li>-->
                         <!--                </ul>-->
                     </div>
-                    <div class="logo-element">IN+</div>
+                    <div class="logo-element">LG+</div>
                 </li>
                 <!--            <li class="active">-->
                 <!--              <a href="index.html"-->
@@ -225,12 +217,6 @@
                 <!--              </ul>-->
                 <!--            </li>-->
 
-                <!--            <li>-->
-                <!--              <a href="grid_options.html"-->
-                <!--                ><i class="fa fa-laptop"></i>-->
-                <!--                <span class="nav-label">Grid options</span></a-->
-                <!--              >-->
-                <!--            </li>-->
                 <li>
                     <a href="{% url 'department_5' %}">
                         <i class="fa fa-table"></i>
@@ -258,15 +244,15 @@
                             class="navbar-form-custom"
                             action="search_results.html"
                     >
-                        <div class="form-group">
-                            <input
-                                    type="text"
-                                    placeholder="Search for something..."
-                                    class="form-control"
-                                    name="top-search"
-                                    id="top-search"
-                            />
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <input-->
+<!--                                    type="text"-->
+<!--                                    placeholder="Search for something..."-->
+<!--                                    class="form-control"-->
+<!--                                    name="top-search"-->
+<!--                                    id="top-search"-->
+<!--                            />-->
+<!--                        </div>-->
                     </form>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
@@ -288,15 +274,15 @@
                     {% endblock %}
                 </div>
                 {% elif 'week' in request.get_full_path %}
-                    <div class="col">
-                        {% block export_table_week %}
-                        {% endblock %}
-                    </div>
+                <div class="col">
+                    {% block export_table_week %}
+                    {% endblock %}
+                </div>
                 {% elif 'month' in request.get_full_path %}
-                     <div class="col">
-                        {% block export_table_month %}
-                        {% endblock %}
-                    </div>
+                <div class="col">
+                    {% block export_table_month %}
+                    {% endblock %}
+                </div>
                 {% endif %}
                 <div class="col">
                     {% block view_data %}
@@ -308,11 +294,19 @@
                 </div>
             </div>
         </div>
-<!--        <div class="footer">-->
-<!--            <div class="float-right">10GB of <strong>250GB</strong> Free.</div>-->
-<!--            <div><strong>Copyright</strong> Example Company &copy; 2014-2018</div>-->
-<!--        </div>-->
+        <!--        <div class="footer">-->
+        <!--            <div class="float-right">10GB of <strong>250GB</strong> Free.</div>-->
+        <!--            <div><strong>Copyright</strong> Example Company &copy; 2014-2018</div>-->
+        <!--        </div>-->
+        {% if messages %}
+        <ul style="list-style: none;" class="mt-3">
+            {% for message in messages %}
+            <li class="message-item alert alert-danger">{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
+
 </div>
 
 
