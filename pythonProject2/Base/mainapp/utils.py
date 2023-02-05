@@ -128,6 +128,8 @@ def get_context_data(page_obj, title, menu, table_data):
 #     context = {str(arg): arg for arg in args}
 #     return {**context, **kwargs}
 
+# Group id
+
 def get_group_loiha_id(request):
     return request.user.groups.filter(id=3).exists() and request.user.groups.filter(id=1)
 
@@ -135,6 +137,13 @@ def get_group_loiha_id(request):
 def del_group_loiha_id(request):
     return request.user.groups.filter(id=3).exists() and not request.user.groups.filter(id=1)
 
+
+def get_group_export_id(request):
+    return request.user.groups.filter(id=3).exists() and request.user.groups.filter(id=2)
+
+
+def del_group_export_id(request):
+    return request.user.groups.filter(id=3).exists() and not request.user.groups.filter(id=2)
 
 
 def make_context_by_form(data, form, menu, page_obj):

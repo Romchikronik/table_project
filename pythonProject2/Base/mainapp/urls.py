@@ -1,6 +1,7 @@
 from django.urls import path
 from .import views
 
+# groups id: departament_group: 3; Loiha group: 1; export group: 2
 
 urlpatterns = [
     path('', views.mainPage, name='main'),

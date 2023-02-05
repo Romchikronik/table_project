@@ -1,6 +1,11 @@
 {% extends 'mainapp/departments/projects_department.html' %}
 {% block table %}
-<h2 class="mb-3">{{ request.user.district }}, {{ title }}</h2>
+<h2 class="mb-3">
+    {% if request.user.district != None %}
+        {{ request.user.district }},
+    {% endif %}
+    {{ title }}
+</h2>
 {% block filter %}
 <div class="container mb-3">
     <div class="row">
@@ -12,16 +17,18 @@
 {% endblock %}
 <div class="container overflow-auto">
         <table class="table table-bordered table-striped">
-        <caption>{{ request.user.district }}, {{ title }}</caption>
-<!--        <tr>-->
-<!--            <th class="table-info" rowspan="2">Район</th>-->
-<!--            <th class="table-info" rowspan="2">Утвержденные холдинговые компании количество</th>-->
-<!--            <th class="table-info" rowspan="2">Предложения предпринимателей(ф.и.о)</th>-->
-<!--            <th class="table-primary" colspan="2">Приоритетные цели</th>-->
-<!--            <th class="table-primary" colspan="7">Заявленные результаты</th>-->
-<!--            <th class="table-info table-info-time" rowspan="2">Time create</th>-->
-<!--        </tr>-->
+        <caption>
+            {% if request.user.district != None %}
+                {{ request.user.district }},
+            {% endif %}
+            {{ title }}
+        </caption>
         <tr>
+            {% for group in request.user.groups.all %}
+            {% if group.id == 3 %}
+            <th class="table-info">HUDUDLAR</th>
+            {% endif %}
+            {% endfor %}
             <th class="table-info">ИНН отправ./получ.</th>
             <th class="table-info">ИНН</th>
             <th class="table-info">Наим. отправителя</th>
@@ -50,6 +57,11 @@
         </tr>
             {% for data in page_obj %}
         <tr>
+            {% for group in request.user.groups.all %}
+                {% if group.id == 3 %}
+                   <td>{{data.district}}</td>
+                {% endif %}
+            {% endfor %}
             <td>{{ data.inn_of_sender_or_recipient }}</td>
             <td>{{ data.inn }}</td>
             <td>{{ data.name_of_sender }}</td>
@@ -84,5 +96,7 @@
 
 
 {% block add_data %}
+   {% if not request.user.groups.all and not request.user.is_superuser %}
 <a class="btn btn-success mb-5" href="{% url 'form_kx' %}">Добавить данные</a>
+   {% endif %}
 {%endblock%}

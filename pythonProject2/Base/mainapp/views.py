@@ -71,11 +71,16 @@ def get_department_projects(request):
 
 @login_required
 def get_department_exports(request):
-    context = {
-        'title': 'Отдел - 2',
-        'second_department_tables_menu': second_department_tables_menu
-    }
-    return render(request, 'mainapp/departments/exports_department.html', context)
+    if del_group_export_id(request):
+        # raise Exception('У вас нету доступа к этому департаменту')
+        messages.error(request, 'У вас нету доступа к этому департаменту')
+        return redirect('/')
+    else:
+        context = {
+            'title': 'Отдел - 2',
+            'second_department_tables_menu': second_department_tables_menu
+        }
+        return render(request, 'mainapp/departments/exports_department.html', context)
 
 
 @login_required
@@ -802,7 +807,11 @@ def table_filter_loiha13(request, filter_slug):
 # Sanoat
 
 def get_data_table_sanoat(request):
-    table_data = show_data_table(request, Sanoat)
+    if get_group_export_id(request):
+        # print('I am department user')
+        table_data = show_data_table_to_departament(Sanoat)
+    else:
+        table_data = show_data_table(request, Sanoat)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Sanoat', second_department_tables_menu, table_data)
     return render(request, src['sanoat'], context)
@@ -827,8 +836,11 @@ def add_data_table_sanoat(request):
 
 
 def table_filter_sanoat(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, Sanoat)
+    # table = show_data_table(request, Sanoat)
+    if not get_group_export_id(request):
+        table = show_data_table(request, Sanoat)
+    else:
+        table = show_data_table_to_departament(Sanoat)
 
     # table_data = show_data_table(request, Loiha131)
     table = filter_tables(filter_slug, table)
@@ -841,7 +853,10 @@ def table_filter_sanoat(request, filter_slug):
 # KX
 
 def get_data_table_kh(request):
-    table_data = show_data_table(request, KH)
+    if get_group_export_id(request):
+        table_data = show_data_table_to_departament(KH)
+    else:
+        table_data = show_data_table(request, KH)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'KX', second_department_tables_menu, table_data)
     return render(request, src['kx'], context)
@@ -867,8 +882,10 @@ def add_data_table_kx(request):
 
 def table_filter_kx(request, filter_slug):
     # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, KH)
-
+    if not get_group_export_id(request):
+        table = show_data_table(request, KH)
+    else:
+        table = show_data_table_to_departament(KH)
     # table_data = show_data_table(request, Loiha131)
     table = filter_tables(filter_slug, table)
 
@@ -880,7 +897,10 @@ def table_filter_kx(request, filter_slug):
 # first_table
 
 def get_data_table_first_table(request):
-    table_data = show_data_table(request, FirstTable)
+    if get_group_export_id(request):
+        table_data = show_data_table_to_departament(FirstTable)
+    else:
+        table_data = show_data_table(request, FirstTable)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'Таблица 1', second_department_tables_menu, table_data)
     return render(request, src['table_1'], context)
@@ -906,7 +926,10 @@ def add_data_table_1(request):
 
 def table_filter_first_table(request, filter_slug):
     # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, FirstTable)
+    if not get_group_export_id(request):
+        table = show_data_table(request, FirstTable)
+    else:
+        table = show_data_table_to_departament(FirstTable)
 
     # table_data = show_data_table(request, Loiha131)
     table = filter_tables(filter_slug, table)
@@ -919,7 +942,10 @@ def table_filter_first_table(request, filter_slug):
 # Kunliu
 
 def get_data_table_kunliu(request):
-    table_data = show_data_table(request, Kunliu)
+    if get_group_export_id(request):
+        table_data = show_data_table_to_departament(Kunliu)
+    else:
+        table_data = show_data_table(request, Kunliu)
     page_obj = paginate_page(request, table_data)
     context = get_context_data(page_obj, 'кунлиу', second_department_tables_menu, table_data)
     return render(request, src['kunliu'], context)
@@ -944,8 +970,10 @@ def add_data_table_kunliu(request):
 
 
 def table_filter_kunliu(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    table = show_data_table(request, Kunliu)
+    if not get_group_export_id(request):
+        table = show_data_table(request, Kunliu)
+    else:
+        table = show_data_table_to_departament(Kunliu)
 
     # table_data = show_data_table(request, Loiha131)
     table = filter_tables(filter_slug, table)
