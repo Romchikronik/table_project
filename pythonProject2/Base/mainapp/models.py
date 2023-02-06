@@ -471,3 +471,233 @@ class Kunliu(models.Model):
         return self.district.district
 
     # general = models.FloatField(verbose_name="Жами")
+
+
+class JamiVault(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Район")
+    loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
+    loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    umumiy_kiymati_reja = models.CharField(max_length=255, verbose_name='Режа')
+    umumiy_kiymati_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    uz_mablag_reja = models.CharField(max_length=255, verbose_name='Режа')
+    uz_mablag_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    bank_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    bank_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    xorijiy_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    xorijiy_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    xorijiy_invest_reja = models.CharField(max_length=255, verbose_name='Режа')
+    xorijiy_invest_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    yangi_ish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    yangi_ish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    ishlab_chiqarish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    ishlab_chiqarish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    import_reja = models.CharField(max_length=255, verbose_name='Режа')
+    import_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    export_reja = models.CharField(max_length=255, verbose_name='Режа')
+    export_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    budget_reja = models.CharField(max_length=255, verbose_name='Режа')
+    budget_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'Жами Свод'
+        verbose_name_plural = 'Жами Свод'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class QuarterVault(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Район")
+
+    loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
+    loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    umumiy_kiymati_reja = models.CharField(max_length=255, verbose_name='Режа')
+    umumiy_kiymati_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    uz_mablag_reja = models.CharField(max_length=255, verbose_name='Режа')
+    uz_mablag_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    bank_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    bank_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    xorijiy_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    xorijiy_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    xorijiy_invest_reja = models.CharField(max_length=255, verbose_name='Режа')
+    xorijiy_invest_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    first_quarter_yangi_ish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    first_quarter_yangi_ish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    first_quarter_ishlab_chiqarish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    first_quarter_ishlab_chiqarish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    first_quarter_import_reja = models.CharField(max_length=255, verbose_name='Режа')
+    first_quarter_import_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    first_quarter_export_reja = models.CharField(max_length=255, verbose_name='Режа')
+    first_quarter_export_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    first_quarter_budget_reja = models.CharField(max_length=255, verbose_name='Режа')
+    first_quarter_budget_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    second_quarter_loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    second_quarter_umumiy_kiymati_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_umumiy_kiymati_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    second_quarter_uz_mablag_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_uz_mablag_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    second_quarter_bank_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_bank_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    second_quarter_xorijiy_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_xorijiy_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    second_quarter_xorijiy_invest_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_xorijiy_invest_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    second_quarter_yangi_ish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_yangi_ish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    second_quarter_ishlab_chiqarish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_ishlab_chiqarish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    second_quarter_import_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_import_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    second_quarter_export_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_export_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    second_quarter_budget_reja = models.CharField(max_length=255, verbose_name='Режа')
+    second_quarter_budget_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    third_quarter_loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    third_quarter_umumiy_kiymati_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_umumiy_kiymati_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    third_quarter_uz_mablag_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_uz_mablag_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    third_quarter_bank_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_bank_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    third_quarter_xorijiy_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_xorijiy_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    third_quarter_xorijiy_invest_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_xorijiy_invest_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    third_quarter_yangi_ish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_yangi_ish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    third_quarter_ishlab_chiqarish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_ishlab_chiqarish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    third_quarter_import_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_import_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    third_quarter_export_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_export_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    third_quarter_budget_reja = models.CharField(max_length=255, verbose_name='Режа')
+    third_quarter_budget_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    fourth_quarter_loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    fourth_quarter_umumiy_kiymati_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_umumiy_kiymati_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    fourth_quarter_uz_mablag_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_uz_mablag_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    fourth_quarter_bank_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_bank_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    fourth_quarter_xorijiy_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_xorijiy_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    fourth_quarter_xorijiy_invest_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_xorijiy_invest_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    fourth_quarter_yangi_ish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_yangi_ish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    fourth_quarter_ishlab_chiqarish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_ishlab_chiqarish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    fourth_quarter_import_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_import_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    fourth_quarter_export_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_export_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    fourth_quarter_budget_reja = models.CharField(max_length=255, verbose_name='Режа')
+    fourth_quarter_budget_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'Свод Чорак'
+        verbose_name_plural = 'Свод Чорак'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class TarmokVault(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Район")
+    tormok_name = models.CharField(max_length=255, verbose_name='Тармоқлар номи')
+
+    loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
+    loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    umumiy_kiymati_reja = models.CharField(max_length=255, verbose_name='Режа')
+    umumiy_kiymati_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    uz_mablag_reja = models.CharField(max_length=255, verbose_name='Режа')
+    uz_mablag_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    bank_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    bank_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    xorijiy_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    xorijiy_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    xorijiy_invest_reja = models.CharField(max_length=255, verbose_name='Режа')
+    xorijiy_invest_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    yangi_ish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    yangi_ish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    ishlab_chiqarish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    ishlab_chiqarish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    import_reja = models.CharField(max_length=255, verbose_name='Режа')
+    import_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    export_reja = models.CharField(max_length=255, verbose_name='Режа')
+    export_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    budget_reja = models.CharField(max_length=255, verbose_name='Режа')
+    budget_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'Свод Тармок'
+        verbose_name_plural = 'Свод Тармок'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class BankVault(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Район")
+
+    loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
+    loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    umumiy_kiymati_reja = models.CharField(max_length=255, verbose_name='Режа')
+    umumiy_kiymati_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    uz_mablag_reja = models.CharField(max_length=255, verbose_name='Режа')
+    uz_mablag_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    bank_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    bank_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    xorijiy_kredit_reja = models.CharField(max_length=255, verbose_name='Режа')
+    xorijiy_kredit_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    xorijiy_invest_reja = models.CharField(max_length=255, verbose_name='Режа')
+    xorijiy_invest_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+
+    yangi_ish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    yangi_ish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    ishlab_chiqarish_reja = models.CharField(max_length=255, verbose_name='Режа')
+    ishlab_chiqarish_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    import_reja = models.CharField(max_length=255, verbose_name='Режа')
+    import_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    export_reja = models.CharField(max_length=255, verbose_name='Режа')
+    export_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    budget_reja = models.CharField(max_length=255, verbose_name='Режа')
+    budget_amalda = models.CharField(max_length=255, verbose_name='Амалда')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'Свод Банк'
+        verbose_name_plural = 'Свод Банк'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
