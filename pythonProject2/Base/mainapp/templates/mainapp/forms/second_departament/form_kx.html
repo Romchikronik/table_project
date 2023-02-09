@@ -5,27 +5,9 @@
         {% csrf_token %}
         <div>{{ form.non_field_errors }}</div>
         <tr>
-            <td>{{ form.inn_of_sender_or_recipient }}</td>
-            <td>{{ form.inn }}</td>
-            <td>{{ form.name_of_sender }}</td>
-            <td>{{ form.address_of_sender }}</td>
-            <td>{{ form.name_of_recipient }}</td>
-            <td>{{ form.address_of_recipient }}</td>
-            <td>{{ form.financial_responsible_inn }}</td>
-            <td>{{ form.face_responsible_for_finance }}</td>
-            <td>{{ form.address_of_face_responsible_for_finance }}</td>
-            <td>{{ form.currency_of_contract }}</td>
-            <td>{{ form.invoice_value }}</td>
-            <td>{{ form.code_of_goods }}</td>
-            <td>{{ form.name_of_goods }}</td>
-            <td>{{ form.weight_netto }}</td>
-            <td>{{ form.ton }}</td>
-            <td>{{ form.stat_price }}</td>
-            <td>{{ form.number_and_date_of_contract }}</td>
-            <td>{{ form.idn }}</td>
-            <td>{{ form.destination_country }}</td>
-            <td>{{ form.date_of_issue }}</td>
-            <td>{{ now.time_create }}</td>
+            {% for field in form %}
+                <td>{{ field }}</td>
+            {% endfor %}
         </tr>
         {% endblock %}
         {% block add_data %}

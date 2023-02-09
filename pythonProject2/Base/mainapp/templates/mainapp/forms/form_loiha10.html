@@ -5,27 +5,10 @@
     <div>{{ form.non_field_errors }}</div>
     <tr>
 <!--        <td>{{ user.district }}</td>-->
-        <td>{{ form.locality_amount }}</td>
-        <td>{{ form.residential_buildings_amount }}</td>
-        <td>{{ form.who_want_to_do_business_residential_buildings }}</td>
-        <td>{{ form.percent_residential_buildings }}</td>
-        <td>{{ form.employed_in_the_sector }}</td>
-        <td>{{ form.animal_husbandry_speciality }}</td>
-        <td>{{ form.poultry_farming_specialty }}</td>
-        <td>{{ form.rabbing_breeding_specialty }}</td>
-        <td>{{ form.Beekeeping_specialty }}</td>
-        <td>{{ form.farm_specialty }}</td>
-        <td>{{ form.gardening_specialty }}</td>
-        <td>{{ form.greenhouses_specialty }}</td>
-        <td>{{ form.teaching_specialty }}</td>
-        <td>{{ form.small_production_specialty }}</td>
-        <td>{{ form.tourism_specialty }}</td>
-        <td>{{ form.services_specialty }}</td>
-        <td>{{ form.other_specialty }}</td>
-        <td>{{ form.remaining_on_the_iron_notebook }}</td>
-        <td>{{ form.remaining_on_the_youth_notebook }}</td>
-        <td>{{ form.remaining_on_the_womens_notebook }}</td>
-        <td>{{ form.time_create }}</td>
+        {% for field in form %}
+            <td>{{ field }}</td>
+        {% endfor %}
+
     </tr>
     {% endblock %}
     {% block add_data %}

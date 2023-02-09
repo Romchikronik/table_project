@@ -1071,3 +1071,44 @@ def add_data_table_quarter(request):
         form = TableQuarterForm()
     context = make_context_by_form('Cвод чорак', form, third_department_tables_menu, page_obj)
     return render(request, 'mainapp/forms/third_departament/form_quarter.html', context)
+
+
+# Свод Ойлар
+def get_data_table_month(request):
+    if get_group_vault_id(request):
+        table_data = show_data_table_to_departament(MonthVault)
+    else:
+        table_data = show_data_table(request, MonthVault)
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, 'Cвод ойлар', third_department_tables_menu, table_data)
+    return render(request, src['monthly'], context)
+
+
+def table_filter_table_month(request, filter_slug):
+    if not get_group_vault_id(request):
+        table = show_data_table(request, MonthVault)
+    else:
+        table = show_data_table_to_departament(MonthVault)
+    table = filter_tables(filter_slug, table)
+
+    page_obj = paginate_page(request, table)
+    context = get_context_data(page_obj, 'Cвод ойлар', third_department_tables_menu, table)
+    return render(request, src['monthly'], context)
+
+
+@login_required
+def add_data_table_month(request):
+    table_data = show_data_table(request, MonthVault)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = TableMonthForm(request.POST)
+        if form.is_valid():
+            try:
+                MonthVault.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect('table_monthly')
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = TableMonthForm()
+    context = make_context_by_form('Cвод ойлар', form, third_department_tables_menu, page_obj)
+    return render(request, 'mainapp/forms/third_departament/form_monthly.html', context)

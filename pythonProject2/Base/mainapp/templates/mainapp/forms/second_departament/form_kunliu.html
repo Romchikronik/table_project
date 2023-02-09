@@ -5,11 +5,9 @@
         {% csrf_token %}
         <div>{{ form.non_field_errors }}</div>
         <tr>
-            <td>{{ form.date_of_forecast }}</td>
-            <td>{{ form.overall }}</td>
-            <td>{{ form.sanoat }}</td>
-            <td>{{ form.meva_sabz }}</td>
-            <td>{{ now.time_create }}</td>
+            {% for field in form %}
+                <td>{{ field }}</td>
+            {% endfor %}
         </tr>
         {% endblock %}
         {% block add_data %}

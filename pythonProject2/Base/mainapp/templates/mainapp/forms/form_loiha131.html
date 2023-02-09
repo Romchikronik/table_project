@@ -6,17 +6,10 @@
         <div>{{ form.non_field_errors }}</div>
         <tr>
 <!--            <td>{{ user.district }}</td>-->
-            <td>{{ form.identified_problems }}</td>
-            <td>{{ form.bank_identified_problems }}</td>
-            <td>{{ form.land_and_building_identified_problems }}</td>
-            <td>{{ form.public_services_identified_problems }}</td>
-            <td>{{ form.customs_identified_problems }}</td>
-            <td>{{ form.tax_identified_problems }}</td>
-            <td>{{ form.permission_identified_problems }}</td>
-            <td>{{ form.bureaucratic_obstacles_identified_problems }}</td>
-            <td>{{ form.other_identified_problems }}</td>
-            <td>{{ form.resolved_problems_identified_problems }}</td>
-            <td>{{ now.time_create }}</td>
+            {% for field in form %}
+                <td>{{ field }}</td>
+            {% endfor %}
+
         </tr>
         {% endblock %}
         {% block add_data %}

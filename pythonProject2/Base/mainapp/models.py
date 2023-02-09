@@ -920,6 +920,7 @@ class MonthVault(models.Model):
     september_export_reja = models.CharField(max_length=255, verbose_name='Режа')
     september_export_amalda = models.CharField(max_length=255, verbose_name='Амалда')
     september_budget_reja = models.CharField(max_length=255, verbose_name='Режа')
+    september_budget_amalda = models.CharField(max_length=255, default='', verbose_name='Режа')
 
     october_loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
     october_loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')

@@ -1,13 +1,14 @@
-{% extends 'mainapp/data_table/second_departament/sanoat.html' %}
+{% extends 'mainapp/data_table/third_departament/month.html' %}
 {% block form %}
 <div class="container">
-    <form action="{% url 'form_sanoat'%}" method="post">
+    <form action="{% url 'form_monthly'%}" method="post">
         {% csrf_token %}
         <div>{{ form.non_field_errors }}</div>
         <tr>
             {% for field in form %}
                 <td>{{ field }}</td>
             {% endfor %}
+<!--            <td>{{ form.time_create }}</td>-->
         </tr>
         {% endblock %}
         {% block add_data %}
@@ -17,7 +18,7 @@
 </div>
 
 {% block export_table %}
-<a class="btn btn-primary mb-5" href="{% url 'table_sanoat' %}">Назад</a>
+<a class="btn btn-primary mb-5" href="{% url 'table_monthly' %}">Назад</a>
 {%endblock%}
 
 {% block view_data%}

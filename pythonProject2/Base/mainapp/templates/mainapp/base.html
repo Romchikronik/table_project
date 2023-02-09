@@ -144,7 +144,7 @@
                     {% block tables %}
                     {% endblock %}
                 </div>
-                {% if not 'week' in request.get_full_path and not 'month' in request.get_full_path %}
+                {% if not 'week' in request.get_full_path and not 'filter/month' in request.get_full_path %}
                 <div class="col">
                     {% block export_table %}
                     {% endblock %}
@@ -154,7 +154,7 @@
                     {% block export_table_week %}
                     {% endblock %}
                 </div>
-                {% elif 'month' in request.get_full_path %}
+                {% elif 'filter/month' in request.get_full_path %}
                 <div class="col">
                     {% block export_table_month %}
                     {% endblock %}

@@ -31,6 +31,7 @@ second_department_tables_menu = [
 third_department_tables_menu = [
     {'table_name': 'Жами свод', 'url_form': 'form_jami', 'url_data_table': 'table_jami'},
     {'table_name': 'Cвод чорак', 'url_form': 'form_quarter', 'url_data_table': 'table_quarter'},
+    {'table_name': 'Cвод ойлар', 'url_form': 'form_monthly', 'url_data_table': 'table_monthly'},
 ]
 # url Таблиц и форм отдела 4
 fourth_department_tables_menu = [
@@ -81,6 +82,7 @@ src = {
     'kunliu': 'mainapp/data_table/second_departament/kunliu.html',
     'jami': 'mainapp/data_table/third_departament/table_jami.html',
     'quarter': 'mainapp/data_table/third_departament/quarter.html',
+    'monthly': 'mainapp/data_table/third_departament/month.html',
 }
 
 # список моделей отдела -2
@@ -94,6 +96,7 @@ second_department_models = [
 third_department_models = [
     JamiVault,
     QuarterVault,
+    MonthVault,
 ]
 # список моделей отдела -4
 fourth_department_models = []

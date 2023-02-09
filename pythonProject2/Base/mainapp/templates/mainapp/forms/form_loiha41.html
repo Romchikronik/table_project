@@ -7,34 +7,11 @@
                     <div>{{ form.non_field_errors }}</div>
                <tr>
 <!--                <td>{{ user.district}}</td>-->
-                <td>{{ form.bill_sum_industry}}</td>
-                <td>{{ form.picture_of_growth_industry}}</td>
-                <td>{{ form.forecast_industry }}</td>
-                <td>{{ form.difference_industry }}</td>
-                <td>{{ form.bill_sum_locality }}</td>
-                <td>{{ form.picture_of_growth_locality }}</td>
-                <td>{{ form.forecast_locality }}</td>
-                <td>{{ form.difference_locality }}</td>
-                <td>{{ form.bill_sum_construction }}</td>
-                <td>{{ form.picture_of_growth_construction }}</td>
-                <td>{{ form.forecast_construction }}</td>
-                <td>{{ form.difference_construction }}</td>
-                <td>{{ form.bill_sum_services }}</td>
-                <td>{{ form.picture_of_growth_services }}</td>
-                <td>{{ form.forecast_services }}</td>
-                <td>{{ form.difference_services }}</td>
-                <td>{{ form.bill_sum_retail }}</td>
-                <td>{{ form.picture_of_growth_retail }}</td>
-                <td>{{ form.forecast_retail }}</td>
-                <td>{{ form.difference_retail }}</td>
-                <td>{{ form.thousand_dollar_international_trade }}</td>
-                <td>{{ form.picture_of_growth_international_trade }}</td>
-                <td>{{ form.thousand_dollar_export }}</td>
-                <td>{{ form.picture_of_growth_export }}</td>
-                <td>{{ form.thousand_dollar_import }}</td>
-                <td>{{ form.picture_of_growth_import }}</td>
-                <td>{{ now.time_create }}</td>
-            </tr>
+                   {% for field in form %}
+                        <td>{{ field }}</td>
+                   {% endfor %}
+
+               </tr>
             {% endblock %}
             {% block add_data %}
             <input class="btn btn-success mb-5" type="submit" value="Добавить данные">

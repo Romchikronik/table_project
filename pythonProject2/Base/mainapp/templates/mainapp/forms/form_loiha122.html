@@ -5,19 +5,10 @@
     <div>{{ form.non_field_errors }}</div>
     <tr>
 <!--        <td>{{ user.district }}</td>-->
-        <td>{{ form.formed_tips }}</td>
-        <td>{{ form.projects_at_work }}</td>
-        <td>{{ form.production_capacity_at_work }}</td>
-        <td>{{ form.grade_at_work }}</td>
-        <td>{{ form.own_funds_grade_at_work }}</td>
-        <td>{{ form.bank_loan_grade_at_work }}</td>
-        <td>{{ form.foreign_investments_grade_at_work }}</td>
-        <td>{{ form.workplace_at_work }}</td>
-        <td>{{ form.export_volume_at_work }}</td>
-        <td>{{ form.name_bank_financing }}</td>
-        <td>{{ form.name_country_financing }}</td>
-        <td>{{ form.organization_name_foreign_financing }}</td>
-        <td>{{ form.time_create }}</td>
+        {% for field in form %}
+            <td>{{ field }}</td>
+        {% endfor %}
+
     </tr>
     {% endblock %}
     {% block add_data %}

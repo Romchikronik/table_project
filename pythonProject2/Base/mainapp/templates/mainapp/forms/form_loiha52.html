@@ -6,19 +6,9 @@
         <div>{{ form.non_field_errors }}</div>
         <tr>
 <!--            <td>{{ user.district}}</td>-->
-            <td>{{ form.places_of_exploration}}</td>
-            <td>{{ form.sites_of_geo_formations}}</td>
-            <td>{{ form.name_of_formations}}</td>
-            <td>{{ form.unit}}</td>
-            <td>{{ form.abc_categories}}</td>
-            <td>{{ form.c2_category}}</td>
-            <td>{{ form.lvl_development_operational_information}}</td>
-            <td>{{ form.date_license_operational_information}}</td>
-            <td>{{ form.volume_of_production_2017}}</td>
-            <td>{{ form.ministry_and_department}}</td>
-            <td>{{ form.confirmed_stock_and_date}}</td>
-            <td>{{ form.comment}}</td>
-            <td>{{ now.time_create}}</td>
+            {% for field in form %}
+                <td>{{ field }}</td>
+            {% endfor %}
         </tr>
         {% endblock %}
         {% block add_data %}

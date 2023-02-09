@@ -5,18 +5,10 @@
     <div>{{ form.non_field_errors }}</div>
     <tr>
 <!--        <td>{{ user.district }}</td>-->
-        <td>{{ form.approved_holding_companies }}</td>
-        <td>{{ form.entrepreneur }}</td>
-        <td>{{ form.names_of_organizations_priority }}</td>
-        <td>{{ form.type_of_activity_priority }}</td>
-        <td>{{ form.projects_the_stated_results }}</td>
-        <td>{{ form.productive_capacity_stated_results }}</td>
-        <td>{{ form.grade_stated_results }}</td>
-        <td>{{ form.workplace_stated_results }}</td>
-        <td>{{ form.export_stated_results }}</td>
-        <td>{{ form.other_stated_results }}</td>
-        <td>{{ form.financing }}</td>
-        <td>{{ now.time_create }}</td>
+        {% for field in form %}
+            <td>{{ field }}</td>
+        {% endfor %}
+
       </tr>
       {% endblock %}
       {% block add_data %}

@@ -5,103 +5,11 @@
         {% csrf_token %}
         <div>{{ form.non_field_errors }}</div>
         <tr>
-            <td>{{ form.loiha_soni_reja }}</td>
-            <td>{{ form.loiha_soni_amalda }}</td>
-            <td>{{ form.umumiy_kiymati_reja }}</td>
-            <td>{{ form.umumiy_kiymati_amalda }}</td>
-            <td>{{ form.uz_mablag_reja }}</td>
-            <td>{{ form.uz_mablag_amalda }}</td>
-            <td>{{ form.bank_kredit_reja }}</td>
-            <td>{{ form.bank_kredit_amalda }}</td>
-            <td>{{ form.xorijiy_kredit_reja }}</td>
-            <td>{{ form.xorijiy_kredit_amalda }}</td>
-            <td>{{ form.xorijiy_invest_reja }}</td>
-            <td>{{ form.xorijiy_invest_amalda }}</td>
+            {% for field in form %}
+                <td>{{ field }}</td>
+            {% endfor %}
 
-            <td>{{ form.first_quarter_yangi_ish_reja }}</td>
-            <td>{{ form.first_quarter_yangi_ish_amalda }}</td>
-            <td>{{ form.first_quarter_ishlab_chiqarish_reja }}</td>
-            <td>{{ form.first_quarter_ishlab_chiqarish_amalda }}</td>
-            <td>{{ form.first_quarter_import_reja }}</td>
-            <td>{{ form.first_quarter_import_amalda }}</td>
-            <td>{{ form.first_quarter_export_reja }}</td>
-            <td>{{ form.first_quarter_export_amalda }}</td>
-            <td>{{ form.first_quarter_budget_reja }}</td>
-            <td>{{ form.first_quarter_budget_amalda }}</td>
-
-            <td>{{ form.second_quarter_loiha_soni_reja }}</td>
-            <td>{{ form.second_quarter_loiha_soni_amalda }}</td>
-            <td>{{ form.second_quarter_umumiy_kiymati_reja }}</td>
-            <td>{{ form.second_quarter_umumiy_kiymati_amalda }}</td>
-            <td>{{ form.second_quarter_uz_mablag_reja }}</td>
-            <td>{{ form.second_quarter_uz_mablag_amalda }}</td>
-            <td>{{ form.second_quarter_bank_kredit_reja }}</td>
-            <td>{{ form.second_quarter_bank_kredit_amalda }}</td>
-            <td>{{ form.second_quarter_xorijiy_kredit_reja }}</td>
-            <td>{{ form.second_quarter_xorijiy_kredit_amalda }}</td>
-            <td>{{ form.second_quarter_xorijiy_invest_reja }}</td>
-            <td>{{ form.second_quarter_xorijiy_invest_amalda }}</td>
-
-            <td>{{ form.second_quarter_yangi_ish_reja }}</td>
-            <td>{{ form.second_quarter_yangi_ish_amalda }}</td>
-            <td>{{ form.second_quarter_ishlab_chiqarish_reja }}</td>
-            <td>{{ form.second_quarter_ishlab_chiqarish_amalda }}</td>
-            <td>{{ form.second_quarter_import_reja }}</td>
-            <td>{{ form.second_quarter_import_amalda }}</td>
-            <td>{{ form.second_quarter_export_reja }}</td>
-            <td>{{ form.second_quarter_export_amalda }}</td>
-            <td>{{ form.second_quarter_budget_reja }}</td>
-            <td>{{ form.second_quarter_budget_amalda }}</td>
-
-            <td>{{ form.third_quarter_loiha_soni_reja }}</td>
-            <td>{{ form.third_quarter_loiha_soni_amalda }}</td>
-            <td>{{ form.third_quarter_umumiy_kiymati_reja }}</td>
-            <td>{{ form.third_quarter_umumiy_kiymati_amalda }}</td>
-            <td>{{ form.third_quarter_uz_mablag_reja }}</td>
-            <td>{{ form.third_quarter_uz_mablag_amalda }}</td>
-            <td>{{ form.third_quarter_bank_kredit_reja }}</td>
-            <td>{{ form.third_quarter_bank_kredit_amalda }}</td>
-            <td>{{ form.third_quarter_xorijiy_kredit_reja }}</td>
-            <td>{{ form.third_quarter_xorijiy_kredit_amalda }}</td>
-            <td>{{ form.third_quarter_xorijiy_invest_reja }}</td>
-            <td>{{ form.third_quarter_xorijiy_invest_amalda }}</td>
-
-            <td>{{ form.third_quarter_yangi_ish_reja }}</td>
-            <td>{{ form.third_quarter_yangi_ish_amalda }}</td>
-            <td>{{ form.third_quarter_ishlab_chiqarish_reja }}</td>
-            <td>{{ form.third_quarter_ishlab_chiqarish_amalda }}</td>
-            <td>{{ form.third_quarter_import_reja }}</td>
-            <td>{{ form.third_quarter_import_amalda }}</td>
-            <td>{{ form.third_quarter_export_reja }}</td>
-            <td>{{ form.third_quarter_export_amalda }}</td>
-            <td>{{ form.third_quarter_budget_reja }}</td>
-            <td>{{ form.third_quarter_budget_amalda }}</td>
-
-            <td>{{ form.fourth_quarter_loiha_soni_reja }}</td>
-            <td>{{ form.fourth_quarter_loiha_soni_amalda }}</td>
-            <td>{{ form.fourth_quarter_umumiy_kiymati_reja }}</td>
-            <td>{{ form.fourth_quarter_umumiy_kiymati_amalda }}</td>
-            <td>{{ form.fourth_quarter_uz_mablag_reja }}</td>
-            <td>{{ form.fourth_quarter_uz_mablag_amalda }}</td>
-            <td>{{ form.fourth_quarter_bank_kredit_reja }}</td>
-            <td>{{ form.fourth_quarter_bank_kredit_amalda }}</td>
-            <td>{{ form.fourth_quarter_xorijiy_kredit_reja }}</td>
-            <td>{{ form.fourth_quarter_xorijiy_kredit_amalda }}</td>
-            <td>{{ form.fourth_quarter_xorijiy_invest_reja }}</td>
-            <td>{{ form.fourth_quarter_xorijiy_invest_amalda }}</td>
-
-            <td>{{ form.fourth_quarter_yangi_ish_reja }}</td>
-            <td>{{ form.fourth_quarter_yangi_ish_amalda }}</td>
-            <td>{{ form.fourth_quarter_ishlab_chiqarish_reja }}</td>
-            <td>{{ form.fourth_quarter_ishlab_chiqarish_amalda }}</td>
-            <td>{{ form.fourth_quarter_import_reja }}</td>
-            <td>{{ form.fourth_quarter_import_amalda }}</td>
-            <td>{{ form.fourth_quarter_export_reja }}</td>
-            <td>{{ form.fourth_quarter_export_amalda }}</td>
-            <td>{{ form.fourth_quarter_budget_reja }}</td>
-            <td>{{ form.fourth_quarter_budget_amalda }}</td>
-
-            <td>{{ form.time_create }}</td>
+<!--            <td>{{ form.time_create }}</td>-->
         </tr>
         {% endblock %}
         {% block add_data %}

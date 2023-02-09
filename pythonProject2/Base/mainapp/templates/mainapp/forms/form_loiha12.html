@@ -5,19 +5,10 @@
     <div>{{ form.non_field_errors }}</div>
     <tr>
 <!--        <td>{{ user.district }}</td>-->
-        <td>{{ form.all_projects }}</td>
-        <td>{{ form.grade }}</td>
-        <td>{{ form.workplace }}</td>
-        <td>{{ form.projects_selected_projects_from_all_projects }}</td>
-        <td>{{ form.grade_selected_projects_from_all_projects }}</td>
-        <td>{{ form.workplace_selected_projects_from_all_projects }}</td>
-        <td>{{ form.all_projects_at_work_from_all_projects }}</td>
-        <td>{{ form.grade_at_work_from_all_projects }}</td>
-        <td>{{ form.workplace_at_work_from_all_projects }}</td>
-        <td>{{ form.all_projects_will_be_completed_end_the_year_from_all_projects }}</td>
-        <td>{{ form.grade_will_be_completed_end_the_year_all_projects }}</td>
-        <td>{{ form.workplace_will_be_completed_end_the_year_all_projects }}</td>
-        <td>{{ form.time_create }}</td>
+        {% for field in form %}
+            <td>{{ field }}</td>
+        {% endfor %}
+
     </tr>
     {% endblock %}
     {% block add_data %}

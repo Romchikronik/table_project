@@ -1,0 +1,821 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">
+    {% if request.user.district != None %}
+        {{ request.user.district }},
+    {% endif %}
+    {{ title }}
+</h2>
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_month' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_month' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_monthly' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+<div class="container overflow-auto">
+        <table class="table table-bordered table-striped">
+        <caption>
+            {% if request.user.district != None %}
+                {{ request.user.district }},
+            {% endif %}
+            {{ title }}
+        </caption>
+        <tr>
+            {% for group in request.user.groups.all %}
+            {% if group.id == 3 %}
+            <th rowspan="4" class="table-primary">HUDUDLAR</th>
+            {% endif %}
+            {% endfor %}
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Январь</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Февраль</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Март</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Апрель</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Май</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Июль</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Июнь</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Август</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Сентябрь</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Октябрь</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Ноябрь</th>
+            <th class="table-primary" colspan="2" rowspan="3">Лойиҳа сони</th>
+            <th class="table-primary" colspan="20">Декабрь</th>
+            <td class="table-primary table-info-time" rowspan="4">Дата создания записи</td>
+        </tr>
+        <tr>
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+
+            <th class="table-info" colspan="2" rowspan="2">Умумий қиймати млн.сўм</th>
+            <th class="table-info" colspan="8">шундан</th>
+            <th class="table-info" colspan="2" rowspan="2">Янги иш ўринлари сони</th>
+            <th class="table-info" colspan="8">Иқтисодий самарадорлик</th>
+        </tr>
+        <tr>
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+
+            <th class="table-info" colspan="2"> ўз маблағлари млн.сўм</th>
+            <th class="table-info" colspan="2"> банк кредитлари млн.сўм</th>
+            <th class="table-info" colspan="2"> хорижий кредитлар минг.долл</th>
+            <th class="table-info" colspan="2"> хорижий инвестициялар минг.долл </th>
+            <th class="table-info" colspan="2">Ишлаб чиқариш қуввати млн.сўм </th>
+            <th class="table-info" colspan="2">Импорт урнини босиш минг.долл </th>
+            <th class="table-info" colspan="2">Экспорт ҳажми минг.долл </th>
+            <th class="table-info" colspan="2">Бюджетга қўшимча тушум млн.сўм </th>
+        </tr>
+        <tr>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+            <th class="table-info">Режа</th>
+            <th class="table-info">Амалда</th>
+        </tr>
+        <tr>
+            {% block form %}
+            {% endblock %}
+        </tr>
+            {% for data in page_obj %}
+        <tr>
+            {% for group in request.user.groups.all %}
+                {% if group.id == 3 %}
+                   <td>{{data.district}}</td>
+                {% endif %}
+            {% endfor %}
+            <td>{{ data.january_loiha_soni_reja }}</td>
+            <td>{{ data.january_loiha_soni_amalda }}</td>
+            <td>{{ data.january_umumiy_kiymati_reja }}</td>
+            <td>{{ data.january_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.january_uz_mablag_reja }}</td>
+            <td>{{ data.january_uz_mablag_amalda }}</td>
+            <td>{{ data.january_bank_kredit_reja }}</td>
+            <td>{{ data.january_bank_kredit_amalda }}</td>
+            <td>{{ data.january_xorijiy_kredit_reja }}</td>
+            <td>{{ data.january_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.january_xorijiy_invest_reja }}</td>
+            <td>{{ data.january_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.january_yangi_ish_reja }}</td>
+            <td>{{ data.january_yangi_ish_amalda }}</td>
+            <td>{{ data.january_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.january_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.january_import_reja }}</td>
+            <td>{{ data.january_import_amalda }}</td>
+            <td>{{ data.january_export_reja }}</td>
+            <td>{{ data.january_export_amalda }}</td>
+            <td>{{ data.january_budget_reja }}</td>
+            <td>{{ data.january_budget_amalda }}</td>
+
+            <td>{{ data.february_loiha_soni_reja }}</td>
+            <td>{{ data.february_loiha_soni_amalda }}</td>
+            <td>{{ data.february_umumiy_kiymati_reja }}</td>
+            <td>{{ data.february_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.february_uz_mablag_reja }}</td>
+            <td>{{ data.february_uz_mablag_amalda }}</td>
+            <td>{{ data.february_bank_kredit_reja }}</td>
+            <td>{{ data.february_bank_kredit_amalda }}</td>
+            <td>{{ data.february_xorijiy_kredit_reja }}</td>
+            <td>{{ data.february_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.february_xorijiy_invest_reja }}</td>
+            <td>{{ data.february_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.february_yangi_ish_reja }}</td>
+            <td>{{ data.february_yangi_ish_amalda }}</td>
+            <td>{{ data.february_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.february_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.february_import_reja }}</td>
+            <td>{{ data.february_import_amalda }}</td>
+            <td>{{ data.february_export_reja }}</td>
+            <td>{{ data.february_export_amalda }}</td>
+            <td>{{ data.february_budget_reja }}</td>
+            <td>{{ data.february_budget_amalda }}</td>
+
+            <td>{{ data.march_loiha_soni_reja }}</td>
+            <td>{{ data.march_loiha_soni_amalda }}</td>
+            <td>{{ data.march_umumiy_kiymati_reja }}</td>
+            <td>{{ data.march_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.march_uz_mablag_reja }}</td>
+            <td>{{ data.march_uz_mablag_amalda }}</td>
+            <td>{{ data.march_bank_kredit_reja }}</td>
+            <td>{{ data.march_bank_kredit_amalda }}</td>
+            <td>{{ data.march_xorijiy_kredit_reja }}</td>
+            <td>{{ data.march_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.march_xorijiy_invest_reja }}</td>
+            <td>{{ data.march_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.march_yangi_ish_reja }}</td>
+            <td>{{ data.march_yangi_ish_amalda }}</td>
+            <td>{{ data.march_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.march_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.march_import_reja }}</td>
+            <td>{{ data.march_import_amalda }}</td>
+            <td>{{ data.march_export_reja }}</td>
+            <td>{{ data.march_export_amalda }}</td>
+            <td>{{ data.march_budget_reja }}</td>
+            <td>{{ data.march_budget_amalda }}</td>
+
+            <td>{{ data.april_loiha_soni_reja }}</td>
+            <td>{{ data.april_loiha_soni_amalda }}</td>
+            <td>{{ data.april_umumiy_kiymati_reja }}</td>
+            <td>{{ data.april_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.april_uz_mablag_reja }}</td>
+            <td>{{ data.april_uz_mablag_amalda }}</td>
+            <td>{{ data.april_bank_kredit_reja }}</td>
+            <td>{{ data.april_bank_kredit_amalda }}</td>
+            <td>{{ data.april_xorijiy_kredit_reja }}</td>
+            <td>{{ data.april_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.april_xorijiy_invest_reja }}</td>
+            <td>{{ data.april_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.april_yangi_ish_reja }}</td>
+            <td>{{ data.april_yangi_ish_amalda }}</td>
+            <td>{{ data.april_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.april_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.april_import_reja }}</td>
+            <td>{{ data.april_import_amalda }}</td>
+            <td>{{ data.april_export_reja }}</td>
+            <td>{{ data.april_export_amalda }}</td>
+            <td>{{ data.april_budget_reja }}</td>
+            <td>{{ data.april_budget_amalda }}</td>
+
+            <td>{{ data.may_loiha_soni_reja }}</td>
+            <td>{{ data.may_loiha_soni_amalda }}</td>
+            <td>{{ data.may_umumiy_kiymati_reja }}</td>
+            <td>{{ data.may_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.may_uz_mablag_reja }}</td>
+            <td>{{ data.may_uz_mablag_amalda }}</td>
+            <td>{{ data.may_bank_kredit_reja }}</td>
+            <td>{{ data.may_bank_kredit_amalda }}</td>
+            <td>{{ data.may_xorijiy_kredit_reja }}</td>
+            <td>{{ data.may_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.may_xorijiy_invest_reja }}</td>
+            <td>{{ data.may_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.may_yangi_ish_reja }}</td>
+            <td>{{ data.may_yangi_ish_amalda }}</td>
+            <td>{{ data.may_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.may_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.may_import_reja }}</td>
+            <td>{{ data.may_import_amalda }}</td>
+            <td>{{ data.may_export_reja }}</td>
+            <td>{{ data.may_export_amalda }}</td>
+            <td>{{ data.may_budget_reja }}</td>
+            <td>{{ data.may_budget_amalda }}</td>
+
+            <td>{{ data.june_loiha_soni_reja }}</td>
+            <td>{{ data.june_loiha_soni_amalda }}</td>
+            <td>{{ data.june_umumiy_kiymati_reja }}</td>
+            <td>{{ data.june_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.june_uz_mablag_reja }}</td>
+            <td>{{ data.june_uz_mablag_amalda }}</td>
+            <td>{{ data.june_bank_kredit_reja }}</td>
+            <td>{{ data.june_bank_kredit_amalda }}</td>
+            <td>{{ data.june_xorijiy_kredit_reja }}</td>
+            <td>{{ data.june_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.june_xorijiy_invest_reja }}</td>
+            <td>{{ data.june_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.june_yangi_ish_reja }}</td>
+            <td>{{ data.june_yangi_ish_amalda }}</td>
+            <td>{{ data.june_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.june_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.june_import_reja }}</td>
+            <td>{{ data.june_import_amalda }}</td>
+            <td>{{ data.june_export_reja }}</td>
+            <td>{{ data.june_export_amalda }}</td>
+            <td>{{ data.june_budget_reja }}</td>
+            <td>{{ data.june_budget_amalda }}</td>
+
+            <td>{{ data.july_loiha_soni_reja }}</td>
+            <td>{{ data.july_loiha_soni_amalda }}</td>
+            <td>{{ data.july_umumiy_kiymati_reja }}</td>
+            <td>{{ data.july_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.july_uz_mablag_reja }}</td>
+            <td>{{ data.july_uz_mablag_amalda }}</td>
+            <td>{{ data.july_bank_kredit_reja }}</td>
+            <td>{{ data.july_bank_kredit_amalda }}</td>
+            <td>{{ data.july_xorijiy_kredit_reja }}</td>
+            <td>{{ data.july_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.july_xorijiy_invest_reja }}</td>
+            <td>{{ data.july_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.july_yangi_ish_reja }}</td>
+            <td>{{ data.july_yangi_ish_amalda }}</td>
+            <td>{{ data.july_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.july_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.july_import_reja }}</td>
+            <td>{{ data.july_import_amalda }}</td>
+            <td>{{ data.july_export_reja }}</td>
+            <td>{{ data.july_export_amalda }}</td>
+            <td>{{ data.july_budget_reja }}</td>
+            <td>{{ data.july_budget_amalda }}</td>
+
+            <td>{{ data.august_loiha_soni_reja }}</td>
+            <td>{{ data.august_loiha_soni_amalda }}</td>
+            <td>{{ data.august_umumiy_kiymati_reja }}</td>
+            <td>{{ data.august_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.august_uz_mablag_reja }}</td>
+            <td>{{ data.august_uz_mablag_amalda }}</td>
+            <td>{{ data.august_bank_kredit_reja }}</td>
+            <td>{{ data.august_bank_kredit_amalda }}</td>
+            <td>{{ data.august_xorijiy_kredit_reja }}</td>
+            <td>{{ data.august_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.august_xorijiy_invest_reja }}</td>
+            <td>{{ data.august_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.august_yangi_ish_reja }}</td>
+            <td>{{ data.august_yangi_ish_amalda }}</td>
+            <td>{{ data.august_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.august_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.august_import_reja }}</td>
+            <td>{{ data.august_import_amalda }}</td>
+            <td>{{ data.august_export_reja }}</td>
+            <td>{{ data.august_export_amalda }}</td>
+            <td>{{ data.august_budget_reja }}</td>
+            <td>{{ data.august_budget_amalda }}</td>
+
+            <td>{{ data.september_loiha_soni_reja }}</td>
+            <td>{{ data.september_loiha_soni_amalda }}</td>
+            <td>{{ data.september_umumiy_kiymati_reja }}</td>
+            <td>{{ data.september_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.september_uz_mablag_reja }}</td>
+            <td>{{ data.september_uz_mablag_amalda }}</td>
+            <td>{{ data.september_bank_kredit_reja }}</td>
+            <td>{{ data.september_bank_kredit_amalda }}</td>
+            <td>{{ data.september_xorijiy_kredit_reja }}</td>
+            <td>{{ data.september_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.september_xorijiy_invest_reja }}</td>
+            <td>{{ data.september_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.september_yangi_ish_reja }}</td>
+            <td>{{ data.september_yangi_ish_amalda }}</td>
+            <td>{{ data.september_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.september_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.september_import_reja }}</td>
+            <td>{{ data.september_import_amalda }}</td>
+            <td>{{ data.september_export_reja }}</td>
+            <td>{{ data.september_export_amalda }}</td>
+            <td>{{ data.september_budget_reja }}</td>
+            <td>{{ data.september_budget_amalda }}</td>
+
+            <td>{{ data.october_loiha_soni_reja }}</td>
+            <td>{{ data.october_loiha_soni_amalda }}</td>
+            <td>{{ data.october_umumiy_kiymati_reja }}</td>
+            <td>{{ data.october_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.october_uz_mablag_reja }}</td>
+            <td>{{ data.october_uz_mablag_amalda }}</td>
+            <td>{{ data.october_bank_kredit_reja }}</td>
+            <td>{{ data.october_bank_kredit_amalda }}</td>
+            <td>{{ data.october_xorijiy_kredit_reja }}</td>
+            <td>{{ data.october_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.october_xorijiy_invest_reja }}</td>
+            <td>{{ data.october_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.october_yangi_ish_reja }}</td>
+            <td>{{ data.october_yangi_ish_amalda }}</td>
+            <td>{{ data.october_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.october_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.october_import_reja }}</td>
+            <td>{{ data.october_import_amalda }}</td>
+            <td>{{ data.october_export_reja }}</td>
+            <td>{{ data.october_export_amalda }}</td>
+            <td>{{ data.october_budget_reja }}</td>
+            <td>{{ data.october_budget_amalda }}</td>
+
+            <td>{{ data.november_loiha_soni_reja }}</td>
+            <td>{{ data.november_loiha_soni_amalda }}</td>
+            <td>{{ data.november_umumiy_kiymati_reja }}</td>
+            <td>{{ data.november_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.november_uz_mablag_reja }}</td>
+            <td>{{ data.november_uz_mablag_amalda }}</td>
+            <td>{{ data.november_bank_kredit_reja }}</td>
+            <td>{{ data.november_bank_kredit_amalda }}</td>
+            <td>{{ data.november_xorijiy_kredit_reja }}</td>
+            <td>{{ data.november_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.november_xorijiy_invest_reja }}</td>
+            <td>{{ data.november_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.november_yangi_ish_reja }}</td>
+            <td>{{ data.november_yangi_ish_amalda }}</td>
+            <td>{{ data.november_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.november_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.november_import_reja }}</td>
+            <td>{{ data.november_import_amalda }}</td>
+            <td>{{ data.november_export_reja }}</td>
+            <td>{{ data.november_export_amalda }}</td>
+            <td>{{ data.november_budget_reja }}</td>
+            <td>{{ data.november_budget_amalda }}</td>
+
+            <td>{{ data.december_loiha_soni_reja }}</td>
+            <td>{{ data.december_loiha_soni_amalda }}</td>
+            <td>{{ data.december_umumiy_kiymati_reja }}</td>
+            <td>{{ data.december_umumiy_kiymati_amalda }}</td>
+            <td>{{ data.december_uz_mablag_reja }}</td>
+            <td>{{ data.december_uz_mablag_amalda }}</td>
+            <td>{{ data.december_bank_kredit_reja }}</td>
+            <td>{{ data.december_bank_kredit_amalda }}</td>
+            <td>{{ data.december_xorijiy_kredit_reja }}</td>
+            <td>{{ data.december_xorijiy_kredit_amalda }}</td>
+            <td>{{ data.december_xorijiy_invest_reja }}</td>
+            <td>{{ data.december_xorijiy_invest_amalda }}</td>
+
+            <td>{{ data.december_yangi_ish_reja }}</td>
+            <td>{{ data.december_yangi_ish_amalda }}</td>
+            <td>{{ data.december_ishlab_chiqarish_reja }}</td>
+            <td>{{ data.december_ishlab_chiqarish_amalda }}</td>
+            <td>{{ data.december_import_reja }}</td>
+            <td>{{ data.december_import_amalda }}</td>
+            <td>{{ data.december_export_reja }}</td>
+            <td>{{ data.december_export_amalda }}</td>
+            <td>{{ data.december_budget_reja }}</td>
+            <td>{{ data.december_budget_amalda }}</td>
+
+            <td class="table-time">{{ data.time_create }}</td>
+          </tr>
+            {%endfor%}
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{% endblock %}
+
+
+{% block add_data %}
+   {% if not request.user.groups.all and not request.user.is_superuser %}
+<a class="btn btn-success mb-5" href="{% url 'form_monthly' %}">Добавить данные</a>
+   {% endif %}
+{%endblock%}

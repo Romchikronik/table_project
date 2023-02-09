@@ -6,14 +6,10 @@
     <div>{{ form.non_field_errors }}</div>
     <tr>
 <!--        <td>{{ user.district }}</td>-->
-        <td>{{ form.project_name }}</td>
-        <td>{{ form.project_activity }}</td>
-        <td>{{ form.project_capacity }}</td>
-        <td>{{ form.grate_sources_of_financing }}</td>
-        <td>{{ form.foreign_financing_grate_sources_of_financing }}</td>
-        <td>{{ form.sources_sources_of_financing }}</td>
-        <td>{{ form.created_new_jobs }}</td>
-        <td>{{ form.time_create }}</td>
+        {% for field in form %}
+            <td>{{ field }}</td>
+        {% endfor %}
+
     </tr>
     {% endblock %}
     {% block add_data %}
