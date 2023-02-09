@@ -85,11 +85,16 @@ def get_department_exports(request):
 
 @login_required
 def get_department_3(request):
-    context = {
-        'title': 'Отдел - 3',
-        'third_department_tables_menu': third_department_tables_menu
-    }
-    return render(request, 'mainapp/departments/department_3.html', context)
+    if del_group_vault_id(request):
+        # raise Exception('У вас нету доступа к этому департаменту')
+        messages.error(request, 'У вас нету доступа к этому департаменту')
+        return redirect('/')
+    else:
+        context = {
+            'title': 'Отдел - 3',
+            'third_department_tables_menu': third_department_tables_menu
+        }
+        return render(request, 'mainapp/departments/department_3.html', context)
 
 
 @login_required
@@ -832,7 +837,7 @@ def add_data_table_sanoat(request):
     else:
         form = TableFormSanoat()
     context = make_context_by_form('Sanoat', form, second_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/form_sanoat.html', context)
+    return render(request, 'mainapp/forms/second_departament/form_sanoat.html', context)
 
 
 def table_filter_sanoat(request, filter_slug):
@@ -877,7 +882,7 @@ def add_data_table_kx(request):
     else:
         form = TableFormKX()
     context = make_context_by_form('KX', form, second_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/form_kx.html', context)
+    return render(request, 'mainapp/forms/second_departament/form_kx.html', context)
 
 
 def table_filter_kx(request, filter_slug):
@@ -921,7 +926,7 @@ def add_data_table_1(request):
     else:
         form = TableFirstForm()
     context = make_context_by_form('Таблица 1', form, second_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/form_table1.html', context)
+    return render(request, 'mainapp/forms/second_departament/form_table1.html', context)
 
 
 def table_filter_first_table(request, filter_slug):
@@ -966,7 +971,7 @@ def add_data_table_kunliu(request):
     else:
         form = TableKunliuForm()
     context = make_context_by_form('кунлиу', form, second_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/form_kunliu.html', context)
+    return render(request, 'mainapp/forms/second_departament/form_kunliu.html', context)
 
 
 def table_filter_kunliu(request, filter_slug):
@@ -981,3 +986,88 @@ def table_filter_kunliu(request, filter_slug):
     page_obj = paginate_page(request, table)
     context = get_context_data(page_obj, 'кунлиу', second_department_tables_menu, table)
     return render(request, src['kunliu'], context)
+
+
+# 3 Сводный отдел
+# Жами Свод
+
+def get_data_table_jami(request):
+    if get_group_vault_id(request):
+        table_data = show_data_table_to_departament(JamiVault)
+    else:
+        table_data = show_data_table(request, JamiVault)
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, 'Жами свод', third_department_tables_menu, table_data)
+    return render(request, src['jami'], context)
+
+
+def table_filter_table_jami(request, filter_slug):
+    if not get_group_vault_id(request):
+        table = show_data_table(request, JamiVault)
+    else:
+        table = show_data_table_to_departament(JamiVault)
+    table = filter_tables(filter_slug, table)
+
+    page_obj = paginate_page(request, table)
+    context = get_context_data(page_obj, 'Жами свод', third_department_tables_menu, table)
+    return render(request, src['jami'], context)
+
+
+@login_required
+def add_data_table_jami(request):
+    table_data = show_data_table(request, JamiVault)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = TableJamiForm(request.POST)
+        if form.is_valid():
+            try:
+                JamiVault.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect('table_jami')
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = TableJamiForm()
+    context = make_context_by_form('Жами свод', form, third_department_tables_menu, page_obj)
+    return render(request, 'mainapp/forms/third_departament/form_jami.html', context)
+
+
+# Свод Чорак
+
+def get_data_table_quarter(request):
+    if get_group_vault_id(request):
+        table_data = show_data_table_to_departament(QuarterVault)
+    else:
+        table_data = show_data_table(request, QuarterVault)
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, 'Cвод чорак', third_department_tables_menu, table_data)
+    return render(request, src['quarter'], context)
+
+
+def table_filter_table_quarter(request, filter_slug):
+    if not get_group_vault_id(request):
+        table = show_data_table(request, QuarterVault)
+    else:
+        table = show_data_table_to_departament(QuarterVault)
+    table = filter_tables(filter_slug, table)
+
+    page_obj = paginate_page(request, table)
+    context = get_context_data(page_obj, 'Cвод чорак', third_department_tables_menu, table)
+    return render(request, src['quarter'], context)
+
+
+@login_required
+def add_data_table_quarter(request):
+    table_data = show_data_table(request, QuarterVault)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = TableQuarterForm(request.POST)
+        if form.is_valid():
+            try:
+                QuarterVault.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect('table_quarter')
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = TableQuarterForm()
+    context = make_context_by_form('Cвод чорак', form, third_department_tables_menu, page_obj)
+    return render(request, 'mainapp/forms/third_departament/form_quarter.html', context)

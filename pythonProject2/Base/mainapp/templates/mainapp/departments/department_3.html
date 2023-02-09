@@ -1,14 +1,17 @@
 {% extends 'mainapp/base.html' %}
+{% block tables %}
 
-{% block tables%}
 <ul class="nav nav-tabs">
     {% for table in third_department_tables_menu %}
     <li class="nav-item">
         <a class="nav-link {% if table.table_name == title %}active{% endif %}"
-           href="">
+           href="{% url table.url_data_table %}">
             {{ table.table_name }}
         </a>
     </li>
-    {%endfor%}
+    {% endfor %}
 </ul>
+
+{% block table %}
+{%endblock%}
 {% endblock %}

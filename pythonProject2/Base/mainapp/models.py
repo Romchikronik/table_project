@@ -475,6 +475,7 @@ class Kunliu(models.Model):
 
 class JamiVault(models.Model):
     district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Район")
+
     loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
     loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
     umumiy_kiymati_reja = models.CharField(max_length=255, verbose_name='Режа')
@@ -1063,6 +1064,10 @@ class RejaVault(models.Model):
     total_xorijiy_kredit = models.CharField(max_length=255, verbose_name='хорижий кредитлар минг.долл')
     total_xorijiy_invest = models.CharField(max_length=255, verbose_name='хорижий инвестициялар минг.долл ')
     total_ish = models.CharField(max_length=255, verbose_name='Иш ўрни')
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
 
     class Meta:
         verbose_name = 'Свод Режа'

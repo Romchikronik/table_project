@@ -29,10 +29,8 @@ second_department_tables_menu = [
 ]
 # url Таблиц и форм отдела 3
 third_department_tables_menu = [
-    {'table_name': 'Отдел-3.1', },
-    {'table_name': 'Отдел-3.1', },
-    {'table_name': 'Отдел-3.1', },
-    {'table_name': 'Отдел-3.1', }
+    {'table_name': 'Жами свод', 'url_form': 'form_jami', 'url_data_table': 'table_jami'},
+    {'table_name': 'Cвод чорак', 'url_form': 'form_quarter', 'url_data_table': 'table_quarter'},
 ]
 # url Таблиц и форм отдела 4
 fourth_department_tables_menu = [
@@ -81,6 +79,8 @@ src = {
     'kx': 'mainapp/data_table/second_departament/kh.html',
     'table_1': 'mainapp/data_table/second_departament/first_table.html',
     'kunliu': 'mainapp/data_table/second_departament/kunliu.html',
+    'jami': 'mainapp/data_table/third_departament/table_jami.html',
+    'quarter': 'mainapp/data_table/third_departament/quarter.html',
 }
 
 # список моделей отдела -2
@@ -91,7 +91,10 @@ second_department_models = [
     Kunliu
 ]
 # список моделей отдела -3
-third_department_models = []
+third_department_models = [
+    JamiVault,
+    QuarterVault,
+]
 # список моделей отдела -4
 fourth_department_models = []
 # список моделей отдела -5
@@ -144,6 +147,14 @@ def get_group_export_id(request):
 
 def del_group_export_id(request):
     return request.user.groups.filter(id=3).exists() and not request.user.groups.filter(id=2)
+
+
+def get_group_vault_id(request):
+    return request.user.groups.filter(id=3).exists() and request.user.groups.filter(id=4)
+
+
+def del_group_vault_id(request):
+    return request.user.groups.filter(id=3).exists() and not request.user.groups.filter(id=4)
 
 
 def make_context_by_form(data, form, menu, page_obj):

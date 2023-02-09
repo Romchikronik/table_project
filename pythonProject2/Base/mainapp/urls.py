@@ -7,7 +7,7 @@ urlpatterns = [
     path('', views.mainPage, name='main'),
     path('project-department/', views.get_department_projects, name='department_projects'),
     path('exports-department/', views.get_department_exports, name='department_exports'),
-    path('department-3/', views.get_department_3, name='department_3'),
+    path('vault-department/', views.get_department_3, name='department_3'),
     path('department-4/', views.get_department_4, name='department_4'),
     path('department-5/', views.get_department_5, name='department_5'),
     path('export-excel/<slug:filter_slug>', views.export_excel, name='export-excel'),
@@ -32,6 +32,10 @@ urlpatterns = [
     path('form/table_1', views.add_data_table_1, name='form_table1'),
     path('form/kunliu', views.add_data_table_kunliu, name='form_kunliu'),
 
+    # 3 отдел
+    path('form/jami', views.add_data_table_jami, name='form_jami'),
+    path('form/quarter', views.add_data_table_quarter, name='form_quarter'),
+
     # path('projects-department/table/<slug:table_slug>', views.get_data_table_Loiha41, name='table'),
 
     path('projects-department/table/ilova-4.1/', views.get_data_table_Loiha41, name='table_loiha4.1'),
@@ -51,6 +55,12 @@ urlpatterns = [
     path('exports-department/table/table_1', views.get_data_table_first_table, name='table_first'),
     path('exports-department/table/kunliu', views.get_data_table_kunliu, name='table_kunliu'),
 
+    # 3 departament
+    path('vault-department/table/jami', views.get_data_table_jami, name='table_jami'),
+    path('vault-department/table/quarter', views.get_data_table_quarter, name='table_quarter'),
+
+    # filters
+
     path('projects-department/table/ilova-13.1/filter/<slug:filter_slug>', views.table_filter_loiha131, name='table_filter_loiha131'),
     path('projects-department/table/ilova-4.1/filter/<slug:filter_slug>', views.table_filter_loiha41, name='table_filter_loiha41'),
     path('projects-department/table/ilova-5.2/filter/<slug:filter_slug>', views.table_filter_loiha52, name='table_filter_loiha52'),
@@ -66,5 +76,11 @@ urlpatterns = [
     path('exports-department/table/sanoat/filter/<slug:filter_slug>', views.table_filter_sanoat, name="table_filter_sanoat"),
     path('exports-department/table/kx/filter/<slug:filter_slug>', views.table_filter_kx, name="table_filter_kx"),
     path('exports-department/table/table_1/filter/<slug:filter_slug>', views.table_filter_first_table, name="table_filter_first_table"),
-    path('exports-department/table/kunliu/filter/<slug:filter_slug>', views.table_filter_kunliu, name="table_filter_kunliu")
+    path('exports-department/table/kunliu/filter/<slug:filter_slug>', views.table_filter_kunliu, name="table_filter_kunliu"),
+
+    # 3 departament
+    path('vault-department/table/jami/filter/<slug:filter_slug>', views.table_filter_table_jami,
+         name="table_filter_table_jami"),
+    path('vault-department/table/quarter/filter/<slug:filter_slug>', views.table_filter_table_quarter,
+         name="table_filter_table_quarter"),
 ]
