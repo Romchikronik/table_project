@@ -32,6 +32,8 @@ third_department_tables_menu = [
     {'table_name': 'Жами свод', 'url_form': 'form_jami', 'url_data_table': 'table_jami'},
     {'table_name': 'Cвод чорак', 'url_form': 'form_quarter', 'url_data_table': 'table_quarter'},
     {'table_name': 'Cвод ойлар', 'url_form': 'form_monthly', 'url_data_table': 'table_monthly'},
+    {'table_name': 'Cвод банк', 'url_form': 'form_bank', 'url_data_table': 'table_bank'},
+    {'table_name': 'Cвод режа', 'url_form': 'form_reja', 'url_data_table': 'table_reja'},
 ]
 # url Таблиц и форм отдела 4
 fourth_department_tables_menu = [
@@ -83,6 +85,8 @@ src = {
     'jami': 'mainapp/data_table/third_departament/table_jami.html',
     'quarter': 'mainapp/data_table/third_departament/quarter.html',
     'monthly': 'mainapp/data_table/third_departament/month.html',
+    'bank': 'mainapp/data_table/third_departament/bank.html',
+    'reja': 'mainapp/data_table/third_departament/reja.html',
 }
 
 # список моделей отдела -2
@@ -97,6 +101,8 @@ third_department_models = [
     JamiVault,
     QuarterVault,
     MonthVault,
+    BankVault,
+    RejaVault
 ]
 # список моделей отдела -4
 fourth_department_models = []

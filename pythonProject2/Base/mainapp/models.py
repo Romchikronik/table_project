@@ -667,6 +667,8 @@ class TarmokVault(models.Model):
 class BankVault(models.Model):
     district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Район")
 
+    bank_name = models.CharField(max_length=255, default="", verbose_name='Banklar nomi')
+
     loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
     loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
     umumiy_kiymati_reja = models.CharField(max_length=255, verbose_name='Режа')
@@ -1032,6 +1034,14 @@ class RejaVault(models.Model):
     ish_kredit = models.CharField(max_length=255, verbose_name='анк кредитлари млн.сўм')
     ish_xorijiy_kredit = models.CharField(max_length=255, verbose_name='хорижий кредитлар минг.долл')
     ish_xorijiy_invest = models.CharField(max_length=255, verbose_name='хорижий инвестициялар минг.долл ')
+
+    istik_ish = models.CharField(default="", max_length=255, verbose_name='Иш ўрни')
+    istik_loiha_soni = models.CharField(default="", max_length=255, verbose_name='Лойиҳа сони')
+    istik_loiha_kiymati = models.CharField(default="", max_length=255, verbose_name='Лойиҳа қиймати, (млн.сўм)')
+    istik_mablag = models.CharField(default="", max_length=255, verbose_name='ўз маблағлари млн.сўм')
+    istik_kredit = models.CharField(default="", max_length=255, verbose_name='анк кредитлари млн.сўм')
+    istik_xorijiy_kredit = models.CharField(default="", max_length=255, verbose_name='хорижий кредитлар минг.долл')
+    istik_xorijiy_invest = models.CharField(default="", max_length=255, verbose_name='хорижий инвестициялар минг.долл ')
 
     mud_ish = models.CharField(max_length=255, verbose_name='Иш ўрни')
     mud_loiha_soni = models.CharField(max_length=255, verbose_name='Лойиҳа сони')

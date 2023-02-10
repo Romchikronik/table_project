@@ -1,0 +1,201 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">
+    {% if request.user.district != None %}
+        {{ request.user.district }},
+    {% endif %}
+    {{ title }}
+</h2>
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_reja' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_reja' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_reja' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+<div class="container overflow-auto">
+        <table class="table table-bordered table-striped">
+        <caption>
+            {% if request.user.district != None %}
+                {{ request.user.district }},
+            {% endif %}
+            {{ title }}
+        </caption>
+        <tr>
+            {% for group in request.user.groups.all %}
+            {% if group.id == 3 %}
+            <th rowspan="3" class="table-primary">HUDUDLAR</th>
+            {% endif %}
+            {% endfor %}
+            <th class="table-primary" colspan="7" rowspan="2">Режа (ҳисобот даври) </th>
+            <th class="table-primary" colspan="7" rowspan="2">Режага нисбатан ишга тушган </th>
+            <th class="table-primary" colspan="6" rowspan="2">Ишга тушмаган </th>
+            <th class="table-primary" colspan="15">шундан</th>
+            <th class="table-primary" colspan="7" rowspan="2">Муддатидан аввал ишга тушган лойиҳалар</th>
+            <th class="table-primary" colspan="7" rowspan="2">Қўшимча (резерв) лойиҳалар</th>
+            <th class="table-primary" colspan="7" rowspan="2">Жами ишга тушган лойиҳалар</th>
+            <td class="table-primary table-info-time" rowspan="3">Дата создания записи</td>
+        </tr>
+        <tr>
+            <th class="table-info" colspan="7"> Истиқболсиз</th>
+            <th class="table-info" colspan="8"> Муддатини узайтириш</th>
+        </tr>
+        <tr>
+            <th class="table-info">Лойиҳа сони</th>
+            <th class="table-info">Лойиҳа қиймати, (млн.сўм)</th>
+            <th class="table-info">ўз маблағлари млн.сўм</th>
+            <th class="table-info">банк кредитлари млн.сўм</th>
+            <th class="table-info">хорижий кредитлар минг.долл</th>
+            <th class="table-info">хорижий инвестициялар минг.долл </th>
+            <th class="table-info">Иш ўрни</th>
+            <th class="table-info">Лойиҳа сони</th>
+            <th class="table-info">Лойиҳа қиймати, (млн.сўм)</th>
+            <th class="table-info">ўз маблағлари млн.сўм</th>
+            <th class="table-info">банк кредитлари млн.сўм</th>
+            <th class="table-info">хорижий кредитлар минг.долл</th>
+            <th class="table-info">хорижий инвестициялар минг.долл </th>
+            <th class="table-info">Иш ўрни</th>
+
+            <th class="table-info">Лойиҳа сони</th>
+            <th class="table-info">Лойиҳа қиймати, (млн.сўм)</th>
+            <th class="table-info">ўз маблағлари млн.сўм</th>
+            <th class="table-info">банк кредитлари млн.сўм</th>
+            <th class="table-info">хорижий кредитлар минг.долл</th>
+            <th class="table-info">хорижий инвестициялар минг.долл </th>
+            <th class="table-info">Иш ўрни</th>
+
+            <th class="table-info">Лойиҳа сони</th>
+            <th class="table-info">Лойиҳа қиймати, (млн.сўм)</th>
+            <th class="table-info">ўз маблағлари млн.сўм</th>
+            <th class="table-info">банк кредитлари млн.сўм</th>
+            <th class="table-info">хорижий кредитлар минг.долл</th>
+            <th class="table-info">хорижий инвестициялар минг.долл </th>
+            <th class="table-info">Иш ўрни</th>
+
+            <th class="table-info">Лойиҳа сони</th>
+            <th class="table-info">Лойиҳа қиймати, (млн.сўм)</th>
+            <th class="table-info">ўз маблағлари млн.сўм</th>
+            <th class="table-info">банк кредитлари млн.сўм</th>
+            <th class="table-info">хорижий кредитлар минг.долл</th>
+            <th class="table-info">хорижий инвестициялар минг.долл </th>
+            <th class="table-info">Иш ўрни</th>
+
+            <th class="table-info">Лойиҳа сони</th>
+            <th class="table-info">Лойиҳа қиймати, (млн.сўм)</th>
+            <th class="table-info">ўз маблағлари млн.сўм</th>
+            <th class="table-info">банк кредитлари млн.сўм</th>
+            <th class="table-info">хорижий кредитлар минг.долл</th>
+            <th class="table-info">хорижий инвестициялар минг.долл </th>
+            <th class="table-info">Иш ўрни</th>
+
+            <th class="table-info">Лойиҳа сони</th>
+            <th class="table-info">Лойиҳа қиймати, (млн.сўм)</th>
+            <th class="table-info">ўз маблағлари млн.сўм</th>
+            <th class="table-info">банк кредитлари млн.сўм</th>
+            <th class="table-info">хорижий кредитлар минг.долл</th>
+            <th class="table-info">хорижий инвестициялар минг.долл </th>
+            <th class="table-info">Иш ўрни</th>
+
+            <th class="table-info">Лойиҳа сони</th>
+            <th class="table-info">Лойиҳа қиймати, (млн.сўм)</th>
+            <th class="table-info">ўз маблағлари млн.сўм</th>
+            <th class="table-info">банк кредитлари млн.сўм</th>
+            <th class="table-info">хорижий кредитлар минг.долл</th>
+            <th class="table-info">хорижий инвестициялар минг.долл </th>
+            <th class="table-info">Иш ўрни</th>
+        </tr>
+        <tr>
+            {% block form %}
+            {% endblock %}
+        </tr>
+            {% for data in page_obj %}
+        <tr>
+            {% for group in request.user.groups.all %}
+                {% if group.id == 3 %}
+                   <td>{{data.district}}</td>
+                {% endif %}
+            {% endfor %}
+            <td>{{ data.reja_loiha_soni }}</td>
+            <td>{{ data.reja_loiha_kiymati }}</td>
+            <td>{{ data.reja_mablag }}</td>
+            <td>{{ data.reja_kredit }}</td>
+            <td>{{ data.reja_xorijiy_kredit }}</td>
+            <td>{{ data.reja_xorijiy_invest }}</td>
+            <td>{{ data.reja_ish }}</td>
+
+            <td>{{ data.nisbatan_loiha_soni }}</td>
+            <td>{{ data.nisbatan_loiha_kiymati }}</td>
+            <td>{{ data.nisbatan_mablag }}</td>
+            <td>{{ data.nisbatan_kredit }}</td>
+            <td>{{ data.nisbatan_xorijiy_kredit }}</td>
+            <td>{{ data.nisbatan_xorijiy_invest }}</td>
+            <td>{{ data.nisbatan_ish }}</td>
+
+            <td>{{ data.ish_loiha_soni }}</td>
+            <td>{{ data.ish_loiha_kiymati }}</td>
+            <td>{{ data.ish_mablag }}</td>
+            <td>{{ data.ish_kredit }}</td>
+            <td>{{ data.ish_xorijiy_kredit }}</td>
+            <td>{{ data.ish_xorijiy_invest }}</td>
+
+             <td>{{ data.istik_ish }}</td>
+             <td>{{ data.istik_loiha_soni }}</td>
+             <td>{{ data.istik_loiha_kiymati }}</td>
+             <td>{{ data.istik_mablag }}</td>
+             <td>{{ data.istik_kredit }}</td>
+             <td>{{ data.istik_xorijiy_kredit }}</td>
+             <td>{{ data.istik_xorijiy_invest }}</td>
+
+            <td>{{ data.mud_ish }}</td>
+            <td>{{ data.mud_loiha_soni }}</td>
+            <td>{{ data.mud_loiha_kiymati }}</td>
+            <td>{{ data.mud_mablag }}</td>
+            <td>{{ data.mud_kredit }}</td>
+            <td>{{ data.mud_xorijiy_kredit }}</td>
+            <td>{{ data.mud_xorijiy_invest }}</td>
+            <td>{{ data.mud_ish_second }}</td>
+
+            <td>{{ data.aval_loiha_soni }}</td>
+            <td>{{ data.aval_loiha_kiymati }}</td>
+            <td>{{ data.aval_mablag }}</td>
+            <td>{{ data.aval_kredit }}</td>
+            <td>{{ data.aval_xorijiy_kredit }}</td>
+            <td>{{ data.aval_xorijiy_invest }}</td>
+            <td>{{ data.aval_ish }}</td>
+
+            <td>{{ data.reserve_loiha_soni }}</td>
+            <td>{{ data.reserve_loiha_kiymati }}</td>
+            <td>{{ data.reserve_mablag }}</td>
+            <td>{{ data.reserve_kredit }}</td>
+            <td>{{ data.reserve_xorijiy_kredit }}</td>
+            <td>{{ data.reserve_xorijiy_invest }}</td>
+            <td>{{ data.reserve_ish }}</td>
+
+            <td>{{ data.total_loiha_soni }}</td>
+            <td>{{ data.total_loiha_kiymati }}</td>
+            <td>{{ data.total_mablag }}</td>
+            <td>{{ data.total_kredit }}</td>
+            <td>{{ data.total_xorijiy_kredit }}</td>
+            <td>{{ data.total_xorijiy_invest }}</td>
+            <td>{{ data.total_ish }}</td>
+
+            <td class="table-time">{{ data.time_create }}</td>
+          </tr>
+            {%endfor%}
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{% endblock %}
+
+
+{% block add_data %}
+   {% if not request.user.groups.all and not request.user.is_superuser %}
+<a class="btn btn-success mb-5" href="{% url 'form_reja' %}">Добавить данные</a>
+   {% endif %}
+{%endblock%}

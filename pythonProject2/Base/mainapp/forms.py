@@ -734,3 +734,105 @@ class TableMonthForm(ModelForm):
         ]
 
 
+class TableBankForm(ModelForm):
+    class Meta:
+        model = BankVault
+        fields = [
+            'bank_name',
+            'loiha_soni_reja',
+            'loiha_soni_amalda',
+            'umumiy_kiymati_reja',
+            'umumiy_kiymati_amalda',
+            'uz_mablag_reja',
+            'uz_mablag_amalda',
+            'bank_kredit_reja',
+            'bank_kredit_amalda',
+            'xorijiy_kredit_reja',
+            'xorijiy_kredit_amalda',
+            'xorijiy_invest_reja',
+            'xorijiy_invest_amalda',
+
+            'yangi_ish_reja',
+            'yangi_ish_amalda',
+            'ishlab_chiqarish_reja',
+            'ishlab_chiqarish_amalda',
+            'import_reja',
+            'import_amalda',
+            'export_reja',
+            'export_amalda',
+            'budget_reja',
+            'budget_amalda',
+        ]
+
+
+class TableRejaForm(ModelForm):
+    class Meta:
+        model = RejaVault
+
+        fields = [
+            'reja_loiha_soni',
+            'reja_loiha_kiymati',
+            'reja_mablag',
+            'reja_kredit',
+            'reja_xorijiy_kredit',
+            'reja_xorijiy_invest',
+            'reja_ish',
+
+            'nisbatan_loiha_soni',
+            'nisbatan_loiha_kiymati',
+            'nisbatan_mablag',
+            'nisbatan_kredit',
+            'nisbatan_xorijiy_kredit',
+            'nisbatan_xorijiy_invest',
+            'nisbatan_ish',
+            
+            'ish_loiha_soni',
+            'ish_loiha_kiymati',
+            'ish_mablag',
+            'ish_kredit',
+            'ish_xorijiy_kredit',
+            'ish_xorijiy_invest',
+
+            'istik_ish',
+            'istik_loiha_soni',
+            'istik_loiha_kiymati',
+            'istik_mablag',
+            'istik_kredit',
+            'istik_xorijiy_kredit',
+            'istik_xorijiy_invest',
+
+            'mud_ish',
+            'mud_loiha_soni',
+            'mud_loiha_kiymati',
+            'mud_mablag',
+            'mud_kredit',
+            'mud_xorijiy_kredit',
+            'mud_xorijiy_invest',
+            'mud_ish_second',
+
+            'aval_loiha_soni',
+            'aval_loiha_kiymati',
+            'aval_mablag',
+            'aval_kredit',
+            'aval_xorijiy_kredit',
+            'aval_xorijiy_invest',
+            'aval_ish',
+
+            'reserve_loiha_soni',
+            'reserve_loiha_kiymati',
+            'reserve_mablag',
+            'reserve_kredit',
+            'reserve_xorijiy_kredit',
+            'reserve_xorijiy_invest',
+            'reserve_ish',
+
+            'total_loiha_soni',
+            'total_loiha_kiymati',
+            'total_mablag',
+            'total_kredit',
+            'total_xorijiy_kredit',
+            'total_xorijiy_invest',
+            'total_ish',
+        ]
+
+

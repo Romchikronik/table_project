@@ -36,6 +36,8 @@ urlpatterns = [
     path('form/jami', views.add_data_table_jami, name='form_jami'),
     path('form/quarter', views.add_data_table_quarter, name='form_quarter'),
     path('form/monthly', views.add_data_table_month, name='form_monthly'),
+    path('form/bank', views.add_data_table_bank, name='form_bank'),
+    path('form/reja', views.add_data_table_reja, name='form_reja'),
 
     # path('projects-department/table/<slug:table_slug>', views.get_data_table_Loiha41, name='table'),
 
@@ -60,6 +62,8 @@ urlpatterns = [
     path('vault-department/table/jami', views.get_data_table_jami, name='table_jami'),
     path('vault-department/table/quarter', views.get_data_table_quarter, name='table_quarter'),
     path('vault-department/table/monthly', views.get_data_table_month, name='table_monthly'),
+    path('vault-department/table/bank', views.get_data_table_bank, name='table_bank'),
+    path('vault-department/table/reja', views.get_data_table_reja, name='table_reja'),
 
     # filters
 
@@ -87,4 +91,8 @@ urlpatterns = [
          name="table_filter_table_quarter"),
     path('vault-department/table/monthly/filter/<slug:filter_slug>', views.table_filter_table_month,
          name="table_filter_table_month"),
+    path('vault-department/table/bank/filter/<slug:filter_slug>', views.table_filter_table_bank,
+         name="table_filter_table_bank"),
+    path('vault-department/table/reja/filter/<slug:filter_slug>', views.table_filter_table_reja,
+         name="table_filter_table_reja"),
 ]

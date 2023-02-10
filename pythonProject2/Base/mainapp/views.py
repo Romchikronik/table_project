@@ -1112,3 +1112,86 @@ def add_data_table_month(request):
         form = TableMonthForm()
     context = make_context_by_form('Cвод ойлар', form, third_department_tables_menu, page_obj)
     return render(request, 'mainapp/forms/third_departament/form_monthly.html', context)
+
+
+# Свод Банк
+def get_data_table_bank(request):
+    if get_group_vault_id(request):
+        table_data = show_data_table_to_departament(BankVault)
+    else:
+        table_data = show_data_table(request, BankVault)
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, 'Cвод банк', third_department_tables_menu, table_data)
+    return render(request, src['bank'], context)
+
+
+def table_filter_table_bank(request, filter_slug):
+    if not get_group_vault_id(request):
+        table = show_data_table(request, BankVault)
+    else:
+        table = show_data_table_to_departament(BankVault)
+    table = filter_tables(filter_slug, table)
+
+    page_obj = paginate_page(request, table)
+    context = get_context_data(page_obj, 'Cвод банк', third_department_tables_menu, table)
+    return render(request, src['bank'], context)
+
+
+@login_required
+def add_data_table_bank(request):
+    table_data = show_data_table(request, BankVault)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = TableBankForm(request.POST)
+        if form.is_valid():
+            try:
+                BankVault.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect('table_bank')
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = TableBankForm()
+    context = make_context_by_form('Cвод банк', form, third_department_tables_menu, page_obj)
+    return render(request, 'mainapp/forms/third_departament/form_bank.html', context)
+
+
+# Свод Режа
+
+def get_data_table_reja(request):
+    if get_group_vault_id(request):
+        table_data = show_data_table_to_departament(RejaVault)
+    else:
+        table_data = show_data_table(request, RejaVault)
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, 'Cвод режа', third_department_tables_menu, table_data)
+    return render(request, src['reja'], context)
+
+
+def table_filter_table_reja(request, filter_slug):
+    if not get_group_vault_id(request):
+        table = show_data_table(request, RejaVault)
+    else:
+        table = show_data_table_to_departament(RejaVault)
+    table = filter_tables(filter_slug, table)
+
+    page_obj = paginate_page(request, table)
+    context = get_context_data(page_obj, 'Cвод режа', third_department_tables_menu, table)
+    return render(request, src['reja'], context)
+
+
+@login_required
+def add_data_table_reja(request):
+    table_data = show_data_table(request, RejaVault)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = TableRejaForm(request.POST)
+        if form.is_valid():
+            try:
+                RejaVault.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect('table_reja')
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = TableRejaForm()
+    context = make_context_by_form('Cвод режа', form, third_department_tables_menu, page_obj)
+    return render(request, 'mainapp/forms/third_departament/form_reja.html', context)
