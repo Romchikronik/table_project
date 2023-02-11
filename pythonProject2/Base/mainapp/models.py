@@ -624,9 +624,88 @@ class QuarterVault(models.Model):
         return self.district.district
 
 
+CATEGORY_CHOICES = [
+    ('SANOAT_YO`NALISHI', 'Саноат йўналиши'),
+    ('HIZMAT_KO`RSATISH_SOHASI', 'Хизмат кўрсатиш соҳаси'),
+    ('KISHLOQ_HO`ZALIGI_YO`NALISHI', 'Қишлоқ хўжалиги йўналиши'),
+]
+
+
+INDUSTRY_CHOICES = [
+    ('pharmaceuticals', 'Фармацевтика саноати'),
+    ('textile_clothing', 'Текстиль ва тўқимачилик саноати'),
+    ('furniture_wood', 'Мебель ва қоғоз саноати'),
+    ('agriculture_livestock', 'Озиқ-овқат саноати'),
+    ('building_materials', 'Қурилиш материаллари саноати'),
+    ('chemical_paints', 'Чарм-пойабзал саноати'),
+    ('metallurgical', 'Металлургия саноати'),
+    ('chemicals', 'Кимё саноати'),
+    ('machine_building', 'Машинасозлик ва эҳтиёт қисмлар саноати'),
+    ('ipakchilik_sanoat', 'Ипакчилик саноати'),
+    ('ozuqa_em_mahsolatlar_islab_chikarish_sanoat', 'Озуқа ем маҳсулотлари ишлаб чиқариш саноати'),
+    ('yoqilgi-energetika_sanoat', 'Ёқилғи-энергетика саноати'),
+    ('yog-moi_sanoat', 'Ёғ-мой саноати'),
+    ('elektrotexnika_sanoat', 'Электротехника саноати'),
+    ('neftgaz_sanoat', 'Нефтегаз саноати'),
+    ('tog-kon_sanoat', 'Тоғ-кон саноати'),
+    ('zargarlik_sanoat', 'Заргарлик саноати'),
+    ('bashqa_sanoat_tarmoklari', 'Бошқа саноат тармоқлари'),
+
+    ('auto', 'Автомобилларга техник хизмат кўрсатиш хизматлари'),
+    ('security', 'Алоқа ва ахборотлаштириш хизмати'),
+    ('restaurant', 'Замонавий уй-жойлар қуриш'),
+    ('cafe', 'Кафе ва ресторан хизматлари'),
+    ('fashion', 'Қушхона хизматлари'),
+    ('hairdressing', 'Маиший хизмат кўрсатиш'),
+    ('wedding', 'Меҳмонхона хизмати'),
+    ('makeup', 'Савдо хизматлари'),
+    ('cleaning', 'Соғлиқни сақлаш соҳасидаги хизматлар'),
+    ('sports', 'Спорт ва соғломлаштириш хизматлари'),
+    ('education', 'Таълим хизматлари'),
+    ('transportation', 'Транспорт хизматлари'),
+    ('tourism', 'Туризм хизматлари'),
+    ('repair', 'Қурилиш соҳасидаги хизматлар'),
+    ('construction', 'Қишлоқ хўжалиги хизматлари'),
+    ('other', 'Бошқа турдаги хизматлар'),
+
+    ('agro_cluster', 'Агро кластер ташкил этиш'),
+    ('asalari_revitalization', 'Асаларичиликни ривожлантириш'),
+    ('balik_revitalization', 'Балиқчиликни ривожлантириш'),
+    ('bogodar_revitalization', 'Боғдорчиликни ривожлантириш'),
+    ('dorivor_etishtirish', 'Доривор ўсимликлар етиштириш'),
+    ('zamona_issikho_etish', 'Замонавий иссиқхона ташкил этиш'),
+    ('intensive_industry', 'Интенсив боғ ташкил қилиш'),
+    ('kislok_industry_etishtirish', 'Қишлоқ хўжалиги маҳсулотларини етиштириш'),
+    ('quyodar_revitalization', 'Қуёнчиликни ривожлантириш'),
+    ('logistics_marks', 'Логистика марказлари'),
+    ('muslatkich_omborho_etish', 'Музлаткичли омборхона ташкил этиш'),
+    ('parranda_revitalization', 'Паррандачиликни ривожлантириш'),
+    ('pahta_etish', 'Пахта-тўқимачилик кластерини ташкил этиш'),
+    ('gallachilik_cluster', 'Галлачилик кластери'),
+    ('pilla_revitalization', 'Пиллачиликни ривожлантириш'),
+    ('UZMCH_RI', 'Узумчиликни ривожлантириш'),
+    ('CRVCH_RI', 'Чорвачиликни ривожлантириш'),
+    ('TMCHL_SG', 'Томчилатиб суғориш'),
+    ('BSHQ_QLHZ_TR', 'Бошқа қишлоқ хўжалиги тармоқлари'),
+]
+
+
 class TarmokVault(models.Model):
     district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Район")
-    tormok_name = models.CharField(max_length=255, verbose_name='Тармоқлар номи')
+    # tormok_name = models.CharField(max_length=255, verbose_name='Тармоқлар номи')
+    category = models.CharField(
+        max_length=255,
+        verbose_name='Kategoriya',
+        choices=CATEGORY_CHOICES,
+        default='SANOAT_YO`NALISHI',
+    )
+
+    industry = models.CharField(
+        max_length=255,
+        verbose_name='Тармоқлар номи',
+        choices=INDUSTRY_CHOICES,
+        default='pharmaceuticals',
+    )
 
     loiha_soni_reja = models.CharField(max_length=255, verbose_name='Режа')
     loiha_soni_amalda = models.CharField(max_length=255, verbose_name='Амалда')
