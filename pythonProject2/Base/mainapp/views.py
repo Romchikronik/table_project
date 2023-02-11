@@ -312,6 +312,117 @@ def export_excel(request, filter_slug):
     return response
 
 
+def export_excel_loiha52(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=table' + \
+                                      str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 2  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 12, 'Чирчик тумани, Илова-5.2', cell_title)
+        ws.write_merge(1, 1, 4, 5, 'Состояние запасов на 01.01.2019', cell_style)
+        ws.write_merge(1, 1, 6, 7, 'Оперативная информация', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 13, 'Илова-5.2', cell_title)
+        # ws.write_merge(1, 2, 0, 1, 'Район', cell_style)
+        ws.write_merge(1, 1, 5, 6, 'Состояние запасов на 01.01.2019', cell_style)
+        ws.write_merge(1, 1, 7, 8, 'Оперативная информация', cell_style)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = ["Название места, где расположены природные ресурсы(Объекты геологоразведки)",
+                    "Участки геологических образований",
+                    "Наименование месторождений геологических формаций (сырых)",
+                    "Единица измерения",
+                    "A+B+C1 категории",
+                    "С2 категория",
+                    "Уровень развития",
+                    "Дата и номер лицензии",
+                    "Объем добычи в 2017 г.",
+                    "Соответствующее министерство и ведомство",
+                    "Подтвержденный отчет о запасах и его дата",
+                    "Комментарий",
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        # 'district__district',
+        'places_of_exploration',
+        'sites_of_geo_formations',
+        'name_of_formations',
+        'unit',
+        'abc_categories',
+        'c2_category',
+        'lvl_development_operational_information',
+        'date_license_operational_information',
+        'volume_of_production_2017',
+        'ministry_and_department',
+        'confirmed_stock_and_date',
+        'comment'
+        # 'time_create'
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    if filter_slug == 'week':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+        if not get_group_loiha_id(request):
+            rows = show_data_table(request, Loiha52).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(Loiha52).filter(time_create__gte=now).values_list(*department_fields)
+    elif filter_slug == 'month':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+        if not get_group_loiha_id(request):
+            rows = show_data_table(request, Loiha52).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(Loiha52).filter(time_create__gte=now).values_list(*department_fields)
+    else:
+        if not get_group_loiha_id(request):
+            rows = show_data_table(request, Loiha52).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(Loiha52).values_list(*department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
 # def export_csv(request):
 #     # csv.writerow(["Имя", "Класс", "Возраст"])
 #
@@ -1195,3 +1306,45 @@ def add_data_table_reja(request):
         form = TableRejaForm()
     context = make_context_by_form('Cвод режа', form, third_department_tables_menu, page_obj)
     return render(request, 'mainapp/forms/third_departament/form_reja.html', context)
+
+
+# Свод Tarmok
+
+def get_data_table_tarmok(request):
+    if get_group_vault_id(request):
+        table_data = show_data_table_to_departament(TarmokVault)
+    else:
+        table_data = show_data_table(request, TarmokVault)
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, 'Cвод тармок', third_department_tables_menu, table_data)
+    return render(request, src['tarmok'], context)
+
+
+def table_filter_table_tarmok(request, filter_slug):
+    if not get_group_vault_id(request):
+        table = show_data_table(request, TarmokVault)
+    else:
+        table = show_data_table_to_departament(TarmokVault)
+    table = filter_tables(filter_slug, table)
+
+    page_obj = paginate_page(request, table)
+    context = get_context_data(page_obj, 'Cвод тармок', third_department_tables_menu, table)
+    return render(request, src['tarmok'], context)
+
+
+@login_required
+def add_data_table_tarmok(request):
+    table_data = show_data_table(request, TarmokVault)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = TableTarmokForm(request.POST)
+        if form.is_valid():
+            try:
+                TarmokVault.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect('table_tarmok')
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = TableTarmokForm()
+    context = make_context_by_form('Cвод тармок', form, third_department_tables_menu, page_obj)
+    return render(request, 'mainapp/forms/third_departament/form_tarmok.html', context)

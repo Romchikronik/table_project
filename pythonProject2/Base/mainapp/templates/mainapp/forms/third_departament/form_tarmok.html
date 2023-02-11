@@ -1,11 +1,12 @@
-{% extends 'mainapp/data_table/third_departament/table_jami.html' %}
+{% extends 'mainapp/data_table/third_departament/tarmok.html' %}
 {% block form %}
 <div class="container">
-    <form action="{% url 'form_jami'%}" method="post">
+    <form action="{% url 'form_tarmok'%}" method="post">
         {% csrf_token %}
         <div>{{ form.non_field_errors }}</div>
         <tr>
             {% include 'mainapp/forms/components/_form-fields.html' %}
+<!--            <td>{{ form.time_create }}</td>-->
         </tr>
         {% endblock %}
         {% block add_data %}

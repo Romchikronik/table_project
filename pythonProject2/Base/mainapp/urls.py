@@ -1,6 +1,8 @@
 from django.urls import path
 from .import views
 
+# from .views import *
+
 # groups id: departament_group: 3; Loiha group: 1; export group: 2
 
 urlpatterns = [
@@ -10,7 +12,9 @@ urlpatterns = [
     path('vault-department/', views.get_department_3, name='department_3'),
     path('department-4/', views.get_department_4, name='department_4'),
     path('department-5/', views.get_department_5, name='department_5'),
+
     path('export-excel/<slug:filter_slug>', views.export_excel, name='export-excel'),
+    path('export-excel-loiha52/<slug:filter_slug>', views.export_excel_loiha52, name='export-excel-loiha52'),
 
     path('login/', views.loginPage, name='login'),
     path('logout/', views.logoutUser, name='logout'),
@@ -38,6 +42,7 @@ urlpatterns = [
     path('form/monthly', views.add_data_table_month, name='form_monthly'),
     path('form/bank', views.add_data_table_bank, name='form_bank'),
     path('form/reja', views.add_data_table_reja, name='form_reja'),
+    path('form/tarmok', views.add_data_table_tarmok, name='form_tarmok'),
 
     # path('projects-department/table/<slug:table_slug>', views.get_data_table_Loiha41, name='table'),
 
@@ -64,6 +69,7 @@ urlpatterns = [
     path('vault-department/table/monthly', views.get_data_table_month, name='table_monthly'),
     path('vault-department/table/bank', views.get_data_table_bank, name='table_bank'),
     path('vault-department/table/reja', views.get_data_table_reja, name='table_reja'),
+    path('vault-department/table/tarmok', views.get_data_table_tarmok, name='table_tarmok'),
 
     # filters
 
@@ -95,4 +101,6 @@ urlpatterns = [
          name="table_filter_table_bank"),
     path('vault-department/table/reja/filter/<slug:filter_slug>', views.table_filter_table_reja,
          name="table_filter_table_reja"),
+    path('vault-department/table/tarmok/filter/<slug:filter_slug>', views.table_filter_table_tarmok,
+         name="table_filter_table_tarmok"),
 ]

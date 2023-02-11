@@ -6,23 +6,22 @@
     <div>{{ form.non_field_errors }}</div>
     <tr>
 <!--        <td>{{ user.district }}</td>-->
-        {% for field in form %}
-            <td>{{ field }}</td>
-        {% endfor %}
+        {% include 'mainapp/forms/components/_form-fields.html' %}
 
     </tr>
     {% endblock %}
     {% block add_data %}
-    <input class="btn btn-success mb-5" type="submit" value="Добавить данные">
+    {% include 'mainapp/forms/components/_add-info-button.html' %}
     {%endblock%}
 </form>
+
 {% block export_table %}
-<a class="btn btn-primary" href="{% url 'table_loiha13' %}">Назад</a>
-{%endblock%}
+{% include 'mainapp/forms/components/_back-button.html' %}
+{% endblock %}
 
 {% block view_data%}
-<input class="btn btn-danger" type="reset" value="Очистить данные">
-{%endblock%}
+{% include 'mainapp/forms/components/_reset-button.html' %}
+{% endblock %}
 
 {% block filter%}
 {%endblock%}

@@ -836,3 +836,38 @@ class TableRejaForm(ModelForm):
         ]
 
 
+class TableTarmokForm(ModelForm):
+    class Meta:
+        model = TarmokVault
+
+        fields = [
+            'category',
+            'industry',
+
+            'loiha_soni_reja',
+            'loiha_soni_amalda',
+            'umumiy_kiymati_reja',
+            'umumiy_kiymati_amalda',
+            'uz_mablag_reja',
+            'uz_mablag_amalda',
+            'bank_kredit_reja',
+            'bank_kredit_amalda',
+            'xorijiy_kredit_reja',
+            'xorijiy_kredit_amalda',
+            'xorijiy_invest_reja',
+            'xorijiy_invest_amalda',
+
+            'yangi_ish_reja',
+            'yangi_ish_amalda',
+            'ishlab_chiqarish_reja',
+            'ishlab_chiqarish_amalda',
+            'import_reja',
+            'import_amalda',
+            'export_reja',
+            'export_amalda',
+            'budget_reja',
+            'budget_amalda',
+        ]
+
+
+

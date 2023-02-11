@@ -34,6 +34,7 @@ third_department_tables_menu = [
     {'table_name': 'Cвод ойлар', 'url_form': 'form_monthly', 'url_data_table': 'table_monthly'},
     {'table_name': 'Cвод банк', 'url_form': 'form_bank', 'url_data_table': 'table_bank'},
     {'table_name': 'Cвод режа', 'url_form': 'form_reja', 'url_data_table': 'table_reja'},
+    {'table_name': 'Cвод тармок', 'url_form': 'form_tarmok', 'url_data_table': 'table_tarmok'},
 ]
 # url Таблиц и форм отдела 4
 fourth_department_tables_menu = [
@@ -87,6 +88,7 @@ src = {
     'monthly': 'mainapp/data_table/third_departament/month.html',
     'bank': 'mainapp/data_table/third_departament/bank.html',
     'reja': 'mainapp/data_table/third_departament/reja.html',
+    'tarmok': 'mainapp/data_table/third_departament/tarmok.html',
 }
 
 # список моделей отдела -2
@@ -102,7 +104,8 @@ third_department_models = [
     QuarterVault,
     MonthVault,
     BankVault,
-    RejaVault
+    RejaVault,
+    TarmokVault
 ]
 # список моделей отдела -4
 fourth_department_models = []
