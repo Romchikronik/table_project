@@ -115,51 +115,6 @@ def get_department_5(request):
     return render(request, 'mainapp/departments/department_5.html', context)
 
 
-# def export_csv(request):
-#     response = HttpResponse(
-#         content_type='text/csv',
-#         headers={'Content-Disposition': 'attachment; filename="table.csv"'},
-#     )
-#     writer = csv.writer(response)
-#     writer.writerow(fields)
-#
-#     model = Loiha41.objects.filter(district=request.user.district).values_list(
-#         'district',
-#         'bill_sum_industry',
-#         'picture_of_growth_industry',
-#         'forecast_industry',
-#         'difference_industry',
-#         'bill_sum_locality',
-#         'picture_of_growth_locality',
-#         'forecast_locality',
-#         'difference_locality',
-#         'bill_sum_construction',
-#         'picture_of_growth_construction',
-#         'forecast_construction',
-#         'difference_construction',
-#         'bill_sum_services',
-#         'picture_of_growth_services',
-#         'forecast_services',
-#         'difference_services',
-#         'bill_sum_retail',
-#         'picture_of_growth_retail',
-#         'forecast_retail',
-#         'difference_retail',
-#         'thousand_dollar_international_trade',
-#         'picture_of_growth_international_trade',
-#         'thousand_dollar_export',
-#         'picture_of_growth_export',
-#         'thousand_dollar_import',
-#         'picture_of_growth_import',
-#         'time_create'
-#     )
-#
-#     for field in model:
-#         writer.writerow(field)
-#
-#
-#     return response
-
 
 def export_excel(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
@@ -423,157 +378,121 @@ def export_excel_loiha52(request, filter_slug):
     return response
 
 
-# def export_csv(request):
-#     # csv.writerow(["Имя", "Класс", "Возраст"])
-#
-#     qs = Loiha41.objects.filter(district=request.user.district).values(
-#         'district__district',
-#         'bill_sum_industry',
-#         'picture_of_growth_industry',
-#         'forecast_industry',
-#         'difference_industry',
-#         'bill_sum_locality',
-#         'picture_of_growth_locality',
-#         'forecast_locality',
-#         'difference_locality',
-#         'bill_sum_construction',
-#         'picture_of_growth_construction',
-#         'forecast_construction',
-#         'difference_construction',
-#         'bill_sum_services',
-#         'picture_of_growth_services',
-#         'forecast_services',
-#         'difference_services',
-#         'bill_sum_retail',
-#         'picture_of_growth_retail',
-#         'forecast_retail',
-#         'difference_retail',
-#         'thousand_dollar_international_trade',
-#         'picture_of_growth_international_trade',
-#         'thousand_dollar_export',
-#         'picture_of_growth_export',
-#         'thousand_dollar_import',
-#         'picture_of_growth_import',
-#         'time_create'
-#     )
-#
-#     return render_to_csv_response(qs, delimiter=' ')
-# with open('table.csv', 'wb') as csv_file:
-#     write_csv(qs, csv_file)
 
-# def get_data_table(request):
-#     for model in projects_department_models:
-#         table_data = show_data_table(request, model)  # model
-#         page_obj = paginate_page(request, table_data)
-#         context = get_context_data(page_obj, 'Илова-4.1', projects_department, table_data)  # title
-#         return render(request, src['loiha41'], context)
+def get_data_table(request, model_name, page_title):
+    model = loiha_models.get(model_name, None)
+    if not model:
+        # Handle invalid model name
+        raise ValueError("Invalid model name: %s" % model_name)
+
+    if get_group_loiha_id(request):
+        table_data = show_data_table_to_departament(model)
+    else:
+        table_data = show_data_table(request, model)
+
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, page_title, projects_department, table_data)
+    return render(request, src[model_name], context)
 
 
 def get_data_table_Loiha41(request):
-    # user = get_user(request)
-    if get_group_loiha_id(request):
-        # print('I am department user')
-        table_data = show_data_table_to_departament(Loiha41)
-    else:
-        table_data = show_data_table(request, Loiha41)  # model
-
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Илова-4.1', projects_department, table_data)  # title
-    return render(request, src['loiha41'], context)
+    return get_data_table(request, 'loiha41', 'Илова-4.1')
 
 
 def get_data_table_Loiha52(request):
-    if get_group_loiha_id(request):
-        table_data = show_data_table_to_departament(Loiha52)
-    else:
-        table_data = show_data_table(request, Loiha52)
-
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Илова-5.2', projects_department, table_data)
-    return render(request, src['loiha52'], context)
+    return get_data_table(request, 'loiha52', 'Илова-5.2')
 
 
 def get_data_table_Loiha14(request):
-    if get_group_loiha_id(request):
-        table_data = show_data_table_to_departament(Loiha14)
-    else:
-        table_data = show_data_table(request, Loiha14)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Илова-14', projects_department, table_data)
-    return render(request, src['loiha14'], context)
+    return get_data_table(request, 'loiha14', 'Илова-14')
 
 
 def get_data_table_Loiha131(request):
-    if get_group_loiha_id(request):
-        table_data = show_data_table_to_departament(Loiha131)
-    else:
-        table_data = show_data_table(request, Loiha131)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Илова-13.1', projects_department, table_data)
-    return render(request, src['loiha131'], context)
+    return get_data_table(request, 'loiha131', 'Илова-13.1')
 
 
 def get_data_table_Loiha122(request):
-    if get_group_loiha_id(request):
-        table_data = show_data_table_to_departament(Loiha122)
-    else:
-        table_data = show_data_table(request, Loiha122)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Илова-12.2', projects_department, table_data)
-    return render(request, src['loiha122'], context)
+    return get_data_table(request, 'loiha122', 'Илова-12.2')
 
 
 def get_data_table_Loiha121(request):
-    if get_group_loiha_id(request):
-        table_data = show_data_table_to_departament(Loiha121)
-    else:
-        table_data = show_data_table(request, Loiha121)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Илова-12.1', projects_department, table_data)
-    return render(request, src['loiha121'], context)
+    return get_data_table(request, 'loiha121', 'Илова-12.1')
 
 
 def get_data_table_Loiha12(request):
-    if get_group_loiha_id(request):
-        table_data = show_data_table_to_departament(Loiha12)
-    else:
-        table_data = show_data_table(request, Loiha12)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Илова-12', projects_department, table_data)
-    return render(request, src['loiha12'], context)
+    return get_data_table(request, 'loiha12', 'Илова-12')
 
 
 def get_data_table_Loiha10(request):
-    if get_group_loiha_id(request):
-        table_data = show_data_table_to_departament(Loiha10)
-    else:
-        table_data = show_data_table(request, Loiha10)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Илова-10', projects_department, table_data)
-    return render(request, src['loiha10'], context)
+    return get_data_table(request, 'loiha10', 'Илова-10')
 
 
 def get_data_table_Loiha6(request):
-    if get_group_loiha_id(request):
-        table_data = show_data_table_to_departament(Loiha6)
-    else:
-        table_data = show_data_table(request, Loiha6)
-    # table_data = show_data_table(request, Loiha6)
-    page_obj = paginate_page(request, table_data)
-
-    # user_district = District.objects.get(id=user.id)
-    context = get_context_data(page_obj, 'Илова-6', projects_department, table_data)
-    return render(request, src['loiha6'], context)
+    return get_data_table(request, 'loiha6', 'Илова-6')
 
 
 def get_data_table_Loiha13(request):
-    if get_group_loiha_id(request):
-        table_data = show_data_table_to_departament(Loiha13)
+    return get_data_table(request, 'loiha13', 'Илова-13')
+
+# All copied elements located in tests.py
+
+
+def get_data_table_filter(request, model_name, page_title, filter_slug):
+    model = loiha_models.get(model_name, None)
+    if not model:
+        # Handle invalid model name
+        raise ValueError("Invalid model name: %s" % model_name)
+
+    if not get_group_loiha_id(request):
+        table_data = show_data_table(request, model)
     else:
-        table_data = show_data_table(request, Loiha13)
+        table_data = show_data_table_to_departament(model)
+
+    table_data = filter_tables(filter_slug, table_data)
+
     page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Илова-13', projects_department, table_data)
-    return render(request, src['loiha13'], context)
+    context = get_context_data(page_obj, page_title, projects_department, table_data)
+    return render(request, src[model_name], context)
+
+
+def table_filter_loiha41(request, filter_slug):
+    return get_data_table_filter(request, 'loiha41', 'Илова-4.1', filter_slug)
+
+
+def table_filter_loiha52(request, filter_slug):
+    return get_data_table_filter(request, 'loiha52', 'Илова-5.2', filter_slug)
+
+
+def table_filter_loiha14(request, filter_slug):
+    return get_data_table_filter(request, 'loiha14', 'Илова-14', filter_slug)
+
+
+def table_filter_loiha131(request, filter_slug):
+    return get_data_table_filter(request, 'loiha131', 'Илова-13.1', filter_slug)
+
+
+def table_filter_loiha122(request, filter_slug):
+    return get_data_table_filter(request, 'loiha122', 'Илова-12.2', filter_slug)
+
+
+def table_filter_loiha121(request, filter_slug):
+    return get_data_table_filter(request, 'loiha121', 'Илова-12.1', filter_slug)
+
+
+def table_filter_loiha12(request, filter_slug):
+    return get_data_table_filter(request, 'loiha12', 'Илова-12', filter_slug)
+
+
+def table_filter_loiha10(request, filter_slug):
+    return get_data_table_filter(request, 'loiha10', 'Илова-10', filter_slug)
+
+
+def table_filter_loiha6(request, filter_slug):
+    return get_data_table_filter(request, 'loiha6', 'Илова-6', filter_slug)
+
+
+def table_filter_loiha13(request, filter_slug):
+    return get_data_table_filter(request, 'loiha13', 'Илова-13', filter_slug)
 
 
 def logoutUser(request):
@@ -581,169 +500,73 @@ def logoutUser(request):
     return render(request, 'mainapp/logout.html')
 
 
-# TODO потом изменить кнопку назад, изменить дату в excel файле.
 # TODO прочитать статью Django про итеграцию с телеграм ботом. Костамизация админкиз
 
 
 @login_required
+def add_data_table(request, model_name, model_form, redirect_url, page_title):
+    model = loiha_models.get(model_name, None)
+    table_data = show_data_table(request, model)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = model_form(request.POST)
+        if form.is_valid():
+            try:
+                model.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect(redirect_url)
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = model_form()
+    context = make_context_by_form(page_title, form, projects_department, page_obj)
+    return render(request, f'mainapp/forms/form_{model_name}.html', context)
+
+
+@login_required
 def add_data_table_Loiha41(request):
-    table_data = show_data_table(request, Loiha41)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha41(request.POST)
-        if form.is_valid():
-            try:
-                Loiha41.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_loiha4.1')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha41()
-    context = make_context_by_form('Илова-4.1', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha41.html', context)
+    return add_data_table(request, 'loiha41', TableFormLoiha41, 'table_loiha4.1', 'Илова-4.1')
 
 
+@login_required
 def add_data_table_Loiha52(request):
-    table_data = show_data_table(request, Loiha52)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha52(request.POST)
-        if form.is_valid():
-            try:
-                create_data(request, Loiha52, form)
-                return redirect('table_loiha5.2')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha52()
-    context = make_context_by_form('Илова-5.2', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha52.html', context)
+    return add_data_table(request, 'loiha52', TableFormLoiha52, 'table_loiha5.2', 'Илова-5.2')
 
 
 @login_required
 def add_data_table_Loiha14(request):
-    table_data = show_data_table(request, Loiha14)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha14(request.POST)
-        if form.is_valid():
-            try:
-                Loiha14.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_loiha14')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha14()
-    context = make_context_by_form('Илова-14', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha14.html', context)
+    return add_data_table(request, 'loiha14', TableFormLoiha14, 'table_loiha14', 'Илова-14')
 
 
 @login_required
 def add_data_table_Loiha131(request):
-    table_data = show_data_table(request, Loiha131)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha131(request.POST)
-        if form.is_valid():
-            try:
-                Loiha131.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_loiha13.1')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha131()
-    context = make_context_by_form('Илова-13.1', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha131.html', context)
+    return add_data_table(request, 'loiha131', TableFormLoiha131, 'table_loiha13.1', 'Илова-13.1')
 
 
 @login_required
 def add_data_table_Loiha122(request):
-    table_data = show_data_table(request, Loiha122)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha122(request.POST)
-        if form.is_valid():
-            try:
-                Loiha122.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_loiha12.2')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha122()
-    context = make_context_by_form('Илова-12.2', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha122.html', context)
+    return add_data_table(request, 'loiha122', TableFormLoiha122, 'table_loiha12.2', 'Илова-12.2')
 
 
 @login_required
 def add_data_table_Loiha121(request):
-    table_data = show_data_table(request, Loiha121)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha121(request.POST)
-        if form.is_valid():
-            try:
-                Loiha121.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_loiha12.1')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha121()
-    context = make_context_by_form('Илова-12.1', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha121.html', context)
+    return add_data_table(request, 'loiha121', TableFormLoiha121, 'table_loiha12.1', 'Илова-12.1')
 
 
 @login_required
 def add_data_table_Loiha12(request):
-    table_data = show_data_table(request, Loiha12)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha12(request.POST)
-        if form.is_valid():
-            try:
-                Loiha12.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_loiha12')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha12()
-    context = make_context_by_form('Илова-12', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha12.html', context)
-
-
-@login_required
-def add_data_table_Loiha6(request):
-    table_data = show_data_table(request, Loiha6)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha6(request.POST)
-        if form.is_valid():
-            try:
-                Loiha6.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_loiha6')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha6()
-    context = make_context_by_form('Илова-6', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha6.html', context)
+    return add_data_table(request, 'loiha12', TableFormLoiha12, 'table_loiha12', 'Илова-12')
 
 
 @login_required
 def add_data_table_Loiha10(request):
-    table_data = show_data_table(request, Loiha10)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha10(request.POST)
-        if form.is_valid():
-            try:
-                Loiha10.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_loiha10')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha10()
-    context = make_context_by_form('Илова-10', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha10.html', context)
+    return add_data_table(request, 'loiha10', TableFormLoiha10, 'table_loiha10', 'Илова-10')
+
+
+@login_required
+def add_data_table_Loiha6(request):
+    return add_data_table(request, 'loiha6', TableFormLoiha6, 'table_loiha6', 'Илова-6')
+
+
 
 
 @login_required
@@ -764,173 +587,72 @@ def add_data_table_Loiha13(request):
     return render(request, 'mainapp/forms/form_loiha13.html', context)
 
 
-def table_filter_loiha131(request, filter_slug):
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha131)
-    else:
-        table = show_data_table_to_departament(Loiha131)
-
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-13.1', projects_department, table)
-    return render(request, src['loiha131'], context)
-
-
-def table_filter_loiha41(request, filter_slug):
-
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha41)
-    else:
-        table = show_data_table_to_departament(Loiha41)
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    # if filter_slug == 'week':
-    #     now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-    #     table = table.filter(time_create__gte=now)
-    # elif filter_slug == 'month':
-    #     now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-    #     table = table.filter(time_create__gte=now)
-    # elif filter_slug == 'all':
-    #     table = table
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-4.1', projects_department, table)
-    return render(request, src['loiha41'], context)
-
-
-def table_filter_loiha52(request, filter_slug):
-    # table = Loiha52.objects.filter(district=request.user.district)
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha52)
-    else:
-        table = show_data_table_to_departament(Loiha52)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-5.2', projects_department, table)
-    return render(request, src['loiha52'], context)
-
-
-def table_filter_loiha14(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha14)
-    else:
-        table = show_data_table_to_departament(Loiha14)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-14', projects_department, table)
-    return render(request, src['loiha14'], context)
-
-
-def table_filter_loiha122(request, filter_slug):
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha122)
-    else:
-        table = show_data_table_to_departament(Loiha122)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-12.2', projects_department, table)
-    return render(request, src['loiha122'], context)
-
-
-def table_filter_loiha121(request, filter_slug):
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha121)
-    else:
-        table = show_data_table_to_departament(Loiha121)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-12.1', projects_department, table)
-    return render(request, src['loiha121'], context)
-
-
-def table_filter_loiha12(request, filter_slug):
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha12)
-    else:
-        table = show_data_table_to_departament(Loiha12)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-12', projects_department, table)
-    return render(request, src['loiha12'], context)
-
-
-def table_filter_loiha10(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    # table = show_data_table(request, Loiha10)
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha10)
-    else:
-        table = show_data_table_to_departament(Loiha10)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-10', projects_department, table)
-    return render(request, src['loiha10'], context)
-
-
-def table_filter_loiha6(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha6)
-    else:
-        table = show_data_table_to_departament(Loiha6)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-6', projects_department, table)
-    return render(request, src['loiha6'], context)
-
-
-def table_filter_loiha13(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    if not get_group_loiha_id(request):
-        table = show_data_table(request, Loiha13)
-    else:
-        table = show_data_table_to_departament(Loiha13)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Илова-13', projects_department, table)
-    return render(request, src['loiha13'], context)
-
-
 # Второй отдел
 
-# Sanoat
+def get_data_table_2(request, model_name, page_title):
+    model = second_department_models_dict.get(model_name, None)
+    if not model:
+        # Handle invalid model name
+        raise ValueError("Invalid model name: %s" % model_name)
+
+    if get_group_export_id(request):
+        table_data = show_data_table_to_departament(model)
+    else:
+        table_data = show_data_table(request, model)
+
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, page_title, second_department_tables_menu, table_data)
+    return render(request, src[model_name], context)
+
 
 def get_data_table_sanoat(request):
-    if get_group_export_id(request):
-        # print('I am department user')
-        table_data = show_data_table_to_departament(Sanoat)
+    return get_data_table_2(request, 'sanoat', 'Sanoat')
+
+
+def get_data_table_kh(request):
+    return get_data_table_2(request, 'kx', 'KX')
+
+
+def get_data_table_first_table(request):
+    return get_data_table_2(request, 'table_1', 'Таблица 1')
+
+
+def get_data_table_kunliu(request):
+    return get_data_table_2(request, 'kunliu', 'кунлиу')
+
+
+def get_data_table_filter_second_departament(request, model_name, page_title, filter_slug):
+    model = second_department_models_dict.get(model_name, None)
+    if not model:
+        # Handle invalid model name
+        raise ValueError("Invalid model name: %s" % model_name)
+
+    if not get_group_export_id(request):
+        table_data = show_data_table(request, model)
     else:
-        table_data = show_data_table(request, Sanoat)
+        table_data = show_data_table_to_departament(model)
+
+    table_data = filter_tables(filter_slug, table_data)
+
     page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Sanoat', second_department_tables_menu, table_data)
-    return render(request, src['sanoat'], context)
+    context = get_context_data(page_obj, page_title, second_department_tables_menu, table_data)
+    return render(request, src[model_name], context)
+
+
+def table_filter_sanoat(request, filter_slug):
+    return get_data_table_filter_second_departament(request, 'sanoat', 'Sanoat', filter_slug)
+
+
+def table_filter_kx(request, filter_slug):
+    return get_data_table_filter_second_departament(request, 'kx', 'KX', filter_slug)
+
+
+def table_filter_first_table(request, filter_slug):
+    return get_data_table_filter_second_departament(request, 'table_1', 'Таблица 1', filter_slug)
+
+
+def table_filter_kunliu(request, filter_slug):
+    return get_data_table_filter_second_departament(request, 'kunliu', 'кунлиу', filter_slug)
 
 
 @login_required
@@ -951,32 +673,6 @@ def add_data_table_sanoat(request):
     return render(request, 'mainapp/forms/second_departament/form_sanoat.html', context)
 
 
-def table_filter_sanoat(request, filter_slug):
-    # table = show_data_table(request, Sanoat)
-    if not get_group_export_id(request):
-        table = show_data_table(request, Sanoat)
-    else:
-        table = show_data_table_to_departament(Sanoat)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Sanoat', second_department_tables_menu, table)
-    return render(request, src['sanoat'], context)
-
-
-# KX
-
-def get_data_table_kh(request):
-    if get_group_export_id(request):
-        table_data = show_data_table_to_departament(KH)
-    else:
-        table_data = show_data_table(request, KH)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'KX', second_department_tables_menu, table_data)
-    return render(request, src['kx'], context)
-
 
 @login_required
 def add_data_table_kx(request):
@@ -994,32 +690,6 @@ def add_data_table_kx(request):
         form = TableFormKX()
     context = make_context_by_form('KX', form, second_department_tables_menu, page_obj)
     return render(request, 'mainapp/forms/second_departament/form_kx.html', context)
-
-
-def table_filter_kx(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    if not get_group_export_id(request):
-        table = show_data_table(request, KH)
-    else:
-        table = show_data_table_to_departament(KH)
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'KX', second_department_tables_menu, table)
-    return render(request, src['kx'], context)
-
-
-# first_table
-
-def get_data_table_first_table(request):
-    if get_group_export_id(request):
-        table_data = show_data_table_to_departament(FirstTable)
-    else:
-        table_data = show_data_table(request, FirstTable)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Таблица 1', second_department_tables_menu, table_data)
-    return render(request, src['table_1'], context)
 
 
 @login_required
@@ -1040,32 +710,7 @@ def add_data_table_1(request):
     return render(request, 'mainapp/forms/second_departament/form_table1.html', context)
 
 
-def table_filter_first_table(request, filter_slug):
-    # table = Loiha14.objects.filter(district=request.user.district)
-    if not get_group_export_id(request):
-        table = show_data_table(request, FirstTable)
-    else:
-        table = show_data_table_to_departament(FirstTable)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Таблица 1', second_department_tables_menu, table)
-    return render(request, src['table_1'], context)
-
-
 # Kunliu
-
-def get_data_table_kunliu(request):
-    if get_group_export_id(request):
-        table_data = show_data_table_to_departament(Kunliu)
-    else:
-        table_data = show_data_table(request, Kunliu)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'кунлиу', second_department_tables_menu, table_data)
-    return render(request, src['kunliu'], context)
-
 
 @login_required
 def add_data_table_kunliu(request):
@@ -1085,43 +730,88 @@ def add_data_table_kunliu(request):
     return render(request, 'mainapp/forms/second_departament/form_kunliu.html', context)
 
 
-def table_filter_kunliu(request, filter_slug):
-    if not get_group_export_id(request):
-        table = show_data_table(request, Kunliu)
-    else:
-        table = show_data_table_to_departament(Kunliu)
-
-    # table_data = show_data_table(request, Loiha131)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'кунлиу', second_department_tables_menu, table)
-    return render(request, src['kunliu'], context)
-
-
 # 3 Сводный отдел
-# Жами Свод
+def get_data_table_3(request, model_name, page_title):
+    model = third_department_models_dict.get(model_name, None)
+    if not model:
+        # Handle invalid model name
+        raise ValueError("Invalid model name: %s" % model_name)
+
+    if get_group_vault_id(request):
+        table_data = show_data_table_to_departament(model)
+    else:
+        table_data = show_data_table(request, model)
+
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, page_title, third_department_tables_menu, table_data)
+    return render(request, src[model_name], context)
+
 
 def get_data_table_jami(request):
-    if get_group_vault_id(request):
-        table_data = show_data_table_to_departament(JamiVault)
+    return get_data_table_3(request, 'jami', 'Жами свод')
+
+
+def get_data_table_quarter(request):
+    return get_data_table_3(request, 'quarter', 'Cвод чорак')
+
+
+def get_data_table_month(request):
+    return get_data_table_3(request, 'monthly', 'Cвод ойлар')
+
+
+def get_data_table_bank(request):
+    return get_data_table_3(request, 'bank', 'Cвод банк')
+
+
+def get_data_table_reja(request):
+    return get_data_table_3(request, 'reja', 'Cвод режа')
+
+
+def get_data_table_tarmok(request):
+    return get_data_table_3(request, 'tarmok', 'Cвод тармок')
+
+# Жами Свод
+
+
+def get_data_table_filter_third_departament(request, model_name, page_title, filter_slug):
+    model = third_department_models_dict.get(model_name, None)
+    if not model:
+        # Handle invalid model name
+        raise ValueError("Invalid model name: %s" % model_name)
+
+    if not get_group_vault_id(request):
+        table_data = show_data_table(request, model)
     else:
-        table_data = show_data_table(request, JamiVault)
+        table_data = show_data_table_to_departament(model)
+
+    table_data = filter_tables(filter_slug, table_data)
     page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Жами свод', third_department_tables_menu, table_data)
-    return render(request, src['jami'], context)
+    context = get_context_data(page_obj, page_title, third_department_tables_menu, table_data)
+    return render(request, src[model_name], context)
 
 
 def table_filter_table_jami(request, filter_slug):
-    if not get_group_vault_id(request):
-        table = show_data_table(request, JamiVault)
-    else:
-        table = show_data_table_to_departament(JamiVault)
-    table = filter_tables(filter_slug, table)
+    return get_data_table_filter_third_departament(request, 'jami', 'Жами свод', filter_slug)
 
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Жами свод', third_department_tables_menu, table)
-    return render(request, src['jami'], context)
+
+def table_filter_table_quarter(request, filter_slug):
+    return get_data_table_filter_third_departament(request, 'quarter', 'Cвод чорак', filter_slug)
+
+
+def table_filter_table_month(request, filter_slug):
+    return get_data_table_filter_third_departament(request, 'monthly', 'Cвод ойлар', filter_slug)
+
+
+def table_filter_table_bank(request, filter_slug):
+    return get_data_table_filter_third_departament(request, 'bank', 'Cвод банк', filter_slug)
+
+
+def table_filter_table_reja(request, filter_slug):
+    return get_data_table_filter_third_departament(request, 'reja', 'Cвод режа', filter_slug)
+
+
+def table_filter_table_tarmok(request, filter_slug):
+    return get_data_table_filter_third_departament(request, 'tarmok', 'Cвод тармок', filter_slug)
 
 
 @login_required
@@ -1142,30 +832,6 @@ def add_data_table_jami(request):
     return render(request, 'mainapp/forms/third_departament/form_jami.html', context)
 
 
-# Свод Чорак
-
-def get_data_table_quarter(request):
-    if get_group_vault_id(request):
-        table_data = show_data_table_to_departament(QuarterVault)
-    else:
-        table_data = show_data_table(request, QuarterVault)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Cвод чорак', third_department_tables_menu, table_data)
-    return render(request, src['quarter'], context)
-
-
-def table_filter_table_quarter(request, filter_slug):
-    if not get_group_vault_id(request):
-        table = show_data_table(request, QuarterVault)
-    else:
-        table = show_data_table_to_departament(QuarterVault)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Cвод чорак', third_department_tables_menu, table)
-    return render(request, src['quarter'], context)
-
-
 @login_required
 def add_data_table_quarter(request):
     table_data = show_data_table(request, QuarterVault)
@@ -1182,29 +848,6 @@ def add_data_table_quarter(request):
         form = TableQuarterForm()
     context = make_context_by_form('Cвод чорак', form, third_department_tables_menu, page_obj)
     return render(request, 'mainapp/forms/third_departament/form_quarter.html', context)
-
-
-# Свод Ойлар
-def get_data_table_month(request):
-    if get_group_vault_id(request):
-        table_data = show_data_table_to_departament(MonthVault)
-    else:
-        table_data = show_data_table(request, MonthVault)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Cвод ойлар', third_department_tables_menu, table_data)
-    return render(request, src['monthly'], context)
-
-
-def table_filter_table_month(request, filter_slug):
-    if not get_group_vault_id(request):
-        table = show_data_table(request, MonthVault)
-    else:
-        table = show_data_table_to_departament(MonthVault)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Cвод ойлар', third_department_tables_menu, table)
-    return render(request, src['monthly'], context)
 
 
 @login_required
@@ -1225,28 +868,6 @@ def add_data_table_month(request):
     return render(request, 'mainapp/forms/third_departament/form_monthly.html', context)
 
 
-# Свод Банк
-def get_data_table_bank(request):
-    if get_group_vault_id(request):
-        table_data = show_data_table_to_departament(BankVault)
-    else:
-        table_data = show_data_table(request, BankVault)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Cвод банк', third_department_tables_menu, table_data)
-    return render(request, src['bank'], context)
-
-
-def table_filter_table_bank(request, filter_slug):
-    if not get_group_vault_id(request):
-        table = show_data_table(request, BankVault)
-    else:
-        table = show_data_table_to_departament(BankVault)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Cвод банк', third_department_tables_menu, table)
-    return render(request, src['bank'], context)
-
 
 @login_required
 def add_data_table_bank(request):
@@ -1266,30 +887,6 @@ def add_data_table_bank(request):
     return render(request, 'mainapp/forms/third_departament/form_bank.html', context)
 
 
-# Свод Режа
-
-def get_data_table_reja(request):
-    if get_group_vault_id(request):
-        table_data = show_data_table_to_departament(RejaVault)
-    else:
-        table_data = show_data_table(request, RejaVault)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Cвод режа', third_department_tables_menu, table_data)
-    return render(request, src['reja'], context)
-
-
-def table_filter_table_reja(request, filter_slug):
-    if not get_group_vault_id(request):
-        table = show_data_table(request, RejaVault)
-    else:
-        table = show_data_table_to_departament(RejaVault)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Cвод режа', third_department_tables_menu, table)
-    return render(request, src['reja'], context)
-
-
 @login_required
 def add_data_table_reja(request):
     table_data = show_data_table(request, RejaVault)
@@ -1306,30 +903,6 @@ def add_data_table_reja(request):
         form = TableRejaForm()
     context = make_context_by_form('Cвод режа', form, third_department_tables_menu, page_obj)
     return render(request, 'mainapp/forms/third_departament/form_reja.html', context)
-
-
-# Свод Tarmok
-
-def get_data_table_tarmok(request):
-    if get_group_vault_id(request):
-        table_data = show_data_table_to_departament(TarmokVault)
-    else:
-        table_data = show_data_table(request, TarmokVault)
-    page_obj = paginate_page(request, table_data)
-    context = get_context_data(page_obj, 'Cвод тармок', third_department_tables_menu, table_data)
-    return render(request, src['tarmok'], context)
-
-
-def table_filter_table_tarmok(request, filter_slug):
-    if not get_group_vault_id(request):
-        table = show_data_table(request, TarmokVault)
-    else:
-        table = show_data_table_to_departament(TarmokVault)
-    table = filter_tables(filter_slug, table)
-
-    page_obj = paginate_page(request, table)
-    context = get_context_data(page_obj, 'Cвод тармок', third_department_tables_menu, table)
-    return render(request, src['tarmok'], context)
 
 
 @login_required

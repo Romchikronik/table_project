@@ -51,8 +51,37 @@ fifth_department_tables_menu = [
     {'table_name': 'Отдел-5.1', }
 ]
 
-# список моделей отдела Лоиха   TODO сделать список словарей клбчем будет заголовок азначением модель
-# { Илова-4.1: { Loiha14:  } }
+
+loiha_models = {
+    'loiha41': Loiha41,
+    'loiha52': Loiha52,
+    'loiha14': Loiha14,
+    'loiha131': Loiha131,
+    'loiha122': Loiha122,
+    'loiha121': Loiha121,
+    'loiha12': Loiha12,
+    'loiha10': Loiha10,
+    'loiha6': Loiha6,
+    'loiha13': Loiha13,
+    # Add other models here
+}
+
+second_department_models_dict = {
+    'sanoat': Sanoat,
+    'kx': KH,
+    'table_1': FirstTable,
+    'kunliu': Kunliu,
+}
+
+third_department_models_dict = {
+    'jami': JamiVault,
+    'quarter': QuarterVault,
+    'monthly': MonthVault,
+    'bank': BankVault,
+    'reja': RejaVault,
+    'tarmok': TarmokVault,
+}
+
 
 projects_department_models = [
     Loiha41,
@@ -196,14 +225,6 @@ def filter_tables(filter_slug, table_p):
 
     return table
 
-# perm = Permission.objects.create(content_type__app_label='user', content_type__model='user', codename='loiha_access')
 
-# department group
-# departament_group, created = Group.objects.get_or_create(name='departament_group')
-# ct = ContentType.objects.get_for_model(User)
-# permission = Permission.objects.get_or_create(
-#                                               codename='access_to_departament',
-#                                               name='Can access to departament',
-#                                               content_type=ct)
-# departament_group.permissions.add(permission)
+
 

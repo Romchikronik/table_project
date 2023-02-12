@@ -121,6 +121,7 @@
 {% include 'mainapp/pagination.html' %}
 {% endblock %}
 
+
 {% if not 'week' in request.get_full_path and not 'month' in request.get_full_path %}
     {% block export_table %}
         <a class="btn btn-primary mb-5" href="{% url 'export-excel' filter_slug='all' %}">Экспорт таблицы excel</a>
