@@ -47,13 +47,6 @@ def mainPage(request):
 
 # if user in
 
-# @login_required
-# def get_department_projects(request, departament_slug):
-#     context = {
-#         'title': 'Отдел - Лоиха',
-#         'projects_department': projects_department
-#     }
-#     return render(request, 'mainapp/departments/projects_department.html', context)
 
 @login_required
 def get_department_projects(request):
@@ -522,69 +515,45 @@ def add_data_table(request, model_name, model_form, redirect_url, page_title):
     return render(request, f'mainapp/forms/form_{model_name}.html', context)
 
 
-@login_required
+# @login_required
 def add_data_table_Loiha41(request):
     return add_data_table(request, 'loiha41', TableFormLoiha41, 'table_loiha4.1', 'Илова-4.1')
 
 
-@login_required
 def add_data_table_Loiha52(request):
     return add_data_table(request, 'loiha52', TableFormLoiha52, 'table_loiha5.2', 'Илова-5.2')
 
 
-@login_required
 def add_data_table_Loiha14(request):
     return add_data_table(request, 'loiha14', TableFormLoiha14, 'table_loiha14', 'Илова-14')
 
 
-@login_required
 def add_data_table_Loiha131(request):
     return add_data_table(request, 'loiha131', TableFormLoiha131, 'table_loiha13.1', 'Илова-13.1')
 
 
-@login_required
 def add_data_table_Loiha122(request):
     return add_data_table(request, 'loiha122', TableFormLoiha122, 'table_loiha12.2', 'Илова-12.2')
 
 
-@login_required
 def add_data_table_Loiha121(request):
     return add_data_table(request, 'loiha121', TableFormLoiha121, 'table_loiha12.1', 'Илова-12.1')
 
 
-@login_required
 def add_data_table_Loiha12(request):
     return add_data_table(request, 'loiha12', TableFormLoiha12, 'table_loiha12', 'Илова-12')
 
 
-@login_required
 def add_data_table_Loiha10(request):
     return add_data_table(request, 'loiha10', TableFormLoiha10, 'table_loiha10', 'Илова-10')
 
 
-@login_required
 def add_data_table_Loiha6(request):
     return add_data_table(request, 'loiha6', TableFormLoiha6, 'table_loiha6', 'Илова-6')
 
 
-
-
-@login_required
 def add_data_table_Loiha13(request):
-    table_data = show_data_table(request, Loiha13)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormLoiha13(request.POST)
-        if form.is_valid():
-            try:
-                Loiha13.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_loiha13')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormLoiha13()
-    context = make_context_by_form('Илова-13', form, projects_department, page_obj)
-    return render(request, 'mainapp/forms/form_loiha13.html', context)
+    return add_data_table(request, 'loiha13', TableFormLoiha13, 'table_loiha13', 'Илова-13')
 
 
 # Второй отдел
@@ -656,78 +625,38 @@ def table_filter_kunliu(request, filter_slug):
 
 
 @login_required
+def add_data_table_second_department(request, model_name, model_form, redirect_url, page_title):
+    model = second_department_models_dict.get(model_name, None)
+    table_data = show_data_table(request, model)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = model_form(request.POST)
+        if form.is_valid():
+            try:
+                model.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect(redirect_url)
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = model_form()
+    context = make_context_by_form(page_title, form, second_department_tables_menu, page_obj)
+    return render(request, f'mainapp/forms/second_departament/form_{model_name}.html', context)
+
+
 def add_data_table_sanoat(request):
-    table_data = show_data_table(request, Sanoat)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormSanoat(request.POST)
-        if form.is_valid():
-            try:
-                Sanoat.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_sanoat')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormSanoat()
-    context = make_context_by_form('Sanoat', form, second_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/second_departament/form_sanoat.html', context)
+    return add_data_table_second_department(request, 'sanoat', TableFormSanoat, 'table_sanoat', 'Sanoat')
 
 
-
-@login_required
 def add_data_table_kx(request):
-    table_data = show_data_table(request, KH)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFormKX(request.POST)
-        if form.is_valid():
-            try:
-                KH.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_kx')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFormKX()
-    context = make_context_by_form('KX', form, second_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/second_departament/form_kx.html', context)
+    return add_data_table_second_department(request, 'kx', TableFormKX, 'table_kx', 'KX')
 
 
-@login_required
 def add_data_table_1(request):
-    table_data = show_data_table(request, FirstTable)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableFirstForm(request.POST)
-        if form.is_valid():
-            try:
-                FirstTable.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_first')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableFirstForm()
-    context = make_context_by_form('Таблица 1', form, second_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/second_departament/form_table1.html', context)
+    return add_data_table_second_department(request, 'table_1', TableFirstForm, 'table_first', 'Таблица 1')
 
 
-# Kunliu
-
-@login_required
 def add_data_table_kunliu(request):
-    table_data = show_data_table(request, Kunliu)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableKunliuForm(request.POST)
-        if form.is_valid():
-            try:
-                Kunliu.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_kunliu')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableKunliuForm()
-    context = make_context_by_form('кунлиу', form, second_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/second_departament/form_kunliu.html', context)
+    return add_data_table_second_department(request, 'kunliu', TableKunliuForm, 'table_kunliu', 'кунлиу')
 
 
 # 3 Сводный отдел
@@ -815,109 +744,43 @@ def table_filter_table_tarmok(request, filter_slug):
 
 
 @login_required
+def add_data_table_third_department(request, model_name, model_form, redirect_url, page_title):
+    model = third_department_models_dict.get(model_name, None)
+    table_data = show_data_table(request, model)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = model_form(request.POST)
+        if form.is_valid():
+            try:
+                model.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect(redirect_url)
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = model_form()
+    context = make_context_by_form(page_title, form, third_department_tables_menu, page_obj)
+    return render(request, f'mainapp/forms/third_departament/form_{model_name}.html', context)
+
+
 def add_data_table_jami(request):
-    table_data = show_data_table(request, JamiVault)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableJamiForm(request.POST)
-        if form.is_valid():
-            try:
-                JamiVault.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_jami')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableJamiForm()
-    context = make_context_by_form('Жами свод', form, third_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/third_departament/form_jami.html', context)
+    return add_data_table_third_department(request, 'jami', TableJamiForm, 'table_jami', 'Жами свод')
 
 
-@login_required
 def add_data_table_quarter(request):
-    table_data = show_data_table(request, QuarterVault)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableQuarterForm(request.POST)
-        if form.is_valid():
-            try:
-                QuarterVault.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_quarter')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableQuarterForm()
-    context = make_context_by_form('Cвод чорак', form, third_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/third_departament/form_quarter.html', context)
+    return add_data_table_third_department(request, 'quarter', TableQuarterForm, 'table_quarter', 'Cвод чорак')
 
 
-@login_required
 def add_data_table_month(request):
-    table_data = show_data_table(request, MonthVault)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableMonthForm(request.POST)
-        if form.is_valid():
-            try:
-                MonthVault.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_monthly')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableMonthForm()
-    context = make_context_by_form('Cвод ойлар', form, third_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/third_departament/form_monthly.html', context)
+    return add_data_table_third_department(request, 'monthly', TableMonthForm, 'table_monthly', 'Cвод ойлар')
 
 
-
-@login_required
 def add_data_table_bank(request):
-    table_data = show_data_table(request, BankVault)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableBankForm(request.POST)
-        if form.is_valid():
-            try:
-                BankVault.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_bank')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableBankForm()
-    context = make_context_by_form('Cвод банк', form, third_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/third_departament/form_bank.html', context)
+    return add_data_table_third_department(request, 'bank', TableBankForm, 'table_bank', 'Cвод банк')
 
 
-@login_required
 def add_data_table_reja(request):
-    table_data = show_data_table(request, RejaVault)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableRejaForm(request.POST)
-        if form.is_valid():
-            try:
-                RejaVault.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_reja')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableRejaForm()
-    context = make_context_by_form('Cвод режа', form, third_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/third_departament/form_reja.html', context)
+    return add_data_table_third_department(request, 'reja', TableRejaForm, 'table_reja', 'Cвод режа')
 
 
-@login_required
 def add_data_table_tarmok(request):
-    table_data = show_data_table(request, TarmokVault)
-    page_obj = paginate_page(request, table_data)
-    if request.method == 'POST':
-        form = TableTarmokForm(request.POST)
-        if form.is_valid():
-            try:
-                TarmokVault.objects.create(**form.cleaned_data, district=request.user.district)
-                return redirect('table_tarmok')
-            except:
-                form.add_error(None, 'Ошибка добавления данных')
-    else:
-        form = TableTarmokForm()
-    context = make_context_by_form('Cвод тармок', form, third_department_tables_menu, page_obj)
-    return render(request, 'mainapp/forms/third_departament/form_tarmok.html', context)
+    return add_data_table_third_department(request, 'tarmok', TableTarmokForm, 'table_tarmok', 'Cвод тармок')
