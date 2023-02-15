@@ -47,6 +47,24 @@ def mainPage(request):
 
 # if user in
 
+# @login_required
+# def get_department(request, del_group_id, page_title, department_name, department_url):
+#     if del_group_id(request):
+#         # raise Exception('У вас нету доступа к этому департаменту')
+#         messages.error(request, 'У вас нету доступа к этому департаменту')
+#         return redirect('/')
+#     else:
+#         context = {
+#             'title': page_title,
+#             f'{department_name}': department_name
+#         }
+#         return render(request, f'mainapp/departments/{department_url}.html', context)
+
+
+# @login_required
+# def get_department_projects(request):
+#     return get_department(request, del_group_loiha_id, 'Отдел - Лоиха', projects_department, 'projects_department')
+
 
 @login_required
 def get_department_projects(request):
@@ -108,8 +126,7 @@ def get_department_5(request):
     return render(request, 'mainapp/departments/department_5.html', context)
 
 
-
-def export_excel(request, filter_slug):
+def export_excel_loiha41(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename=table' + \
                                       str(datetime.now()) + '.xls'
@@ -126,7 +143,7 @@ def export_excel(request, filter_slug):
 
     # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
     if not get_group_loiha_id(request):
-        ws.write_merge(0, 0, 0, 25, 'Чирчик тумани, Илова-4.1', cell_title)
+        ws.write_merge(0, 0, 0, 25, f'{request.user.district}, Илова-4.1', cell_title)
         ws.write_merge(1, 1, 0, 3, 'SANOAT', cell_style)
         ws.write_merge(1, 1, 4, 7, 'QISHLOQ', cell_style)
         ws.write_merge(1, 1, 8, 11, 'QURILISH', cell_style)
@@ -232,23 +249,7 @@ def export_excel(request, filter_slug):
         *fields
     ]
 
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        if not get_group_loiha_id(request):
-            rows = show_data_table(request, Loiha41).filter(time_create__gte=now).values_list(*fields)
-        else:
-            rows = show_data_table_to_departament(Loiha41).filter(time_create__gte=now).values_list(*department_fields)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        if not get_group_loiha_id(request):
-            rows = show_data_table(request, Loiha41).filter(time_create__gte=now).values_list(*fields)
-        else:
-            rows = show_data_table_to_departament(Loiha41).filter(time_create__gte=now).values_list(*department_fields)
-    else:
-        if not get_group_loiha_id(request):
-            rows = show_data_table(request, Loiha41).values_list(*fields)
-        else:
-            rows = show_data_table_to_departament(Loiha41).values_list(*department_fields)
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha41, fields, department_fields)
 
     for row in rows:
         row_num += 1
@@ -277,7 +278,7 @@ def export_excel_loiha52(request, filter_slug):
 
     # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
     if not get_group_loiha_id(request):
-        ws.write_merge(0, 0, 0, 12, 'Чирчик тумани, Илова-5.2', cell_title)
+        ws.write_merge(0, 0, 0, 12, f'{request.user.district}, Илова-5.2', cell_title)
         ws.write_merge(1, 1, 4, 5, 'Состояние запасов на 01.01.2019', cell_style)
         ws.write_merge(1, 1, 6, 7, 'Оперативная информация', cell_style)
     else:
@@ -343,23 +344,7 @@ def export_excel_loiha52(request, filter_slug):
         *fields
     ]
 
-    if filter_slug == 'week':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
-        if not get_group_loiha_id(request):
-            rows = show_data_table(request, Loiha52).filter(time_create__gte=now).values_list(*fields)
-        else:
-            rows = show_data_table_to_departament(Loiha52).filter(time_create__gte=now).values_list(*department_fields)
-    elif filter_slug == 'month':
-        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
-        if not get_group_loiha_id(request):
-            rows = show_data_table(request, Loiha52).filter(time_create__gte=now).values_list(*fields)
-        else:
-            rows = show_data_table_to_departament(Loiha52).filter(time_create__gte=now).values_list(*department_fields)
-    else:
-        if not get_group_loiha_id(request):
-            rows = show_data_table(request, Loiha52).values_list(*fields)
-        else:
-            rows = show_data_table_to_departament(Loiha52).values_list(*department_fields)
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha52, fields, department_fields)
 
     for row in rows:
         row_num += 1
@@ -370,6 +355,745 @@ def export_excel_loiha52(request, filter_slug):
     wb.save(response)
     return response
 
+
+def export_excel_loiha14(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=table' + \
+                                      str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 3 # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 13, f'{request.user.district}, Илова-14', cell_title)
+        ws.write_merge(1, 2, 0, 2, 'Доступная информация', cell_style)
+        ws.write_merge(1, 1, 3, 9, 'Процесс реализации запланированных проектов', cell_style)
+        ws.write_merge(1, 1, 10, 12, 'Финансирование', cell_style)
+
+        ws.write_merge(2, 2, 5, 7, 'Из них', cell_style)
+        ws.write_merge(2, 2, 11, 12, 'Иностранные', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 14, 'Илова-14', cell_title)
+        # ws.write_merge(1, 2, 0, 1, 'Район', cell_style)
+        ws.write_merge(1, 2, 1, 3, 'Доступная информация', cell_style)
+        ws.write_merge(1, 1, 4, 10, 'Процесс реализации запланированных проектов', cell_style)
+        ws.write_merge(1, 1, 11, 13, 'Финансирование', cell_style)
+
+        ws.write_merge(2, 2, 6, 8, 'Из них', cell_style)
+        ws.write_merge(2, 2, 12, 13, 'Иностранные', cell_style)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = ["Организация",
+                    "Род деятельности",
+                    "Имеющиеся рабочие места",
+                    "Проектная деятельность",
+                    "Оценка (млрд долл)",
+                    "Собственные средства",
+                    "Банковский кредит",
+                    "Иностранные инвестиции",
+                    "Созданные рабочие места",
+                    "Обьем экспорта (млрд долл)",
+                    "Название банка",
+                    "Название страны",
+                    "Название организации",
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'organization_available_information',
+        'kind_of_activity_available_information',
+        'available_jobs_available_information',
+        'project_activity_at_work',
+        'grade_at_work',
+        'own_funds_grade_at_work',
+        'bank_loan_grade_at_work',
+        'sources_sources_of_financing',
+        'created_new_jobs_at_work',
+        'export_volume_at_work',
+        'name_bank_financing',
+        'name_country_financing',
+        'organization_name_foreign_financing'
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha14, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_loiha131(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=table' + \
+                                      str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 2 # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 10, f'{request.user.district}, Илова-13.1', cell_title)
+        ws.write_merge(1, 1, 1, 8, 'Из них', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 11, 'Илова-13.1', cell_title)
+        ws.write_merge(1, 1, 2, 9, 'Из них', cell_style)
+
+    # "Район",
+    columns_list = [
+                    "Известные проблемы",
+                    "Банк",
+                    "Земля и здание",
+                    "Коммунальные",
+                    "Таможня",
+                    "Налог",
+                    "Разрешения",
+                    "Бюрокартический барьер",
+                    "Другое",
+                    "Решенные проблемы"
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'identified_problems',
+        'bank_identified_problems',
+        'land_and_building_identified_problems',
+        'public_services_identified_problems',
+        'customs_identified_problems',
+        'tax_identified_problems',
+        'permission_identified_problems',
+        'bureaucratic_obstacles_identified_problems',
+        'other_identified_problems',
+        'resolved_problems_identified_problems',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha131, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_loiha122(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=table' + \
+                                      str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 3 # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 12, f'{request.user.district}, Илова-12.2', cell_title)
+        ws.write_merge(1, 1, 1, 8, 'в процессе', cell_style)
+        ws.write_merge(1, 1, 9, 11, 'Финансирование', cell_style)
+
+        ws.write_merge(2, 2, 4, 6, 'Из них', cell_style)
+        ws.write_merge(2, 2, 10, 11, 'Иностранные', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 13, 'Илова-12.2', cell_title)
+        ws.write_merge(1, 1, 2, 9, 'в процессе', cell_style)
+        ws.write_merge(1, 1, 10, 12, 'Финансирование', cell_style)
+
+        ws.write_merge(2, 2, 5, 7, 'Из них', cell_style)
+        ws.write_merge(2, 2, 11, 12, 'Иностранные', cell_style)
+
+    # "Район",
+    columns_list = [
+                    "Сформированные советы",
+                    "Проекты",
+                    "Производсвенные мощности",
+                    "Оценка",
+                    "Собственные средства",
+                    "Банковский кредит",
+                    "Иностранные инвестиции",
+                    "Уровнь работы",
+                    "Обьем экспорта",
+                    "Название банка",
+                    "Название страны",
+                    "название организации",
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'formed_tips',
+        'projects_at_work',
+        'production_capacity_at_work',
+        'grade_at_work',
+        'own_funds_grade_at_work',
+        'bank_loan_grade_at_work',
+        'foreign_investments_grade_at_work',
+        'workplace_at_work',
+        'export_volume_at_work',
+        'name_bank_financing',
+        'name_country_financing',
+        'organization_name_foreign_financing'
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha122, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_loiha121(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=table' + \
+                                      str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 2 # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 11, f'{request.user.district}, Илова-12.1', cell_title)
+        ws.write_merge(1, 1, 2, 3, 'Приоритетные цели', cell_style)
+        ws.write_merge(1, 1, 4, 10, 'Заявленные результаты', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 12, 'Илова-12.1', cell_title)
+        ws.write_merge(1, 1, 3, 4, 'Приоритетные цели', cell_style)
+        ws.write_merge(1, 1, 5, 11, 'Заявленные результаты', cell_style)
+    # "Район",
+    columns_list = [
+                    "Утвержденные холдинговые компании количество",
+                    "Предложения предпринимателей(ф.и.о)",
+                    "Название организации",
+                    "Тип деятельности",
+                    "Проекты",
+                    "Производственная мощность",
+                    "Оценка",
+                    "Рабочее место",
+                    "Экспорт",
+                    "Другое",
+                    "Финансирование",
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'approved_holding_companies',
+        'entrepreneur',
+        'names_of_organizations_priority',
+        'type_of_activity_priority',
+        'projects_the_stated_results',
+        'productive_capacity_stated_results',
+        'grade_stated_results',
+        'workplace_stated_results',
+        'export_stated_results',
+        'other_stated_results',
+        'financing',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha121, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_loiha12(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=table' + \
+                                      str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 3 # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 12, f'{request.user.district}, Илова-12', cell_title)
+        ws.write_merge(1, 1, 3, 11, 'Из них', cell_style)
+
+        ws.write_merge(2, 2, 3, 5, 'Выбранные проекты', cell_style)
+        ws.write_merge(2, 2, 6, 8, 'В процессе', cell_style)
+        ws.write_merge(2, 2, 9, 11, 'Будут завершены к концу года', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 13, 'Илова-12', cell_title)
+        ws.write_merge(1, 1, 4, 12, 'Из них', cell_style)
+
+        ws.write_merge(2, 2, 4, 6, 'Выбранные проекты', cell_style)
+        ws.write_merge(2, 2, 7, 9, 'В процессе', cell_style)
+        ws.write_merge(2, 2, 10, 12, 'Будут завершены к концу года', cell_style)
+    # "Район",
+    columns_list = [
+                    "Все проекты",
+                    "Оценка(млрд долл)",
+                    "Рабочее место",
+                    "Проекты",
+                    "Оценка",
+                    "Рабочее место",
+                    "Проекты",
+                    "Оценка (млрд долл)",
+                    "Рабочее место",
+                    "Проекты",
+                    "Оценка (млрд долл)",
+                    "Рабочее место",
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'all_projects',
+        'grade',
+        'workplace',
+        'projects_selected_projects_from_all_projects',
+        'grade_selected_projects_from_all_projects',
+        'workplace_selected_projects_from_all_projects',
+        'all_projects_at_work_from_all_projects',
+        'grade_at_work_from_all_projects',
+        'workplace_at_work_from_all_projects',
+        'all_projects_will_be_completed_end_the_year_from_all_projects',
+        'grade_will_be_completed_end_the_year_all_projects',
+        'workplace_will_be_completed_end_the_year_all_projects',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha12, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_loiha10(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=table' + \
+                                      str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 2 # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 20, f'{request.user.district}, Илова-10', cell_title)
+        ws.write_merge(1, 1, 2, 3, 'Из них', cell_style)
+
+        ws.write_merge(1, 1, 5, 16, 'Специализация', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 21, 'Илова-10', cell_title)
+        ws.write_merge(1, 1, 3, 4, 'Из них', cell_style)
+        ws.write_merge(1, 1, 6, 17, 'Специализация', cell_style)
+    # "Район",
+    columns_list = [
+                    "насленный пункт (количество)",
+                    "Жилые дома (количество)",
+                    "Желающие заняться предпринимательством (количество)",
+                    "процентное соотношение",
+                    "дома занятые в секторе",
+                    "животноводство",
+                    "птицеводство",
+                    "кроликоведение",
+                    "пчеловодство",
+                    "фермерство",
+                    "садоводство",
+                    "парники",
+                    "преподование",
+                    "мелькое производство",
+                    "туризм",
+                    "услуги",
+                    "другие",
+                    "железная тетрадь оставшиеся",
+                    "молодёжная тетрадь оставшиеся",
+                    "женская тетрадь оставшиеся",
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'locality_amount',
+        'residential_buildings_amount',
+        'who_want_to_do_business_residential_buildings',
+        'percent_residential_buildings',
+        'employed_in_the_sector',
+        'animal_husbandry_speciality',
+        'poultry_farming_specialty',
+        'rabbing_breeding_specialty',
+        'Beekeeping_specialty',
+        'farm_specialty',
+        'gardening_specialty',
+        'greenhouses_specialty',
+        'teaching_specialty',
+        'small_production_specialty',
+        'tourism_specialty',
+        'services_specialty',
+        'other_specialty',
+        'remaining_on_the_iron_notebook',
+        'remaining_on_the_youth_notebook',
+        'remaining_on_the_womens_notebook',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha10, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_loiha6(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=table' + \
+                                      str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 2 # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 11, f'{request.user.district}, Илова-6', cell_title)
+        ws.write_merge(1, 1, 1, 4, 'Из них', cell_style)
+        ws.write_merge(1, 1, 6, 7, 'Из них', cell_style)
+        ws.write_merge(1, 1, 9, 10, 'Из них', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 12, 'Илова-6', cell_title)
+        ws.write_merge(1, 1, 2, 5, 'Из них', cell_style)
+        ws.write_merge(1, 1, 7, 8, 'Из них', cell_style)
+        ws.write_merge(1, 1, 10, 11, 'Из них', cell_style)
+
+    # "Район",
+    columns_list = [
+                    "Пустующие объекты",
+                    "адрес",
+                    "владелец",
+                    "государственное имущество (количество)",
+                    "частное имущуство (количество)",
+                    "Неиспользуемые производственные площадки(Га)",
+                    "ориентированное на сельское хозяйство(Га)",
+                    "ориентированное на производство(Га)",
+                    "Предложения по инвестициям (источники)",
+                    "Предварительная стоимость проекта(млн.долл)",
+                    "количество созданных навых рабочих мест",
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'empty_objects',
+        'adress_empty_objects',
+        'owner_empty_objects',
+        'state_property_amount_empty_objects',
+        'private_property_amount_empty_objects',
+        'unused_production_sites',
+        'focused_on_agriculture_unused_production_sites',
+        'focused_on_production_unused_production_sites',
+        'Investment_proposals_sources',
+        'preliminary_project_cost_bil_sum_sources',
+        'new_jobs_created_amount_sources'
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha6, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_loiha13(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=table' + \
+                                      str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 2 # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 7, f'{request.user.district}, Илова-13', cell_title)
+        ws.write_merge(1, 1, 3, 4, 'Источники финансирования', cell_style)
+
+    else:
+        ws.write_merge(0, 0, 0, 8, 'Илова-13', cell_title)
+        ws.write_merge(1, 1, 4, 5, 'Источники финансирования', cell_style)
+
+    # "Район",
+    columns_list = [
+                    "Название проекта",
+                    "Проектная деятельность",
+                    "Проектная мощность",
+                    "Оценка в миллиардах долларах",
+                    "Иностранные инвестиции",
+                    "Cозданные новые рабочие места",
+                    "Источники",
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'project_name',
+        'project_activity',
+        'project_capacity',
+        'grate_sources_of_financing',
+        'foreign_financing_grate_sources_of_financing',
+        'sources_sources_of_financing',
+        'created_new_jobs'
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha13, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
 
 
 def get_data_table(request, model_name, page_title):

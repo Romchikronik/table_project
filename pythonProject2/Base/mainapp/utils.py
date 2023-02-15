@@ -226,5 +226,24 @@ def filter_tables(filter_slug, table_p):
     return table
 
 
+def filter_export_loiha_tables(request, filter_slug, model, fields, department_fields):
+    if filter_slug == 'week':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+        if not get_group_loiha_id(request):
+            rows = show_data_table(request, model).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).filter(time_create__gte=now).values_list(*department_fields)
+    elif filter_slug == 'month':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+        if not get_group_loiha_id(request):
+            rows = show_data_table(request, model).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).filter(time_create__gte=now).values_list(*department_fields)
+    else:
+        if not get_group_loiha_id(request):
+            rows = show_data_table(request, model).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).values_list(*department_fields)
 
+    return rows
 

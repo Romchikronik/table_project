@@ -13,8 +13,16 @@ urlpatterns = [
     path('department-4/', views.get_department_4, name='department_4'),
     path('department-5/', views.get_department_5, name='department_5'),
 
-    path('export-excel/<slug:filter_slug>', views.export_excel, name='export-excel'),
+    path('export-excel-loiha41/<slug:filter_slug>', views.export_excel_loiha41, name='export-excel-loiha41'),
     path('export-excel-loiha52/<slug:filter_slug>', views.export_excel_loiha52, name='export-excel-loiha52'),
+    path('export-excel-loiha14/<slug:filter_slug>', views.export_excel_loiha14, name='export-excel-loiha14'),
+    path('export-excel-loiha131/<slug:filter_slug>', views.export_excel_loiha131, name='export-excel-loiha131'),
+    path('export-excel-loiha122/<slug:filter_slug>', views.export_excel_loiha122, name='export-excel-loiha122'),
+    path('export-excel-loiha121/<slug:filter_slug>', views.export_excel_loiha121, name='export-excel-loiha121'),
+    path('export-excel-loiha12/<slug:filter_slug>', views.export_excel_loiha12, name='export-excel-loiha12'),
+    path('export-excel-loiha10/<slug:filter_slug>', views.export_excel_loiha10, name='export-excel-loiha10'),
+    path('export-excel-loiha6/<slug:filter_slug>', views.export_excel_loiha6, name='export-excel-loiha6'),
+    path('export-excel-loiha13/<slug:filter_slug>', views.export_excel_loiha13, name='export-excel-loiha13'),
 
     path('login/', views.loginPage, name='login'),
     path('logout/', views.logoutUser, name='logout'),
