@@ -88,7 +88,7 @@ def get_department_exports(request):
         return redirect('/')
     else:
         context = {
-            'title': 'Отдел - 2',
+            'title': 'Отдел экспорта',       # Отдел - 2
             'second_department_tables_menu': second_department_tables_menu
         }
         return render(request, 'mainapp/departments/exports_department.html', context)
@@ -102,7 +102,7 @@ def get_department_3(request):
         return redirect('/')
     else:
         context = {
-            'title': 'Отдел - 3',
+            'title': 'Сводный отдел',     # Отдел - 3
             'third_department_tables_menu': third_department_tables_menu
         }
         return render(request, 'mainapp/departments/department_3.html', context)
@@ -110,11 +110,15 @@ def get_department_3(request):
 
 @login_required
 def get_department_4(request):
-    context = {
-        'title': 'Отдел - 4',
-        'fourth_department_tables_menu': fourth_department_tables_menu
-    }
-    return render(request, 'mainapp/departments/department_4.html', context)
+    if del_group_post_monitoring_id(request):
+        messages.error(request, 'У вас нету доступа к этому департаменту')
+        return redirect('/')
+    else:
+        context = {
+            'title': 'Отдел постмониторинга',
+            'fourth_department_tables_menu': fourth_department_tables_menu
+        }
+        return render(request, 'mainapp/departments/department_4.html', context)
 
 
 @login_required

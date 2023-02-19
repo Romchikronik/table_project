@@ -1169,6 +1169,463 @@ class RejaVault(models.Model):
 
 
 
+class Manzil(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудуд номи")
+
+    city_name = models.CharField(max_length=255, verbose_name="Шаҳар (туман) номи")
+    loiha = models.CharField(max_length=255, verbose_name="Лойиҳа ташаббускори")
+    loiha_name = models.CharField(max_length=255, verbose_name="Лойиҳа номи")
+    year_nature = models.CharField(max_length=255, verbose_name="(натурада)")
+    year_price = models.CharField(max_length=255, verbose_name="(млн. сўмда)")
+    work = models.CharField(max_length=255, verbose_name="Иш ўринлари")
+    korxona = models.CharField(max_length=255, verbose_name="Корхона холати(Инфратузилма объекти, Мавсумий, Вақтинча ишламаяпти, Тугатилган, Тўлиқ қувват (80-100%), Ўрта қувват (51-79%), Паст қувват (0-50%))")
+    izox = models.CharField(max_length=255, verbose_name="Изоҳ")
+    ish_sabab = models.CharField(max_length=255, verbose_name="Кам қувватда ишлаш сабаби (бу устунда фақат паст қувват бўлса ёзилади)")
+    problem = models.CharField(max_length=255, verbose_name="Муаммо мавжудлиги (бўлмаса бўш қолсин, мавжуд эмас)")
+    taklif = models.CharField(max_length=255, verbose_name="Муаммони бартараф этиш бўйича таклиф")
+    tashkilot = models.CharField(max_length=255, verbose_name="Муаммони ҳал этишга масъул ташкилот")
+    natija_korxona = models.CharField(max_length=255, verbose_name="Корхонада тикланадиган қувватлар (млн сўмда)")
+    natija_tik = models.CharField(max_length=255, verbose_name="Тикланадиган иш ўрни (та)")
+    natija_kush = models.CharField(max_length=255, verbose_name="Қўшимча иш ўрни (та)")
+    natija_export_tik = models.CharField(max_length=255, verbose_name="Тикланадиган экспорт (минг доллар)")
+    natija_export_kush = models.CharField(max_length=255, verbose_name="Қўшимча экспорт (минг доллар)")
+    natija_budget_tik = models.CharField(max_length=255, verbose_name="Тикланадиган тушум (млн сўм)")
+    natija_budget_kush = models.CharField(max_length=255, verbose_name="Қўшимча тушум (млн сўм)")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = '2017-2020 манзилли'
+        verbose_name_plural = '2017-2020 манзилли'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class Subtotals(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудуд номи")
+
+    general = models.CharField(max_length=255, verbose_name="Умумий корхоналар сони")
+    january_toy = models.CharField(max_length=255, verbose_name="Тўлиқ қувват (80-100%)")
+    january_orta = models.CharField(max_length=255, verbose_name="Ўрта қувват (51-79%)")
+    january_past = models.CharField(max_length=255, verbose_name="Паст қувват (0-50%)")
+    january_clock = models.CharField(max_length=255, verbose_name="Вақтинча ишламаяпти")
+    end = models.CharField(max_length=255, verbose_name="Тугатилган")
+    mavsumiy = models.CharField(max_length=255, verbose_name="Мавсумий")
+    other = models.CharField(max_length=255, verbose_name="Бошқа")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'Промежуточный итог'
+        verbose_name_plural = 'Промежуточный итоги'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class Addressed(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудуд номи")
+
+    city_name = models.CharField(max_length=255, verbose_name="Туман номи")
+    responsible_organization = models.CharField(max_length=255, verbose_name="Масъул ташкилот")
+    company_name = models.CharField(max_length=255, verbose_name="Корхона номи")
+
+    tag = models.CharField(max_length=255, verbose_name="ТЕГМА")
+    project_cost_million_doll = models.CharField(max_length=255, verbose_name="Лойиҳа қиймати млн.долл.")
+    project_organization = models.CharField(max_length=255, verbose_name="Лойиҳа ташкил этилиши (янгидан, модернизация, кенгайтириш)")
+    name_of_directions = models.CharField(max_length=255, verbose_name="Йўналишлар номи")
+    name_of_networks = models.CharField(max_length=255, verbose_name="Тармоқлар номи")
+    inn = models.CharField(max_length=255, verbose_name="ИНН рақами")
+    legal_address = models.CharField(max_length=255, verbose_name="Юридик (жойлашган) манзил")
+    head_of_the_enterprise = models.CharField(max_length=255, verbose_name="Корхона раҳбари")
+    phone_number = models.CharField(max_length=255, verbose_name="Телефон рақами")
+    warranty = models.CharField(max_length=255, verbose_name="Кафолатлилиги (Давлат, Тўғридан-тўғри хорижий инвестиция, хорижий кредит, ўз маблағи)")
+    foreign_state = models.CharField(max_length=255, verbose_name="Давлат")
+    foreign_company_name = models.CharField(max_length=255, verbose_name="Компания номи")
+    year = models.CharField(max_length=255, verbose_name="Йил")
+    project_launch_period = models.CharField(max_length=255, verbose_name="Лойиҳа ишга тушган даври (кун, ой, йил)")
+    annual_capacity_in_kind = models.CharField(max_length=255, verbose_name="(натурада)")
+    annual_capacity_price = models.CharField(max_length=255, verbose_name="(млн. сўмда)")
+    jobs_created_the_number = models.CharField(max_length=255, verbose_name="Яратилган иш ўрни сони")
+    planned_production_in_kind = models.CharField(max_length=255, verbose_name="натурада")
+    planned_production_price = models.CharField(max_length=255, verbose_name=" млн.сўм")
+
+    volume_of_products_in_kind = models.CharField(max_length=255, verbose_name="натурада")
+    volume_of_products_price = models.CharField(max_length=255, verbose_name=" млн.сўм")
+
+    export_volume_in_kind = models.CharField(max_length=255, verbose_name="Режа (минг доллар)")
+    export_volume_price = models.CharField(max_length=255, verbose_name="Амалда (минг доллар)")
+
+    budget_volume_in_kind = models.CharField(max_length=255, verbose_name="Режа (млн сўм")
+    budget_volume_price = models.CharField(max_length=255, verbose_name="Амалда (млн сўм)")
+
+    work_number = models.CharField(max_length=255, verbose_name="Ишчилар сони")
+    vacancy_number = models.CharField(max_length=255, verbose_name="Вакансия сони")
+    bank = models.CharField(max_length=255, verbose_name="Хизмат кўрсатувчи банк")
+    company = models.CharField(max_length=255, verbose_name="Корхона холати (Инфратузилма объекти, Мавсумий, Вақтинча ишламаяпти, Тугатилган, Тўлиқ қувват (80-100%), Ўрта қувват (40-79%), Паст қувват (0-39,9%))")
+    reason_for_working = models.CharField(max_length=255, verbose_name="Кам қувватда ишлаш сабаби (бу устунда фақат паст қувват бўлса ёзилади)")
+    existence_of_the_problem  = models.CharField(max_length=255, verbose_name="Муаммо мавжудлиги (бўлмаса бўш қолсин, мавжуд эмас)")
+    suggestion_for_solving = models.CharField(max_length=255, verbose_name="Муаммони бартараф этиш бўйича таклиф")
+    organization_response = models.CharField(max_length=255, verbose_name="Муаммони ҳал этишга масъул ташкилот")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'Манзилли'
+        verbose_name_plural = 'Манзилли'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class NetworkAdministrations(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудудлар")
+
+    total_enterprise = models.CharField(max_length=255, verbose_name="Корхона сони")
+    total_problem = models.CharField(max_length=255, verbose_name="Муаммо сони")
+    done_enterprise = models.CharField(max_length=255, verbose_name="Корхона сони")
+    done_problem = models.CharField(max_length=255, verbose_name="Муаммо сони")
+    donein_enterprise = models.CharField(max_length=255, verbose_name="Корхона сони")
+    donein_problem = models.CharField(max_length=255, verbose_name="Муаммо сони")
+    bank_info = models.CharField(max_length=255, verbose_name="Банк бўйича муаммолар")
+    total_sum = models.CharField(max_length=255, verbose_name="Жами сумма")
+    kredit = models.CharField(max_length=255, verbose_name="Кредит")
+    sum = models.CharField(max_length=255, verbose_name="Сумма")
+    term_extension = models.CharField(max_length=255, verbose_name="Муддат узайтириш")
+    sum_2 = models.CharField(max_length=255, verbose_name="Сумма")
+    muta = models.CharField(max_length=255, verbose_name="Мутахассис олиб келиш")
+    buy_it = models.CharField(max_length=255, verbose_name="Харидор")
+    sub = models.CharField(max_length=255, verbose_name="Субсидия")
+    asb = models.CharField(max_length=255, verbose_name="Асбобускуна")
+    kks = models.CharField(max_length=255, verbose_name="ҚҚС қайтариш")
+    raw_material = models.CharField(max_length=255, verbose_name="Хомашё")
+    er = models.CharField(max_length=255, verbose_name="Ер")
+    imt = models.CharField(max_length=255, verbose_name="Имтиёз")
+    ruxsat = models.CharField(max_length=255, verbose_name="Рухсатнома бериш")
+    info_tuz = models.CharField(max_length=255, verbose_name="Инфратузилма")
+    electricity = models.CharField(max_length=255, verbose_name="Электр")
+    gas = models.CharField(max_length=255, verbose_name="Газ")
+    water = models.CharField(max_length=255, verbose_name="Сув")
+    road = models.CharField(max_length=255, verbose_name="Йўл")
+    other = models.CharField(max_length=255, verbose_name="Бошқалар")
+    restored_production = models.CharField(max_length=255, verbose_name="Тикланган ишлаб чиқариш (млн.сўм)")
+    restored_job = models.CharField(max_length=255, verbose_name="Тикланган иш ўрни")
+    restored_export = models.CharField(max_length=255, verbose_name="Тикланган экспорт ҳажми минг долл.")
+    tax_revenues = models.CharField(max_length=255, verbose_name="Солиқ тушумлари, млн.сўм")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'Тармоқ бошқармалари'
+        verbose_name_plural = 'Тармоқ бошқармалари'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class TotalCleaning(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудудлар")
+
+    total_enterprise = models.CharField(max_length=255, verbose_name="Корхона сони")
+    total_problem = models.CharField(max_length=255, verbose_name="Муаммо сони")
+    done_enterprise = models.CharField(max_length=255, verbose_name="Бажарилган")
+    done_problem = models.CharField(max_length=255, verbose_name="Бажарилмоқда")
+
+    bank_info = models.CharField(max_length=255, verbose_name="Банк бўйича муаммолар")
+    total_sum = models.CharField(max_length=255, verbose_name="Жами сумма")
+    kredit = models.CharField(max_length=255, verbose_name="Кредит")
+    sum = models.CharField(max_length=255, verbose_name="Сумма")
+    term_extension = models.CharField(max_length=255, verbose_name="Муддат узайтириш")
+    sum_2 = models.CharField(max_length=255, verbose_name="Сумма")
+    muta = models.CharField(max_length=255, verbose_name="Мутахассис олиб келиш")
+    buy_it = models.CharField(max_length=255, verbose_name="Харидор")
+    sub = models.CharField(max_length=255, verbose_name="Субсидия")
+    asb = models.CharField(max_length=255, verbose_name="Асбобускуна")
+    kks = models.CharField(max_length=255, verbose_name="ҚҚС қайтариш")
+    raw_material = models.CharField(max_length=255, verbose_name="Хомашё")
+    er = models.CharField(max_length=255, verbose_name="Ер")
+    imt = models.CharField(max_length=255, verbose_name="Имтиёз")
+    ruxsat = models.CharField(max_length=255, verbose_name="Рухсатнома бериш")
+    info_tuz = models.CharField(max_length=255, verbose_name="Инфратузилма")
+    electricity = models.CharField(max_length=255, verbose_name="Электр")
+    gas = models.CharField(max_length=255, verbose_name="Газ")
+    water = models.CharField(max_length=255, verbose_name="Сув")
+    road = models.CharField(max_length=255, verbose_name="Йўл")
+    other = models.CharField(max_length=255, verbose_name="Бошқалар")
+    restored_production = models.CharField(max_length=255, verbose_name="Тикланган ишлаб чиқариш (млн.сўм)")
+    restored_job = models.CharField(max_length=255, verbose_name="Тикланган иш ўрни")
+    restored_export = models.CharField(max_length=255, verbose_name="Тикланган экспорт ҳажми минг долл.")
+    tax_revenues = models.CharField(max_length=255, verbose_name="Солиқ тушумлари, млн.сўм")
+
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'ЖАМИ чистка'
+        verbose_name_plural = 'ЖАМИ чистка'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class TotalCleaningNetwork(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудудлар")
+
+    those_in_charge = models.CharField(max_length=255, verbose_name="Масъуллар")
+
+    total_enterprise = models.CharField(max_length=255, verbose_name="Корхона сони")
+    total_problem = models.CharField(max_length=255, verbose_name="Муаммо сони")
+    done_enterprise = models.CharField(max_length=255, verbose_name="Бажарилган")
+    done_problem = models.CharField(max_length=255, verbose_name="Бажарилмоқда")
+
+    bank_info = models.CharField(max_length=255, verbose_name="Банк бўйича муаммолар")
+    total_sum = models.CharField(max_length=255, verbose_name="Жами сумма")
+    kredit = models.CharField(max_length=255, verbose_name="Кредит")
+    sum = models.CharField(max_length=255, verbose_name="Сумма")
+    term_extension = models.CharField(max_length=255, verbose_name="Муддат узайтириш")
+    sum_2 = models.CharField(max_length=255, verbose_name="Сумма")
+    muta = models.CharField(max_length=255, verbose_name="Мутахассис олиб келиш")
+    buy_it = models.CharField(max_length=255, verbose_name="Харидор")
+    sub = models.CharField(max_length=255, verbose_name="Субсидия")
+    asb = models.CharField(max_length=255, verbose_name="Асбобускуна")
+    kks = models.CharField(max_length=255, verbose_name="ҚҚС қайтариш")
+    raw_material = models.CharField(max_length=255, verbose_name="Хомашё")
+    er = models.CharField(max_length=255, verbose_name="Ер")
+    imt = models.CharField(max_length=255, verbose_name="Имтиёз")
+    ruxsat = models.CharField(max_length=255, verbose_name="Рухсатнома бериш")
+    info_tuz = models.CharField(max_length=255, verbose_name="Инфратузилма")
+    electricity = models.CharField(max_length=255, verbose_name="Электр")
+    gas = models.CharField(max_length=255, verbose_name="Газ")
+    water = models.CharField(max_length=255, verbose_name="Сув")
+    road = models.CharField(max_length=255, verbose_name="Йўл")
+    other = models.CharField(max_length=255, verbose_name="Бошқалар")
+    restored_production = models.CharField(max_length=255, verbose_name="Тикланган ишлаб чиқариш (млн.сўм)")
+    restored_job = models.CharField(max_length=255, verbose_name="Тикланган иш ўрни")
+    restored_export = models.CharField(max_length=255, verbose_name="Тикланган экспорт ҳажми минг долл.")
+    tax_revenues = models.CharField(max_length=255, verbose_name="Солиқ тушумлари, млн.сўм")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'ЖАМИ чистка тармоқ'
+        verbose_name_plural = 'ЖАМИ чистка тармоқ'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class TotalDone(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудудлар")
+
+    total_enterprise = models.CharField(max_length=255, verbose_name="Корхона сони")
+    total_problem = models.CharField(max_length=255, verbose_name="Муаммо сони")
+    done_enterprise = models.CharField(max_length=255, verbose_name="Бажарилган")
+    done_problem = models.CharField(max_length=255, verbose_name="Бажарилмоқда")
+
+    persentage = models.CharField(max_length=255, verbose_name="%")
+    restored_production = models.CharField(max_length=255, verbose_name="Тикланган ишлаб чиқариш (млн.сўм)")
+    restored_job = models.CharField(max_length=255, verbose_name="Тикланган иш ўрни")
+    restored_export = models.CharField(max_length=255, verbose_name="Тикланган экспорт ҳажми минг долл.")
+    tax_revenues = models.CharField(max_length=255, verbose_name="Солиқ тушумлари, млн.сўм")
+    done = models.CharField(max_length=255, verbose_name="Бажарилган")
+
+    bank_info = models.CharField(max_length=255, verbose_name="Банк билан боғлиқ муаммо сони")
+    total_sum = models.CharField(max_length=255, verbose_name="Суммаси (млн сўм)")
+    kredit = models.CharField(max_length=255, verbose_name="Кредит сони")
+    sum = models.CharField(max_length=255, verbose_name="Суммаси (млн сўм)")
+    term_extension = models.CharField(max_length=255, verbose_name="Муддат узайтириш")
+    sum_2 = models.CharField(max_length=255, verbose_name="Суммаси (млн сўм)")
+    muta = models.CharField(max_length=255, verbose_name="Мутахассис олиб келиш")
+    buy_it = models.CharField(max_length=255, verbose_name="Харидор топиш")
+    sub = models.CharField(max_length=255, verbose_name="Субсидия ажратиш")
+    asb = models.CharField(max_length=255, verbose_name="Асбобускуна")
+    kks = models.CharField(max_length=255, verbose_name="ҚҚС қайтариш")
+    raw_material = models.CharField(max_length=255, verbose_name="Хом ашё")
+    er = models.CharField(max_length=255, verbose_name="Ер")
+    imt = models.CharField(max_length=255, verbose_name="Имтиёз")
+    ruxsat = models.CharField(max_length=255, verbose_name="Сертификат ва рухсатнома бериш")
+    info_tuz = models.CharField(max_length=255, verbose_name="Инфратузилмага уланиш")
+    electricity = models.CharField(max_length=255, verbose_name="Электр")
+    gas = models.CharField(max_length=255, verbose_name="Газ")
+    water = models.CharField(max_length=255, verbose_name="Сув")
+    road = models.CharField(max_length=255, verbose_name="Йўл")
+    other = models.CharField(max_length=255, verbose_name="Бошқалар")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'ЖАМИ бажарилган'
+        verbose_name_plural = 'ЖАМИ бажарилган'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class TotalCompletedNetwork(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудудлар")
+    bank = models.CharField(max_length=255, verbose_name="Bank")
+
+    total_problem = models.CharField(max_length=255, verbose_name="Муаммо сони")
+    done_problem = models.CharField(max_length=255, verbose_name="Бажарилмоқда")
+    done_enterprise = models.CharField(max_length=255, verbose_name="Бажарилган")
+    persentage = models.CharField(max_length=255, verbose_name="%")
+
+    restored_production = models.CharField(max_length=255, verbose_name="Тикланган ишлаб чиқариш (млн.сўм)")
+    restored_job = models.CharField(max_length=255, verbose_name="Тикланган иш ўрни")
+    additional_new_jobs = models.CharField(max_length=255, verbose_name="Қўшимча янги иш ўрни")
+    restored_export = models.CharField(max_length=255, verbose_name="Тикланган экспорт ҳажми минг долл.")
+    tax_revenues = models.CharField(max_length=255, verbose_name="Солиқ тушумлари, млн.сўм")
+    done = models.CharField(max_length=255, verbose_name="Бажарилган")
+
+    bank_info = models.CharField(max_length=255, verbose_name="Банк билан боғлиқ муаммо сони")
+    total_sum = models.CharField(max_length=255, verbose_name="Суммаси (млн сўм)")
+    kredit = models.CharField(max_length=255, verbose_name="Кредит сони")
+    sum = models.CharField(max_length=255, verbose_name="Суммаси (млн сўм)")
+    term_extension = models.CharField(max_length=255, verbose_name="Муддат узайтириш")
+    sum_2 = models.CharField(max_length=255, verbose_name="Суммаси (млн сўм)")
+    muta = models.CharField(max_length=255, verbose_name="Мутахассис олиб келиш")
+    buy_it = models.CharField(max_length=255, verbose_name="Харидор топиш")
+    sub = models.CharField(max_length=255, verbose_name="Субсидия ажратиш")
+    asb = models.CharField(max_length=255, verbose_name="Асбоб ускуна")
+    kks = models.CharField(max_length=255, verbose_name="ҚҚС қайтариш")
+    raw_material = models.CharField(max_length=255, verbose_name="Хом ашё")
+    er = models.CharField(max_length=255, verbose_name="Ер")
+    imt = models.CharField(max_length=255, verbose_name="Имтиёз")
+    ruxsat = models.CharField(max_length=255, verbose_name="Сертификат ва рухсатнома бериш")
+    info_tuz = models.CharField(max_length=255, verbose_name="Инфратузилмага уланиш")
+    electricity = models.CharField(max_length=255, verbose_name="Электр")
+    gas = models.CharField(max_length=255, verbose_name="Газ")
+    water = models.CharField(max_length=255, verbose_name="Сув")
+    road = models.CharField(max_length=255, verbose_name="Йўл")
+    other = models.CharField(max_length=255, verbose_name="Бошқалар")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'ЖАМИ бажарилган тармоқ'
+        verbose_name_plural = 'ЖАМИ бажарилган тармоқ'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class TotalProblem(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудудлар")
+
+    total_enterprise = models.CharField(max_length=255, verbose_name="Корхона сони")
+    total_problem = models.CharField(max_length=255, verbose_name="Муаммо сони")
+    done_enterprise = models.CharField(max_length=255, verbose_name="Бажарилган")
+    done_problem = models.CharField(max_length=255, verbose_name="Бажарилмоқда")
+
+    bank_info = models.CharField(max_length=255, verbose_name="Банк билан боғлиқ муаммо сони")
+    total_sum = models.CharField(max_length=255, verbose_name="Суммаси (млн сўм)")
+    kredit = models.CharField(max_length=255, verbose_name="Кредит сони")
+    sum = models.CharField(max_length=255, verbose_name="Суммаси (млн сўм)")
+    term_extension = models.CharField(max_length=255, verbose_name="Муддат узайтириш")
+    sum_2 = models.CharField(max_length=255, verbose_name="Суммаси (млн сўм)")
+    muta = models.CharField(max_length=255, verbose_name="Мутахассис олиб келиш")
+    buy_it = models.CharField(max_length=255, verbose_name="Харидор топиш")
+    sub = models.CharField(max_length=255, verbose_name="Субсидия ажратиш")
+    asb = models.CharField(max_length=255, verbose_name="Асбоб ускуна")
+    raw_material = models.CharField(max_length=255, verbose_name="Хом ашё")
+    er = models.CharField(max_length=255, verbose_name="Ер")
+    imt = models.CharField(max_length=255, verbose_name="Имтиёз")
+    kks = models.CharField(max_length=255, verbose_name="ҚҚС қайтариш")
+
+    ruxsat = models.CharField(max_length=255, verbose_name="Сертификат ва рухсатнома бериш")
+    info_tuz = models.CharField(max_length=255, verbose_name="Инфратузилмага уланиш")
+    electricity = models.CharField(max_length=255, verbose_name="Электр")
+    gas = models.CharField(max_length=255, verbose_name="Газ")
+    water = models.CharField(max_length=255, verbose_name="Сув")
+    road = models.CharField(max_length=255, verbose_name="Йўл")
+    other = models.CharField(max_length=255, verbose_name="Бошқалар")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'ЖАМИ муаммо'
+        verbose_name_plural = 'ЖАМИ муаммо'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+class PerformanceIsAddressed(models.Model):
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудудлар")
+
+    direction = models.CharField(max_length=255, verbose_name="Йўналиш")
+    basis = models.CharField(max_length=255, verbose_name="Асос Гип, Рип")
+    basis_problem = models.CharField(max_length=255, verbose_name="Асос Гип, Рип (Муаммолар сони бўйича)")
+    networks = models.CharField(max_length=255, verbose_name="Тармоқлар")
+    networks_2 = models.CharField(max_length=255, verbose_name="Тармоқлар")
+    year = models.CharField(max_length=255, verbose_name="ЙИЛ")
+    company_name = models.CharField(max_length=255, verbose_name="Корхона номи  ва ишлаб чиқариш йўналиши")
+    problematic_issues = models.CharField(max_length=255, verbose_name="Муаммоли масалалар мазмуни")
+    problem_solving = models.CharField(max_length=255, verbose_name="Муаммоли масалаларни бартараф этиш механизми")
+    duration_of_execution = models.CharField(max_length=255, verbose_name="Ижро муддати")
+    for_performance_responsible = models.CharField(max_length=255, verbose_name="Ижро учун маъсуллар")
+    project_cost = models.CharField(max_length=255, verbose_name="Лойиҳа қиймати млн.сум.")
+
+    annual_capacity_in_kind = models.CharField(max_length=255, verbose_name="(натурада)")
+    annual_capacity_sum = models.CharField(max_length=255, verbose_name="(млн. сўмда)")
+    jobs_created = models.CharField(max_length=255, verbose_name="Яратилган иш ўрни сони")
+    fulfillment = models.CharField(max_length=255, verbose_name="Бажарилиши")
+
+    status_is_short = models.CharField(max_length=255, verbose_name="Ҳолати қисқа")
+    area_name = models.CharField(max_length=255, verbose_name="ҳудуд номи")
+    type_of_problem = models.CharField(max_length=255, verbose_name="Муаммо тури")
+    area_number = models.CharField(max_length=255, verbose_name="Ҳудуд сони")
+    according_to_the_answers = models.CharField(max_length=255, verbose_name="масуллар бўйича")
+    bank_loan = models.CharField(max_length=255, verbose_name="Банк кредити ва пролонгация млн сўм")
+    million_soums = models.CharField(max_length=255, verbose_name="И/ч млн.сўм")
+    job = models.CharField(max_length=255, verbose_name="Иш ўрни (тикланади)")
+    job_new = models.CharField(max_length=255, verbose_name="Иш ўрни (янги)")
+    export = models.CharField(max_length=255, verbose_name="Экспорт минг долл")
+    tax = models.CharField(max_length=255, verbose_name="Солиқ млн.сўм")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Дата обновления записи")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+
+    class Meta:
+        verbose_name = 'манзилли'
+        verbose_name_plural = 'манзилли'
+        ordering = ['-time_create']
+
+    def __str__(self):
+        return self.district.district
+
+
+
+
 
 
 

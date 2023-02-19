@@ -198,6 +198,14 @@ def del_group_vault_id(request):
     return request.user.groups.filter(id=3).exists() and not request.user.groups.filter(id=4)
 
 
+def get_group_post_monitoring_id(request):
+    return request.user.groups.filter(id=3).exists() and request.user.groups.filter(id=5)
+
+
+def del_group_post_monitoring_id(request):
+    return request.user.groups.filter(id=3).exists() and not request.user.groups.filter(id=5)
+
+
 def make_context_by_form(data, form, menu, page_obj):
     context = {
         'title': data,
