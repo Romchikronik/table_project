@@ -870,4 +870,8 @@ class TableTarmokForm(ModelForm):
         ]
 
 
-
+class TableManzilForm(ModelForm):
+    class Meta:
+        model = Manzil
+        fields = '__all__'
+        exclude = ['district', ]

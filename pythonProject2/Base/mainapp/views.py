@@ -1512,3 +1512,139 @@ def add_data_table_reja(request):
 
 def add_data_table_tarmok(request):
     return add_data_table_third_department(request, 'tarmok', TableTarmokForm, 'table_tarmok', 'Cвод тармок')
+
+
+def get_data_table_4(request, model_name, page_title):
+    model = fourth_department_models_dict.get(model_name, None)
+    if not model:
+        # Handle invalid model name
+        raise ValueError("Invalid model name: %s" % model_name)
+
+    if get_group_post_monitoring_id(request):
+        table_data = show_data_table_to_departament(model)
+    else:
+        table_data = show_data_table(request, model)
+
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, page_title, fourth_department_tables_menu, table_data)
+    return render(request, src[model_name], context)
+
+
+def get_data_table_manzil(request):
+    return get_data_table_4(request, 'manzil', '2017-2020 манзилли')
+
+
+def get_data_table_subtotals(request):
+    return get_data_table_4(request, 'subtotals', 'Промежуточный итоги')
+
+
+def get_data_table_addressed(request):
+    return get_data_table_4(request, 'addressed', 'Манзилли')
+
+
+def get_data_table_networkAdministrations(request):
+    return get_data_table_4(request, 'networkAdministrations', 'Тармоқ бошқармалари')
+
+
+def get_data_table_totalCleaning(request):
+    return get_data_table_4(request, 'totalCleaning', 'ЖАМИ чистка')
+
+
+def get_data_table_totalCleaningNetwork(request):
+    return get_data_table_4(request, 'totalCleaningNetwork', 'ЖАМИ чистка тармоқ')
+
+
+def get_data_table_totalDone(request):
+    return get_data_table_4(request, 'totalDone', 'ЖАМИ бажарилган')
+
+
+def get_data_table_totalCompletedNetwork(request):
+    return get_data_table_4(request, 'totalCompletedNetwork', 'ЖАМИ бажарилган тармоқ')
+
+
+def get_data_table_totalProblem(request):
+    return get_data_table_4(request, 'totalProblem', 'ЖАМИ муаммо')
+
+
+def get_data_table_performanceAddressed(request):
+    return get_data_table_4(request, 'performanceAddressed', 'манзилли')
+
+
+def get_data_table_filter_fourth_departament(request, model_name, page_title, filter_slug):
+    model = fourth_department_models_dict.get(model_name, None)
+    if not model:
+        # Handle invalid model name
+        raise ValueError("Invalid model name: %s" % model_name)
+
+    if not get_group_post_monitoring_id(request):
+        table_data = show_data_table(request, model)
+    else:
+        table_data = show_data_table_to_departament(model)
+
+    table_data = filter_tables(filter_slug, table_data)
+    page_obj = paginate_page(request, table_data)
+    context = get_context_data(page_obj, page_title, fourth_department_tables_menu, table_data)
+    return render(request, src[model_name], context)
+
+
+def table_filter_table_manzil(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'manzil', '2017-2020 манзилли', filter_slug)
+
+
+def table_filter_table_subtotals(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'subtotals', 'Промежуточный итоги', filter_slug)
+
+
+def table_filter_table_addressed(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'addressed', 'Манзилли', filter_slug)
+
+
+def table_filter_table_networkAdministrations(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'networkAdministrations', 'Тармоқ бошқармалари', filter_slug)
+
+
+def table_filter_table_totalCleaning(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'totalCleaning', 'ЖАМИ чистка', filter_slug)
+
+
+def table_filter_table_totalCleaningNetwork(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'totalCleaningNetwork', 'ЖАМИ чистка тармоқ', filter_slug)
+
+
+def table_filter_table_totalDone(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'totalDone', 'ЖАМИ бажарилган', filter_slug)
+
+
+def table_filter_table_totalCompletedNetwork(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'totalCompletedNetwork', 'ЖАМИ бажарилган тармоқ', filter_slug)
+
+
+def table_filter_table_totalProblem(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'totalProblem', 'ЖАМИ муаммо', filter_slug)
+
+
+def table_filter_table_performanceAddressed(request, filter_slug):
+    return get_data_table_filter_fourth_departament(request, 'performanceAddressed', 'манзилли', filter_slug)
+
+
+@login_required
+def add_data_table_fourth_department(request, model_name, model_form, redirect_url, page_title):
+    model = fourth_department_models_dict.get(model_name, None)
+    table_data = show_data_table(request, model)
+    page_obj = paginate_page(request, table_data)
+    if request.method == 'POST':
+        form = model_form(request.POST)
+        if form.is_valid():
+            try:
+                model.objects.create(**form.cleaned_data, district=request.user.district)
+                return redirect(redirect_url)
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+    else:
+        form = model_form()
+    context = make_context_by_form(page_title, form, fourth_department_tables_menu, page_obj)
+    return render(request, f'mainapp/forms/fourth_departament/form_{model_name}.html', context)
+
+
+def add_data_table_manzil(request):
+    return add_data_table_fourth_department(request, 'manzil', TableManzilForm, 'table_manzil', '2017-2020 манзилли')

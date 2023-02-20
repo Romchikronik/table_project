@@ -1167,7 +1167,7 @@ class RejaVault(models.Model):
     def __str__(self):
         return self.district.district
 
-
+# 4 отдел
 
 class Manzil(models.Model):
     district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name="Ҳудуд номи")

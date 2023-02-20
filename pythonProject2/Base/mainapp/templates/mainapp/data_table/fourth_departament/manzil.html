@@ -1,0 +1,109 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">
+    {% if request.user.district != None %}
+        {{ request.user.district }},
+    {% endif %}
+    {{ title }}
+</h2>
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_manzil' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_manzil' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_manzil' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+<div class="container overflow-auto">
+        <table class="table table-bordered table-striped">
+        <caption>
+            {% if request.user.district != None %}
+                {{ request.user.district }},
+            {% endif %}
+            {{ title }}
+        </caption>
+        <tr>
+            {% for group in request.user.groups.all %}
+            {% if group.id == 3 %}
+            <th rowspan="3" class="table-info">Ҳудуд номи</th>
+            {% endif %}
+            {% endfor %}
+            <th class="table-info" rowspan="3">Шаҳар (туман) номи</th>
+            <th class="table-info" rowspan="3">Лойиҳа ташаббускори</th>
+            <th class="table-info" rowspan="3">Лойиҳа номи</th>
+            <th class="table-info" rowspan="2" colspan="2">Йиллик қуввати (ТИА/бизнес режа бўйича)</th>
+            <th class="table-info" rowspan="3">Иш ўринлари</th>
+            <th class="table-info" rowspan="3">Корхона холати(Инфратузилма объекти, Мавсумий, Вақтинча ишламаяпти, Тугатилган, Тўлиқ қувват (80-100%), Ўрта қувват (51-79%), Паст қувват (0-50%))</th>
+            <th class="table-info" rowspan="3">Изоҳ</th>
+            <th class="table-info" rowspan="3">Кам қувватда ишлаш сабаби (бу устунда фақат паст қувват бўлса ёзилади)</th>
+            <th class="table-info" rowspan="3">Муаммо мавжудлиги (бўлмаса бўш қолсин, мавжуд эмас)</th>
+            <th class="table-info" rowspan="3">Муаммони бартараф этиш бўйича таклиф</th>
+            <th class="table-info" rowspan="3">Муаммони ҳал этишга масъул ташкилот</th>
+            <th class="table-info" colspan="7">Муаммолар бартараф этилганда эришиладиган натижа:</th>
+            <th class="table-info table-info-time" rowspan="3">Time create</th>
+        </tr>
+        <tr>
+            <th class="table-info">(натурада)</th>
+            <th class="table-info">(млн. сўмда)</th>
+            <th class="table-info" rowspan="2">Корхонада тикланадиган қувватлар (млн сўмда)</th>
+            <th class="table-info" colspan="2">Иш ўрни</th>
+            <th class="table-info" colspan="2">Экспорт</th>
+            <th class="table-info" colspan="2">Бюджет тушумлари (солиқ)</th>
+        </tr>
+        <tr>
+            <td class="table-info">Тикланадиган иш ўрни (та)</td>
+            <td class="table-info">Қўшимча иш ўрни (та)</td>
+            <td class="table-info">Тикланадиган экспорт (минг доллар)</td>
+            <td class="table-info">Қўшимча экспорт (минг доллар)</td>
+            <td class="table-info">Тикланадиган тушум (млн сўм)</td>
+            <td class="table-info">Қўшимча тушум (млн сўм)</td>
+        </tr>
+        <tr>
+            {% block form %}
+            {% endblock %}
+        </tr>
+            {% for data in page_obj %}
+        <tr>
+            {% for group in request.user.groups.all %}
+                {% if group.id == 3 %}
+                   <td>{{data.district}}</td>
+                {% endif %}
+            {% endfor %}
+            <td>{{ data.city_name }}</td>
+            <td>{{ data.loiha }}</td>
+            <td>{{ data.loiha_name }}</td>
+            <td>{{ data.year_nature }}</td>
+            <td>{{ data.year_price }}</td>
+            <td>{{ data.work }}</td>
+            <td>{{ data.korxona }}</td>
+            <td>{{ data.izox }}</td>
+            <td>{{ data.ish_sabab }}</td>
+            <td>{{ data.problem }}</td>
+            <td>{{ data.taklif }}</td>
+            <td>{{ data.tashkilot }}</td>
+            <td>{{ data.natija_korxona }}</td>
+            <td>{{ data.natija_tik }}</td>
+            <td>{{ data.natija_kush }}</td>
+            <td>{{ data.natija_export_tik }}</td>
+            <td>{{ data.natija_export_kush }}</td>
+            <td>{{ data.natija_budget_tik }}</td>
+            <td>{{ data.natija_budget_kush }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+          </tr>
+            {%endfor%}
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{% endblock %}
+
+
+{% block add_data %}
+   {% if not request.user.groups.all and not request.user.is_superuser %}
+        <a class="btn btn-success mb-5" href="{% url 'form_manzil' %}">Добавить данные</a>
+   {% endif %}
+{%endblock%}
