@@ -1,10 +1,7 @@
 {% extends 'mainapp/departments/projects_department.html' %}
 {% block table %}
 <h2 class="mb-3">
-    {% if request.user.district != None %}
-        {{ request.user.district }},
-    {% endif %}
-    {{ title }}
+    {% include 'mainapp/data_table/components/table_title.html' %}
 </h2>
 {% block filter %}
 <div class="container mb-3">
@@ -18,10 +15,7 @@
 <div class="container overflow-auto">
         <table class="table table-bordered table-striped">
         <caption>
-            {% if request.user.district != None %}
-                {{ request.user.district }},
-            {% endif %}
-            {{ title }}
+            {% include 'mainapp/data_table/components/table_title.html' %}
         </caption>
         <tr>
             {% for group in request.user.groups.all %}
@@ -44,14 +38,14 @@
             <th class="table-info table-info-time" rowspan="3">Time create</th>
         </tr>
         <tr>
-            <th class="table-info">(натурада)</th>
-            <th class="table-info">(млн. сўмда)</th>
             <th class="table-info" rowspan="2">Корхонада тикланадиган қувватлар (млн сўмда)</th>
             <th class="table-info" colspan="2">Иш ўрни</th>
             <th class="table-info" colspan="2">Экспорт</th>
             <th class="table-info" colspan="2">Бюджет тушумлари (солиқ)</th>
         </tr>
         <tr>
+            <td class="table-info">(натурада)</td>
+            <td class="table-info">(млн. сўмда)</td>
             <td class="table-info">Тикланадиган иш ўрни (та)</td>
             <td class="table-info">Қўшимча иш ўрни (та)</td>
             <td class="table-info">Тикланадиган экспорт (минг доллар)</td>
@@ -65,11 +59,7 @@
         </tr>
             {% for data in page_obj %}
         <tr>
-            {% for group in request.user.groups.all %}
-                {% if group.id == 3 %}
-                   <td>{{data.district}}</td>
-                {% endif %}
-            {% endfor %}
+            {% include 'mainapp/data_table/components/district_field.html' %}
             <td>{{ data.city_name }}</td>
             <td>{{ data.loiha }}</td>
             <td>{{ data.loiha_name }}</td>

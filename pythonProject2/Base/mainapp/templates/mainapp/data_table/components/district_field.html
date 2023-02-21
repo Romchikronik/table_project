@@ -1,0 +1,5 @@
+{% for group in request.user.groups.all %}
+    {% if group.id == 3 %}
+        <td>{{data.district}}</td>
+    {% endif %}
+{% endfor %}

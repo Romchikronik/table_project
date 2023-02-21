@@ -1643,7 +1643,7 @@ def add_data_table_fourth_department(request, model_name, model_form, redirect_u
     else:
         form = model_form()
     context = make_context_by_form(page_title, form, fourth_department_tables_menu, page_obj)
-    return render(request, f'mainapp/forms/fourth_departament/form_{model_name}.html', context)
+    return render(request, f'mainapp/forms/fourth_department/form_{model_name}.html', context)
 
 
 def add_data_table_manzil(request):

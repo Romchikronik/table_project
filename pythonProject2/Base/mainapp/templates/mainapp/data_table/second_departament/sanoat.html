@@ -1,10 +1,7 @@
 {% extends 'mainapp/departments/projects_department.html' %}
 {% block table %}
 <h2 class="mb-3">
-    {% if request.user.district != None %}
-        {{ request.user.district }},
-    {% endif %}
-    {{ title }}
+    {% include 'mainapp/data_table/components/table_title.html' %}
 </h2>
 {% block filter %}
 <div class="container mb-3">
@@ -18,10 +15,7 @@
 <div class="container overflow-auto">
         <table class="table table-bordered table-striped">
         <caption>
-            {% if request.user.district != None %}
-                {{ request.user.district }},
-            {% endif %}
-            {{ title }}
+            {% include 'mainapp/data_table/components/table_title.html' %}
         </caption>
 <!--        <tr>-->
 <!--            <th class="table-info" rowspan="2">Район</th>-->
@@ -64,11 +58,7 @@
         </tr>
             {% for data in page_obj %}
         <tr>
-            {% for group in request.user.groups.all %}
-                {% if group.id == 3 %}
-                   <td>{{data.district}}</td>
-                {% endif %}
-            {% endfor %}
+            {% include 'mainapp/data_table/components/district_field.html' %}
             <td>{{ data.inn_of_sender_or_recipient }}</td>
             <td>{{ data.inn }}</td>
             <td>{{ data.name_of_sender }}</td>

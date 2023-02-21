@@ -1,10 +1,8 @@
 {% extends 'mainapp/departments/projects_department.html' %}
 {% block table %}
 <h2 class="mb-3">
-    {% if request.user.district != None %}
-    {{ request.user.district }},
-    {% endif %}
-    {{ title }}</h2>
+    {% include 'mainapp/data_table/components/table_title.html' %}
+</h2>
 {% block filter %}
 <div class="container mb-3">
     <div class="row">
@@ -20,10 +18,7 @@
 <div class="container overflow-auto">
     <table class="table table-bordered table-striped">
         <caption>
-            {% if request.user.district != None %}
-            {{ request.user.district }},
-            {% endif %}
-            Илова 5.2
+            {% include 'mainapp/data_table/components/table_title.html' %}
         </caption>
         <tr>
             {% for group in request.user.groups.all %}
@@ -57,11 +52,7 @@
         </tr>
         {% for data in page_obj %}
         <tr>
-            {% for group in request.user.groups.all %}
-            {% if group.id == 3 %}
-            <td>{{data.district}}</td>
-            {% endif %}
-            {% endfor %}
+            {% include 'mainapp/data_table/components/district_field.html' %}
             <td>{{data.places_of_exploration}}</td>
             <td>{{data.sites_of_geo_formations}}</td>
             <td>{{data.name_of_formations}}</td>
