@@ -1648,3 +1648,39 @@ def add_data_table_fourth_department(request, model_name, model_form, redirect_u
 
 def add_data_table_manzil(request):
     return add_data_table_fourth_department(request, 'manzil', TableManzilForm, 'table_manzil', '2017-2020 манзилли')
+
+
+def add_data_table_subtotals(request):
+    return add_data_table_fourth_department(request, 'subtotals', TableSubtotalsForm, 'table_subtotals', 'Промежуточный итоги')
+
+
+def add_data_table_addressed(request):
+    return add_data_table_fourth_department(request, 'addressed', TableAddressedForm, 'table_addressed', 'Манзилли')
+
+
+def add_data_table_networkAdministrations(request):
+    return add_data_table_fourth_department(request, 'networkAdministrations', TableNetworkAdministrationsForm, 'table_networkAdministrations', 'Тармоқ бошқармалари')
+
+
+def add_data_table_totalCleaning(request):
+    return add_data_table_fourth_department(request, 'totalCleaning', TableTotalCleaningForm, 'table_totalCleaning', 'ЖАМИ чистка')
+
+
+def add_data_table_totalCleaningNetwork(request):
+    return add_data_table_fourth_department(request, 'totalCleaningNetwork', TableTotalCleaningNetworkForm, 'table_totalCleaningNetwork', 'ЖАМИ чистка тармоқ')
+
+
+def add_data_table_totalDone(request):
+    return add_data_table_fourth_department(request, 'totalDone', TableTotalDoneForm, 'table_totalDone', 'ЖАМИ бажарилган')
+
+
+def add_data_table_totalCompletedNetwork(request):
+    return add_data_table_fourth_department(request, 'totalCompletedNetwork', TableTotalCompletedNetworkForm, 'table_totalCompletedNetwork', 'ЖАМИ бажарилган тармоқ')
+
+
+def add_data_table_totalProblem(request):
+    return add_data_table_fourth_department(request, 'totalProblem', TableTotalProblemForm, 'table_totalProblem', 'ЖАМИ муаммо')
+
+
+def add_data_table_performanceAddressed(request):
+    return add_data_table_fourth_department(request, 'performanceAddressed', TablePerformanceIsAddressedForm, 'table_performanceAddressed', 'манзилли')

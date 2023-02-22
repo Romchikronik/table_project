@@ -1738,3 +1738,11 @@ from django.test import TestCase
 #             'budget_reja',
 #             'budget_amalda',
 #         ]
+
+
+
+#            {% for group in request.user.groups.all %}
+#             {% if group.id == 3 %}
+#             <th rowspan="3" class="table-primary">HUDUDLAR</th>
+#             {% endif %}
+#             {% endfor %}

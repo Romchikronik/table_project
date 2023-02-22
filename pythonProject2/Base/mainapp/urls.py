@@ -54,6 +54,15 @@ urlpatterns = [
 
     # 4 отдел
     path('form/manzil', add_data_table_manzil, name='form_manzil'),
+    path('form/subtotals', add_data_table_subtotals, name='form_subtotals'),
+    path('form/addressed', add_data_table_addressed, name='form_addressed'),
+    path('form/networkAdministrations', add_data_table_networkAdministrations, name='form_networkAdministrations'),
+    path('form/totalCleaning', add_data_table_totalCleaning, name='form_totalCleaning'),
+    path('form/totalCleaningNetwork', add_data_table_totalCleaningNetwork, name='form_totalCleaningNetwork'),
+    path('form/totalDone', add_data_table_totalDone, name='form_totalDone'),
+    path('form/totalCompletedNetwork', add_data_table_totalCompletedNetwork, name='form_totalCompletedNetwork'),
+    path('form/totalProblem', add_data_table_totalProblem, name='form_totalProblem'),
+    path('form/performanceAddressed', add_data_table_performanceAddressed, name='form_performanceAddressed'),
 
     # path('projects-department/table/<slug:table_slug>', views.get_data_table_Loiha41, name='table'),
 
@@ -84,6 +93,15 @@ urlpatterns = [
 
     # 4 departament
     path('postmonitoring-department/table/manzil', get_data_table_manzil, name='table_manzil'),
+    path('postmonitoring-department/table/subtotals', get_data_table_subtotals, name='table_subtotals'),
+    path('postmonitoring-department/table/addressed', get_data_table_addressed, name='table_addressed'),
+    path('postmonitoring-department/table/networkAdministrations', get_data_table_networkAdministrations, name='table_networkAdministrations'),
+    path('postmonitoring-department/table/totalCleaning', get_data_table_totalCleaning, name='table_totalCleaning'),
+    path('postmonitoring-department/table/totalCleaningNetwork', get_data_table_totalCleaningNetwork, name='table_totalCleaningNetwork'),
+    path('postmonitoring-department/table/totalDone', get_data_table_totalDone, name='table_totalDone'),
+    path('postmonitoring-department/table/totalCompletedNetwork', get_data_table_totalCompletedNetwork, name='table_totalCompletedNetwork'),
+    path('postmonitoring-department/table/totalProblem', get_data_table_totalProblem, name='table_totalProblem'),
+    path('postmonitoring-department/table/performanceAddressed', get_data_table_performanceAddressed, name='table_performanceAddressed'),
 
     # filters
 
@@ -121,4 +139,22 @@ urlpatterns = [
     # 4 department
     path('postmonitoring-department/table/manzil/filter/<slug:filter_slug>', table_filter_table_manzil,
          name="table_filter_table_manzil"),
+    path('postmonitoring-department/table/subtotals/filter/<slug:filter_slug>', table_filter_table_subtotals,
+         name="table_filter_table_subtotals"),
+    path('postmonitoring-department/table/addressed/filter/<slug:filter_slug>', table_filter_table_addressed,
+         name="table_filter_table_addressed"),
+    path('postmonitoring-department/table/networkAdministrations/filter/<slug:filter_slug>', table_filter_table_networkAdministrations,
+         name="table_filter_table_networkAdministrations"),
+    path('postmonitoring-department/table/totalCleaning/filter/<slug:filter_slug>', table_filter_table_totalCleaning,
+         name="table_filter_table_totalCleaning"),
+    path('postmonitoring-department/table/totalCleaningNetwork/filter/<slug:filter_slug>', table_filter_table_totalCleaningNetwork,
+         name="table_filter_table_totalCleaningNetwork"),
+    path('postmonitoring-department/table/totalDone/filter/<slug:filter_slug>', table_filter_table_totalDone,
+         name="table_filter_table_totalDone"),
+    path('postmonitoring-department/table/totalCompletedNetwork/filter/<slug:filter_slug>', table_filter_table_totalCompletedNetwork,
+         name="table_filter_table_totalCompletedNetwork"),
+    path('postmonitoring-department/table/totalProblem/filter/<slug:filter_slug>', table_filter_table_totalProblem,
+         name="table_filter_table_totalProblem"),
+    path('postmonitoring-department/table/performanceAddressed/filter/<slug:filter_slug>', table_filter_table_performanceAddressed,
+         name="table_filter_table_performanceAddressed"),
 ]

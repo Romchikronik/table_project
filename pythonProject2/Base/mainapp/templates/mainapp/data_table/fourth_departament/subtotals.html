@@ -1,0 +1,72 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">
+    {% include 'mainapp/data_table/components/table_title.html' %}
+</h2>
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_subtotals' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_subtotals' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_subtotals' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+<div class="container overflow-auto">
+        <table class="table table-bordered table-striped">
+        <caption>
+            {% include 'mainapp/data_table/components/table_title.html' %}
+        </caption>
+        <tr>
+            {% for group in request.user.groups.all %}
+            {% if group.id == 3 %}
+            <th rowspan="2" class="table-info">Ҳудуд номи</th>
+            {% endif %}
+            {% endfor %}
+            <th class="table-info" rowspan="2">Умумий корхоналар сони</th>
+            <th class="table-info" colspan="7">Январь ойи</th>
+
+            <th class="table-info table-info-time" rowspan="2">Time create</th>
+        </tr>
+        <tr>
+            <th class="table-info">Тўлиқ қувват (80-100%)</th>
+            <th class="table-info">Ўрта қувват (51-79%)</th>
+            <th class="table-info">Паст қувват (0-50%)</th>
+            <th class="table-info">Вақтинча ишламаяпти</th>
+            <th class="table-info">Тугатилган</th>
+            <th class="table-info">Мавсумий</th>
+            <th class="table-info">Бошқа</th>
+        </tr>
+        <tr>
+            {% block form %}
+            {% endblock %}
+        </tr>
+            {% for data in page_obj %}
+        <tr>
+            {% include 'mainapp/data_table/components/district_field.html' %}
+            <td>{{ data.general }}</td>
+            <td>{{ data.january_toy }}</td>
+            <td>{{ data.january_orta }}</td>
+            <td>{{ data.january_past }}</td>
+            <td>{{ data.january_clock }}</td>
+            <td>{{ data.end }}</td>
+            <td>{{ data.mavsumiy }}</td>
+            <td>{{ data.other }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+          </tr>
+            {%endfor%}
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{% endblock %}
+
+
+{% block add_data %}
+   {% if not request.user.groups.all and not request.user.is_superuser %}
+        <a class="btn btn-success mb-5" href="{% url 'form_subtotals' %}">Добавить данные</a>
+   {% endif %}
+{%endblock%}

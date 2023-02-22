@@ -147,3 +147,66 @@ class TableManzilForm(ModelForm):
         model = Manzil
         fields = '__all__'
         exclude = ['district', 'is_published']
+
+
+class TableSubtotalsForm(ModelForm):
+    class Meta:
+        model = Subtotals
+        fields = '__all__'
+        exclude = ['district', 'is_published']
+
+
+class TableAddressedForm(ModelForm):
+    class Meta:
+        model = Addressed
+        fields = '__all__'
+        exclude = ['district', 'is_published']
+
+
+class TableNetworkAdministrationsForm(ModelForm):
+    class Meta:
+        model = NetworkAdministrations
+        fields = '__all__'
+        exclude = ['district', 'is_published']
+
+
+class TableTotalCleaningForm(ModelForm):
+    class Meta:
+        model = TotalCleaning
+        fields = '__all__'
+        exclude = ['district', 'is_published']
+
+
+class TableTotalCleaningNetworkForm(ModelForm):
+    class Meta:
+        model = TotalCleaningNetwork
+        fields = '__all__'
+        exclude = ['district', 'is_published']
+
+
+class TableTotalDoneForm(ModelForm):
+    class Meta:
+        model = TotalDone
+        fields = '__all__'
+        exclude = ['district', 'is_published']
+
+
+class TableTotalCompletedNetworkForm(ModelForm):
+    class Meta:
+        model = TotalCompletedNetwork
+        fields = '__all__'
+        exclude = ['district', 'is_published']
+
+
+class TableTotalProblemForm(ModelForm):
+    class Meta:
+        model = TotalProblem
+        fields = '__all__'
+        exclude = ['district', 'is_published']
+
+
+class TablePerformanceIsAddressedForm(ModelForm):
+    class Meta:
+        model = PerformanceIsAddressed
+        fields = '__all__'
+        exclude = ['district', 'is_published']

@@ -39,15 +39,15 @@ third_department_tables_menu = [
 # url Таблиц и форм отдела 4
 fourth_department_tables_menu = [
     {'table_name': '2017-2020 манзилли', 'url_form': 'form_manzil', 'url_data_table': 'table_manzil'},
-    # {'table_name': 'Промежуточный итоги', 'url_form': 'form_subtotals', 'url_data_table': 'table_subtotals'},
-    # {'table_name': 'Манзилли', 'url_form': 'form_addressed', 'url_data_table': 'table_addressed'},
-    # {'table_name': 'Тармоқ бошқармалари', 'url_form': 'form_networkAdministrations', 'url_data_table': 'table_networkAdministrations'},
-    # {'table_name': 'ЖАМИ чистка', 'url_form': 'form_totalCleaning', 'url_data_table': 'table_totalCleaning'},
-    # {'table_name': 'ЖАМИ чистка тармоқ', 'url_form': 'form_totalCleaningNetwork', 'url_data_table': 'table_totalCleaningNetwork'},
-    # {'table_name': 'ЖАМИ бажарилган', 'url_form': 'form_totalDone', 'url_data_table': 'table_totalDone'},
-    # {'table_name': 'ЖАМИ бажарилган тармоқ', 'url_form': 'form_totalCompletedNetwork', 'url_data_table': 'table_totalCompletedNetwork'},
-    # {'table_name': 'ЖАМИ муаммо', 'url_form': 'form_totalProblem', 'url_data_table': 'table_totalProblem'},
-    # {'table_name': 'манзилли', 'url_form': 'form_performanceAddressed', 'url_data_table': 'table_performanceAddressed'},
+    {'table_name': 'Промежуточный итоги', 'url_form': 'form_subtotals', 'url_data_table': 'table_subtotals'},
+    {'table_name': 'Манзилли', 'url_form': 'form_addressed', 'url_data_table': 'table_addressed'},
+    {'table_name': 'Тармоқ бошқармалари', 'url_form': 'form_networkAdministrations', 'url_data_table': 'table_networkAdministrations'},
+    {'table_name': 'ЖАМИ чистка', 'url_form': 'form_totalCleaning', 'url_data_table': 'table_totalCleaning'},
+    {'table_name': 'ЖАМИ чистка тармоқ', 'url_form': 'form_totalCleaningNetwork', 'url_data_table': 'table_totalCleaningNetwork'},
+    {'table_name': 'ЖАМИ бажарилган', 'url_form': 'form_totalDone', 'url_data_table': 'table_totalDone'},
+    {'table_name': 'ЖАМИ бажарилган тармоқ', 'url_form': 'form_totalCompletedNetwork', 'url_data_table': 'table_totalCompletedNetwork'},
+    {'table_name': 'ЖАМИ муаммо', 'url_form': 'form_totalProblem', 'url_data_table': 'table_totalProblem'},
+    {'table_name': 'манзилли', 'url_form': 'form_performanceAddressed', 'url_data_table': 'table_performanceAddressed'},
 ]
 # url Таблиц и форм отдела 5
 fifth_department_tables_menu = [
