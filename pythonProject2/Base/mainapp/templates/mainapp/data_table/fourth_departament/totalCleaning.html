@@ -1,0 +1,122 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">
+    {% include 'mainapp/data_table/components/table_title.html' %}
+</h2>
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_totalCleaning' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_totalCleaning' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_totalCleaning' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+<div class="container overflow-auto">
+        <table class="table table-bordered table-striped">
+        <caption>
+            {% include 'mainapp/data_table/components/table_title.html' %}
+        </caption>
+        <tr>
+            {% for group in request.user.groups.all %}
+            {% if group.id == 3 %}
+            <th rowspan="3" class="table-info">Ҳудудлар</th>
+            {% endif %}
+            {% endfor %}
+            <th class="table-info" rowspan="3">Корхона сони</th>
+            <th class="table-info" rowspan="3">Муаммо сони</th>
+            <th class="table-info" rowspan="3">Бажарилган</th>
+            <th class="table-info" rowspan="3">Бажарилмоқда</th>
+            <th class="table-info" colspan="8">Шундан:</th>
+            <th class="table-info" colspan="13">Шундан:</th>
+            <th class="table-info" colspan="4">Эришиладиган натижалар</th>
+
+            <th class="table-info table-info-time" rowspan="3">Time create</th>
+        </tr>
+        <tr>
+            <th class="table-info" rowspan="2">Банк бўйича муаммолар</th>
+            <th class="table-info" rowspan="2">Жами сумма</th>
+            <th class="table-info" colspan="4">Шундан (млн сўм)</th>
+            <th class="table-info" rowspan="2">Мутахассис олиб келиш</th>
+            <th class="table-info" rowspan="2">Харидор</th>
+            <th class="table-info" rowspan="2">Субсидия</th>
+            <th class="table-info" rowspan="2">Асбобускуна</th>
+            <th class="table-info" rowspan="2">ҚҚС қайтариш</th>
+            <th class="table-info" rowspan="2">Хом ашё</th>
+            <th class="table-info" rowspan="2">Ер</th>
+            <th class="table-info" rowspan="2">Имтиёз</th>
+            <th class="table-info" rowspan="2">Рухсатнома бериш</th>
+            <th class="table-info" rowspan="2">Инфратузилма</th>
+            <th class="table-info" colspan="4">Шундан</th>
+            <th class="table-info" rowspan="2">Бошқалар</th>
+            <th class="table-info" rowspan="2">Тикланган ишлаб чиқариш (млн.сўм)</th>
+            <th class="table-info" rowspan="2">Тикланган иш ўрни</th>
+            <th class="table-info" rowspan="2">Тикланган экспорт ҳажми минг долл.</th>
+            <th class="table-info" rowspan="2">Солиқ тушумлари, млн.сўм</th>
+        </tr>
+        <tr>
+            <td class="table-info">Кредит</td>
+            <td class="table-info">Сумма</td>
+            <td class="table-info">Муддат узайтириш</td>
+            <td class="table-info">Сумма</td>
+            <td class="table-info">Электр</td>
+            <td class="table-info">Газ</td>
+            <td class="table-info">Сув</td>
+            <td class="table-info">Йўл</td>
+        </tr>
+        <tr>
+            {% block form %}
+            {% endblock %}
+        </tr>
+            {% for data in page_obj %}
+        <tr>
+            {% include 'mainapp/data_table/components/district_field.html' %}
+            <td>{{ data.total_enterprise }}</td>
+            <td>{{ data.total_problem }}</td>
+            <td>{{ data.done_enterprise }}</td>
+            <td>{{ data.done_problem }}</td>
+
+            <td>{{ data.bank_info }}</td>
+            <td>{{ data.total_sum }}</td>
+            <td>{{ data.kredit }}</td>
+
+            <td>{{ data.sum }}</td>
+            <td>{{ data.term_extension }}</td>
+            <td>{{ data.sum_2 }}</td>
+            <td>{{ data.muta }}</td>
+            <td>{{ data.buy_it }}</td>
+            <td>{{ data.sub }}</td>
+            <td>{{ data.asb }}</td>
+            <td>{{ data.kks }}</td>
+            <td>{{ data.raw_material }}</td>
+            <td>{{ data.er }}</td>
+            <td>{{ data.imt }}</td>
+            <td>{{ data.ruxsat }}</td>
+            <td>{{ data.info_tuz }}</td>
+            <td>{{ data.electricity }}</td>
+            <td>{{ data.gas }}</td>
+            <td>{{ data.water }}</td>
+            <td>{{ data.road }}</td>
+            <td>{{ data.other }}</td>
+            <td>{{ data.restored_production }}</td>
+            <td>{{ data.restored_job }}</td>
+            <td>{{ data.restored_export }}</td>
+            <td>{{ data.tax_revenues }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+          </tr>
+            {%endfor%}
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{% endblock %}
+
+
+{% block add_data %}
+   {% if not request.user.groups.all and not request.user.is_superuser %}
+        <a class="btn btn-success mb-5" href="{% url 'form_totalCleaning' %}">Добавить данные</a>
+   {% endif %}
+{%endblock%}

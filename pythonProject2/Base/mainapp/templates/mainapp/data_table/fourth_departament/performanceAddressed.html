@@ -1,0 +1,111 @@
+{% extends 'mainapp/departments/projects_department.html' %}
+{% block table %}
+<h2 class="mb-3">
+    {% include 'mainapp/data_table/components/table_title.html' %}
+</h2>
+{% block filter %}
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_performanceAddressed' filter_slug='week' %}">неделя</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_performanceAddressed' filter_slug='month' %}">месяц</a></div>
+        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_performanceAddressed' %}">все</a></div>
+    </div>
+</div>
+{% endblock %}
+<div class="container overflow-auto">
+        <table class="table table-bordered table-striped">
+        <caption>
+            {% include 'mainapp/data_table/components/table_title.html' %}
+        </caption>
+        <tr>
+            {% for group in request.user.groups.all %}
+            {% if group.id == 3 %}
+            <th rowspan="2" class="table-info">Ҳудудлар</th>
+            {% endif %}
+            {% endfor %}
+            <th class="table-info" rowspan="2">Йўналиш</th>
+            <th class="table-info" rowspan="2">Асос Гип, Рип</th>
+            <th class="table-info" rowspan="2">Асос Гип, Рип (Муаммолар сони бўйича)</th>
+            <th class="table-info" rowspan="2">Тармоқлар</th>
+            <th class="table-info" rowspan="2">Тармоқлар</th>
+            <th class="table-info" rowspan="2">ЙИЛ</th>
+            <th class="table-info" rowspan="2">Корхона номи  ва ишлаб чиқариш йўналиши</th>
+            <th class="table-info" rowspan="2">Муаммоли масалалар мазмуни</th>
+            <th class="table-info" rowspan="2">Муаммоли масалаларни бартараф этиш механизми</th>
+            <th class="table-info" rowspan="2">Ижро муддати</th>
+            <th class="table-info" rowspan="2">Ижро учун маъсуллар</th>
+            <th class="table-info" rowspan="2">Лойиҳа қиймати млн.сум.</th>
+            <th class="table-info" colspan="2">Йиллик қуввати (ТИА/бизнес режа бўйича)</th>
+            <th class="table-info" rowspan="2">Яратилган иш ўрни сони</th>
+            <th class="table-info" rowspan="2">Бажарилиши</th>
+            <th class="table-info" rowspan="2">Ҳолати қисқа</th>
+            <th class="table-info" rowspan="2">ҳудуд номи</th>
+            <th class="table-info" rowspan="2">Муаммо тури</th>
+            <th class="table-info" rowspan="2">Ҳудуд сони</th>
+            <th class="table-info" rowspan="2">масуллар бўйича</th>
+            <th class="table-info" rowspan="2">Банк кредити ва пролонгация млн сўм</th>
+            <th class="table-info" colspan="5"></th>
+
+            <th class="table-info table-info-time" rowspan="2">Time create</th>
+        </tr>
+        <tr>
+            <td class="table-info">(натурада)</td>
+            <td class="table-info">(млн. сўмда)</td>
+            <td class="table-info">И/ч млн.сўм</td>
+            <td class="table-info">Иш ўрни (тикланади)</td>
+            <td class="table-info">Иш ўрни (янги)</td>
+            <td class="table-info">Экспорт минг долл</td>
+            <td class="table-info">Солиқ млн.сўм</td>
+        </tr>
+        <tr>
+            {% block form %}
+            {% endblock %}
+        </tr>
+            {% for data in page_obj %}
+        <tr>
+            {% include 'mainapp/data_table/components/district_field.html' %}
+            <td>{{ data.direction }}</td>
+            <td>{{ data.basis }}</td>
+            <td>{{ data.basis_problem }}</td>
+            <td>{{ data.networks }}</td>
+            <td>{{ data.networks_2 }}</td>
+            <td>{{ data.year }}</td>
+            <td>{{ data.company_name }}</td>
+            <td>{{ data.problematic_issues }}</td>
+            <td>{{ data.problem_solving }}</td>
+            <td>{{ data.duration_of_execution }}</td>
+            <td>{{ data.for_performance_responsible }}</td>
+            <td>{{ data.project_cost }}</td>
+            <td>{{ data.annual_capacity_in_kind }}</td>
+            <td>{{ data.annual_capacity_sum }}</td>
+            <td>{{ data.jobs_created }}</td>
+            <td>{{ data.fulfillment }}</td>
+            <td>{{ data.status_is_short }}</td>
+            <td>{{ data.area_name }}</td>
+            <td>{{ data.type_of_problem }}</td>
+            <td>{{ data.area_number }}</td>
+            <td>{{ data.according_to_the_answers }}</td>
+            <td>{{ data.bank_loan }}</td>
+            <td>{{ data.million_soums }}</td>
+            <td>{{ data.job }}</td>
+            <td>{{ data.job_new }}</td>
+            <td>{{ data.export }}</td>
+            <td>{{ data.tax }}</td>
+            <td class="table-time">{{ data.time_create }}</td>
+          </tr>
+            {%endfor%}
+    </table>
+</div>
+{% include 'mainapp/pagination.html' %}
+{% endblock %}
+
+{% block export_table %}
+<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
+{% endblock %}
+
+
+{% block add_data %}
+   {% if not request.user.groups.all and not request.user.is_superuser %}
+        <a class="btn btn-success mb-5" href="{% url 'form_performanceAddressed' %}">Добавить данные</a>
+   {% endif %}
+{%endblock%}
