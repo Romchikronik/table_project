@@ -65,7 +65,6 @@ def mainPage(request):
 # def get_department_projects(request):
 #     return get_department(request, del_group_loiha_id, 'Отдел - Лоиха', projects_department, 'projects_department')
 
-
 @login_required
 def get_department_projects(request):
     if del_group_loiha_id(request):
@@ -132,8 +131,9 @@ def get_department_5(request):
 
 def export_excel_loiha41(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+    # response['Content-Disposition'] = 'attachment; filename=table' + \
+    #                                   str(datetime.now()) + '.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -267,8 +267,7 @@ def export_excel_loiha41(request, filter_slug):
 
 def export_excel_loiha52(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -362,8 +361,7 @@ def export_excel_loiha52(request, filter_slug):
 
 def export_excel_loiha14(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -465,8 +463,7 @@ def export_excel_loiha14(request, filter_slug):
 
 def export_excel_loiha131(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -549,8 +546,7 @@ def export_excel_loiha131(request, filter_slug):
 
 def export_excel_loiha122(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -645,8 +641,7 @@ def export_excel_loiha122(request, filter_slug):
 
 def export_excel_loiha121(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -732,8 +727,7 @@ def export_excel_loiha121(request, filter_slug):
 
 def export_excel_loiha12(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -827,8 +821,7 @@ def export_excel_loiha12(request, filter_slug):
 
 def export_excel_loiha10(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -933,8 +926,7 @@ def export_excel_loiha10(request, filter_slug):
 
 def export_excel_loiha6(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -1023,8 +1015,7 @@ def export_excel_loiha6(request, filter_slug):
 
 def export_excel_loiha13(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=table' + \
-                                      str(datetime.now()) + '.xls'
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
@@ -1098,6 +1089,144 @@ def export_excel_loiha13(request, filter_slug):
 
     wb.save(response)
     return response
+
+
+# export second department
+def export_excel_sanoat(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+    # response['Content-Disposition'] = 'attachment; filename=table' + \
+    #                                   str(datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 2  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_loiha_id(request):
+        ws.write_merge(0, 0, 0, 25, f'{request.user.district}, Илова-4.1', cell_title)
+        ws.write_merge(1, 1, 0, 3, 'SANOAT', cell_style)
+        ws.write_merge(1, 1, 4, 7, 'QISHLOQ', cell_style)
+        ws.write_merge(1, 1, 8, 11, 'QURILISH', cell_style)
+        ws.write_merge(1, 1, 12, 15, 'XIZMATLAR', cell_style)
+        ws.write_merge(1, 1, 16, 19, 'CHAKANA SAVDO', cell_style)
+        ws.write_merge(1, 1, 20, 21, 'TASHQI SAVDO AYLANMASI', cell_style)
+        ws.write_merge(1, 1, 22, 23, 'EKSPORT', cell_style)
+        ws.write_merge(1, 1, 24, 25, 'IMPORT', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 26, 'Илова-4.1', cell_title)
+        # ws.write_merge(1, 2, 0, 1, 'Район', cell_style)
+        ws.write_merge(1, 1, 1, 4, 'SANOAT', cell_style)
+        ws.write_merge(1, 1, 5, 8, 'QISHLOQ', cell_style)
+        ws.write_merge(1, 1, 9, 12, 'QURILISH', cell_style)
+        ws.write_merge(1, 1, 13, 16, 'XIZMATLAR', cell_style)
+        ws.write_merge(1, 1, 17, 20, 'CHAKANA SAVDO', cell_style)
+        ws.write_merge(1, 1, 21, 22, 'TASHQI SAVDO AYLANMASI', cell_style)
+        ws.write_merge(1, 1, 23, 24, 'EKSPORT', cell_style)
+        ws.write_merge(1, 1, 25, 26, 'IMPORT', cell_style)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = ["mlrd. so'm",
+                    "o'shish sur'ti %",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "mlrd. so'm",
+                    "o'shish sur'ti %",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "mlrd. so'm",
+                    "o'shish sur'ti%",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "mlrd. so'm",
+                    "o'shish sur'ti%",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "mlrd. so'm",
+                    "o'shish sur'ti%",
+                    "prognoz",
+                    "farqi (-;+)",
+                    "ming. AQSh doll",
+                    "o'shish sur'ti%",
+                    "ming. AQSh doll",
+                    "o'shish sur'ti%",
+                    "ming. AQSh doll",
+                    "o'shish sur'ti%"
+                    ]
+
+    if not get_group_loiha_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Район",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        # 'district__district',
+        'bill_sum_industry',
+        'picture_of_growth_industry',
+        'forecast_industry',
+        'difference_industry',
+        'bill_sum_locality',
+        'picture_of_growth_locality',
+        'forecast_locality',
+        'difference_locality',
+        'bill_sum_construction',
+        'picture_of_growth_construction',
+        'forecast_construction',
+        'difference_construction',
+        'bill_sum_services',
+        'picture_of_growth_services',
+        'forecast_services',
+        'difference_services',
+        'bill_sum_retail',
+        'picture_of_growth_retail',
+        'forecast_retail',
+        'difference_retail',
+        'thousand_dollar_international_trade',
+        'picture_of_growth_international_trade',
+        'thousand_dollar_export',
+        'picture_of_growth_export',
+        'thousand_dollar_import',
+        'picture_of_growth_import',
+        # 'time_create'
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_loiha_tables(request, filter_slug, Loiha41, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
 
 
 def get_data_table(request, model_name, page_title):

@@ -6,9 +6,8 @@
 {% block filter %}
 <div class="container mb-3">
     <div class="row">
-        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_networkAdministrations' filter_slug='week' %}">неделя</a></div>
-        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_filter_table_networkAdministrations' filter_slug='month' %}">месяц</a></div>
-        <div class="col-1"><a class="btn btn btn-primary w-100" href="{% url 'table_networkAdministrations' %}">все</a></div>
+        {% include "mainapp/data_table/components/filter_buttons.html" with table_filter_url='table_filter_table_networkAdministrations' %}
+        {% include "mainapp/data_table/components/main_table_url.html" with table_url='table_networkAdministrations' %}
     </div>
 </div>
 {% endblock %}
@@ -18,11 +17,7 @@
             {% include 'mainapp/data_table/components/table_title.html' %}
         </caption>
         <tr>
-            {% for group in request.user.groups.all %}
-            {% if group.id == 3 %}
-            <th rowspan="3" class="table-info">Ҳудудлар</th>
-            {% endif %}
-            {% endfor %}
+            {% include 'mainapp/data_table/components/district_title.html' with rowspan=3 %}
             <th class="table-info" rowspan="2" colspan="2">Жами</th>
             <th class="table-info" colspan="4">Шундан</th>
             <th class="table-info" colspan="8">Шундан</th>
