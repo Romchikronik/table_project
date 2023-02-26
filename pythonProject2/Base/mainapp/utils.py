@@ -352,3 +352,9 @@ def filter_export_vault_tables(request, filter_slug, model, fields, department_f
     return rows
 
 
+# def get_export_fields(get_form):
+#     form = get_form()
+#     all_fields = form.fields.keys()
+#     exclude_fields = form.Meta.exclude
+#     fields_to_use = all_fields - exclude_fields
+#     return fields_to_use

@@ -2606,6 +2606,746 @@ def export_excel_quarter(request, filter_slug):
     return response
 
 
+from openpyxl import Workbook
+from openpyxl.styles import NamedStyle, Font, Alignment
+import openpyxl
+
+
+def export_excel_monthly(request, filter_slug):
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xlsx'
+
+    wb = Workbook()
+    ws = wb.active
+    row_num = 4
+
+
+    # wb = xlwt.Workbook(encoding='utf-8')
+    # ws = wb.add_sheet('table', cell_overwrite_ok=True)
+
+    font_style = NamedStyle(name='font_style')
+    font_style.font = Font(bold=True)
+
+    cell_style = NamedStyle(name='cell_style')
+    cell_style.font = Font(bold=True)
+    cell_style.alignment = Alignment(vertical='center', horizontal='center')
+
+    cell_title = NamedStyle(name='cell_title')
+    cell_title.font = Font(bold=True, size=16)
+    cell_title.alignment = Alignment(vertical='center', horizontal='left')
+
+    row_num = 5  # с какой строки начинается наша таблица
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_vault_id(request):
+        # ws.write_merge(0, 0, 0, 87, f'{request.user.district}, Cвод ойлар', cell_title)
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=264)
+        ws.cell(row=1, column=1, value=f'{request.user.district}, Cвод ойлар').style = cell_title
+        ws.merge_cells(start_row=2, end_row=4, start_column=1, end_column=2)
+        ws.cell(row=2, column=1, value='Лойиҳа сони').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=3, end_column=22)
+        ws.cell(row=2, column=3, value='Январь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=23, end_column=24)
+        ws.cell(row=2, column=23, value='Лойиҳа сони').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=25, end_column=44)
+        ws.cell(row=2, column=25, value='Февраль').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=45, end_column=46)
+        ws.cell(row=2, column=45, value='Лойиҳа сони').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=47, end_column=66)
+        ws.cell(row=2, column=47, value='Март').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=67, end_column=68)
+        ws.cell(row=2, column=67, value='Лойиҳа сони').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=69, end_column=88)
+        ws.cell(row=2, column=69, value='Апрель').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=89, end_column=90)
+        ws.cell(row=2, column=89, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=91, end_column=110)
+        ws.cell(row=2, column=91, value='Май').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=111, end_column=112)
+        ws.cell(row=2, column=111, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=113, end_column=132)
+        ws.cell(row=2, column=113, value='Июль').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=133, end_column=134)
+        ws.cell(row=2, column=133, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=135, end_column=154)
+        ws.cell(row=2, column=135, value='Июнь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=155, end_column=156)
+        ws.cell(row=2, column=155, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=157, end_column=176)
+        ws.cell(row=2, column=157, value='Август').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=177, end_column=178)
+        ws.cell(row=2, column=177, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=179, end_column=198)
+        ws.cell(row=2, column=179, value='Сентябрь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=199, end_column=200)
+        ws.cell(row=2, column=199, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=201, end_column=220)
+        ws.cell(row=2, column=201, value='Октябрь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=221, end_column=222)
+        ws.cell(row=2, column=221, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=223, end_column=242)
+        ws.cell(row=2, column=223, value='Ноябрь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=243, end_column=244)
+        ws.cell(row=2, column=243, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=245, end_column=264)
+        ws.cell(row=2, column=245, value='Декабрь').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=3, end_column=4)
+        ws.cell(row=3, column=3, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=5, end_column=12)
+        ws.cell(row=3, column=5, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=13, end_column=14)
+        ws.cell(row=3, column=13, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=15, end_column=22)
+        ws.cell(row=3, column=15, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=25, end_column=26)
+        ws.cell(row=3, column=25, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=27, end_column=34)
+        ws.cell(row=3, column=27, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=35, end_column=36)
+        ws.cell(row=3, column=35, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=37, end_column=44)
+        ws.cell(row=3, column=37, value='Иқтисодий самарадорлик').style = cell_style
+
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=47, end_column=48)
+        ws.cell(row=3, column=47, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=49, end_column=56)
+        ws.cell(row=3, column=49, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=57, end_column=58)
+        ws.cell(row=3, column=57, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=59, end_column=66)
+        ws.cell(row=3, column=59, value='Иқтисодий самарадорлик').style = cell_style
+
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=69, end_column=70)
+        ws.cell(row=3, column=69, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=71, end_column=78)
+        ws.cell(row=3, column=71, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=79, end_column=80)
+        ws.cell(row=3, column=79, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=81, end_column=88)
+        ws.cell(row=3, column=81, value='Иқтисодий самарадорлик').style = cell_style
+
+        # это был Апрель
+        # ws.merge_cells(start_row=2, end_row=2, start_column=21, end_column=35)
+
+    else:
+        pass
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = [
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+    ]
+
+    if not get_group_vault_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        column_letter = openpyxl.utils.get_column_letter(col_num + 1)
+        ws.column_dimensions[column_letter].width = 27
+        ws.cell(row=row_num, column=col_num + 1, value=columns[col_num])
+        ws.cell(row=row_num, column=col_num + 1).style = cell_style
+
+    font_style = openpyxl.styles.Font(bold=False)
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    form = TableMonthForm()
+    all_fields = form.fields.keys()
+    fields = [
+        *all_fields
+    ]
+
+
+    fieldsm = [
+        'january_loiha_soni_reja',
+        'january_loiha_soni_amalda',
+        'january_umumiy_kiymati_reja',
+        'january_umumiy_kiymati_amalda',
+        'january_uz_mablag_reja',
+        'january_uz_mablag_amalda',
+        'january_bank_kredit_reja',
+        'january_bank_kredit_amalda',
+        'january_xorijiy_kredit_reja',
+        'january_xorijiy_kredit_amalda',
+        'january_xorijiy_invest_reja',
+        'january_xorijiy_invest_amalda',
+        'january_yangi_ish_reja',
+        'january_yangi_ish_amalda',
+        'january_ishlab_chiqarish_reja',
+        'january_ishlab_chiqarish_amalda',
+        'january_import_reja',
+        'january_import_amalda',
+        'january_export_reja',
+        'january_export_amalda',
+        'january_budget_reja',
+        'january_budget_amalda',
+
+        'february_loiha_soni_reja',
+        'february_loiha_soni_amalda',
+        'february_umumiy_kiymati_reja',
+        'february_umumiy_kiymati_amalda',
+        'february_uz_mablag_reja',
+        'february_uz_mablag_amalda',
+        'february_bank_kredit_reja',
+        'february_bank_kredit_amalda',
+        'february_xorijiy_kredit_reja',
+        'february_xorijiy_kredit_amalda',
+        'february_xorijiy_invest_reja',
+        'february_xorijiy_invest_amalda',
+        'february_yangi_ish_reja',
+        'february_yangi_ish_amalda',
+        'february_ishlab_chiqarish_reja',
+        'february_ishlab_chiqarish_amalda',
+        'february_import_reja',
+        'february_import_amalda',
+        'february_export_reja',
+        'february_export_amalda',
+        'february_budget_reja',
+        'february_budget_amalda',
+
+        'march_loiha_soni_reja',
+        'march_loiha_soni_amalda',
+        'march_umumiy_kiymati_reja',
+        'march_umumiy_kiymati_amalda',
+        'march_uz_mablag_reja',
+        'march_uz_mablag_amalda',
+        'march_bank_kredit_reja',
+        'march_bank_kredit_amalda',
+        'march_xorijiy_kredit_reja',
+        'march_xorijiy_kredit_amalda',
+        'march_xorijiy_invest_reja',
+        'march_xorijiy_invest_amalda',
+        'march_yangi_ish_reja',
+        'march_yangi_ish_amalda',
+        'march_ishlab_chiqarish_reja',
+        'march_ishlab_chiqarish_amalda',
+        'march_import_reja',
+        'march_import_amalda',
+        'march_export_reja',
+        'march_export_amalda',
+        'march_budget_reja',
+        'march_budget_amalda',
+
+        'april_loiha_soni_reja',
+        'april_loiha_soni_amalda',
+        'april_umumiy_kiymati_reja',
+        'april_umumiy_kiymati_amalda',
+        'april_uz_mablag_reja',
+        'april_uz_mablag_amalda',
+        'april_bank_kredit_reja',
+        'april_bank_kredit_amalda',
+        'april_xorijiy_kredit_reja',
+        'april_xorijiy_kredit_amalda',
+        'april_xorijiy_invest_reja',
+        'april_xorijiy_invest_amalda',
+        'april_yangi_ish_reja',
+        'april_yangi_ish_amalda',
+        'april_ishlab_chiqarish_reja',
+        'april_ishlab_chiqarish_amalda',
+        'april_import_reja',
+        'april_import_amalda',
+        'april_export_reja',
+        'april_export_amalda',
+        'april_budget_reja',
+        'april_budget_amalda',
+
+        'may_loiha_soni_reja',
+        'may_loiha_soni_amalda',
+        'may_umumiy_kiymati_reja',
+        'may_umumiy_kiymati_amalda',
+        'may_uz_mablag_reja',
+        'may_uz_mablag_amalda',
+        'may_bank_kredit_reja',
+        'may_bank_kredit_amalda',
+        'may_xorijiy_kredit_reja',
+        'may_xorijiy_kredit_amalda',
+        'may_xorijiy_invest_reja',
+        'may_xorijiy_invest_amalda',
+        'may_yangi_ish_reja',
+        'may_yangi_ish_amalda',
+        'may_ishlab_chiqarish_reja',
+        'may_ishlab_chiqarish_amalda',
+        'may_import_reja',
+        'may_import_amalda',
+        'may_export_reja',
+        'may_export_amalda',
+        'may_budget_reja',
+        'may_budget_amalda',
+
+        'june_loiha_soni_reja',
+        'june_loiha_soni_amalda',
+        'june_umumiy_kiymati_reja',
+        'june_umumiy_kiymati_amalda',
+        'june_uz_mablag_reja',
+        'june_uz_mablag_amalda',
+        'june_bank_kredit_reja',
+        'june_bank_kredit_amalda',
+        'june_xorijiy_kredit_reja',
+        'june_xorijiy_kredit_amalda',
+        'june_xorijiy_invest_reja',
+        'june_xorijiy_invest_amalda',
+        'june_yangi_ish_reja',
+        'june_yangi_ish_amalda',
+        'june_ishlab_chiqarish_reja',
+        'june_ishlab_chiqarish_amalda',
+        'june_import_reja',
+        'june_import_amalda',
+        'june_export_reja',
+        'june_export_amalda',
+        'june_budget_reja',
+        'june_budget_amalda',
+
+        'july_loiha_soni_reja',
+        'july_loiha_soni_amalda',
+        'july_umumiy_kiymati_reja',
+        'july_umumiy_kiymati_amalda',
+        'july_uz_mablag_reja',
+        'july_uz_mablag_amalda',
+        'july_bank_kredit_reja',
+        'july_bank_kredit_amalda',
+        'july_xorijiy_kredit_reja',
+        'july_xorijiy_kredit_amalda',
+        'july_xorijiy_invest_reja',
+        'july_xorijiy_invest_amalda',
+        'july_yangi_ish_reja',
+        'july_yangi_ish_amalda',
+        'july_ishlab_chiqarish_reja',
+        'july_ishlab_chiqarish_amalda',
+        'july_import_reja',
+        'july_import_amalda',
+        'july_export_reja',
+        'july_export_amalda',
+        'july_budget_reja',
+        'july_budget_amalda',
+
+        'august_loiha_soni_reja',
+        'august_loiha_soni_amalda',
+        'august_umumiy_kiymati_reja',
+        'august_umumiy_kiymati_amalda',
+        'august_uz_mablag_reja',
+        'august_uz_mablag_amalda',
+        'august_bank_kredit_reja',
+        'august_bank_kredit_amalda',
+        'august_xorijiy_kredit_reja',
+        'august_xorijiy_kredit_amalda',
+        'august_xorijiy_invest_reja',
+        'august_xorijiy_invest_amalda',
+        'august_yangi_ish_reja',
+        'august_yangi_ish_amalda',
+        'august_ishlab_chiqarish_reja',
+        'august_ishlab_chiqarish_amalda',
+        'august_import_reja',
+        'august_import_amalda',
+        'august_export_reja',
+        'august_export_amalda',
+        'august_budget_reja',
+        'august_budget_amalda',
+
+        'september_loiha_soni_reja',
+        'september_loiha_soni_amalda',
+        'september_umumiy_kiymati_reja',
+        'september_umumiy_kiymati_amalda',
+        'september_uz_mablag_reja',
+        'september_uz_mablag_amalda',
+        'september_bank_kredit_reja',
+        'september_bank_kredit_amalda',
+        'september_xorijiy_kredit_reja',
+        'september_xorijiy_kredit_amalda',
+        'september_xorijiy_invest_reja',
+        'september_xorijiy_invest_amalda',
+        'september_yangi_ish_reja',
+        'september_yangi_ish_amalda',
+        'september_ishlab_chiqarish_reja',
+        'september_ishlab_chiqarish_amalda',
+        'september_import_reja',
+        'september_import_amalda',
+        'september_export_reja',
+        'september_export_amalda',
+        'september_budget_reja',
+        'september_budget_amalda',
+
+        'october_loiha_soni_reja',
+        'october_loiha_soni_amalda',
+        'october_umumiy_kiymati_reja',
+        'october_umumiy_kiymati_amalda',
+        'october_uz_mablag_reja',
+        'october_uz_mablag_amalda',
+        'october_bank_kredit_reja',
+        'october_bank_kredit_amalda',
+        'october_xorijiy_kredit_reja',
+        'october_xorijiy_kredit_amalda',
+        'october_xorijiy_invest_reja',
+        'october_xorijiy_invest_amalda',
+        'october_yangi_ish_reja',
+        'october_yangi_ish_amalda',
+        'october_ishlab_chiqarish_reja',
+        'october_ishlab_chiqarish_amalda',
+        'october_import_reja',
+        'october_import_amalda',
+        'october_export_reja',
+        'october_export_amalda',
+        'october_budget_reja',
+        'october_budget_amalda',
+
+        'november_loiha_soni_reja',
+        'november_loiha_soni_amalda',
+        'november_umumiy_kiymati_reja',
+        'november_umumiy_kiymati_amalda',
+        'november_uz_mablag_reja',
+        'november_uz_mablag_amalda',
+        'november_bank_kredit_reja',
+        'november_bank_kredit_amalda',
+        'november_xorijiy_kredit_reja',
+        'november_xorijiy_kredit_amalda',
+        'november_xorijiy_invest_reja',
+        'november_xorijiy_invest_amalda',
+        'november_yangi_ish_reja',
+        'november_yangi_ish_amalda',
+        'november_ishlab_chiqarish_reja',
+        'november_ishlab_chiqarish_amalda',
+        'november_import_reja',
+        'november_import_amalda',
+        'november_export_reja',
+        'november_export_amalda',
+        'november_budget_reja',
+        'november_budget_amalda',
+
+        'december_loiha_soni_reja',
+        'december_loiha_soni_amalda',
+        'december_umumiy_kiymati_reja',
+        'december_umumiy_kiymati_amalda',
+        'december_uz_mablag_reja',
+        'december_uz_mablag_amalda',
+        'december_bank_kredit_reja',
+        'december_bank_kredit_amalda',
+        'december_xorijiy_kredit_reja',
+        'december_xorijiy_kredit_amalda',
+        'december_xorijiy_invest_reja',
+        'december_xorijiy_invest_amalda',
+        'december_yangi_ish_reja',
+        'december_yangi_ish_amalda',
+        'december_ishlab_chiqarish_reja',
+        'december_ishlab_chiqarish_amalda',
+        'december_import_reja',
+        'december_import_amalda',
+        'december_export_reja',
+        'december_export_amalda',
+        'december_budget_reja',
+        'december_budget_amalda',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_vault_tables(request, filter_slug, MonthVault, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.cell(row=row_num, column=col_num + 1, value=str(row[col_num]))
+
+    wb.save(response)
+    return response
+
+
 def get_data_table(request, model_name, page_title):
     model = loiha_models.get(model_name, None)
     if not model:

@@ -36,6 +36,7 @@ urlpatterns = [
     path('export-excel-reja/<slug:filter_slug>', export_excel_reja, name='export-excel-reja'),
     path('export-excel-tarmok/<slug:filter_slug>', export_excel_tarmok, name='export-excel-tarmok'),
     path('export-excel-quarter/<slug:filter_slug>', export_excel_quarter, name='export-excel-quarter'),
+    path('export-excel-monthly/<slug:filter_slug>', export_excel_monthly, name='export-excel-monthly'),
 
 
 
