@@ -1858,6 +1858,754 @@ def export_excel_jami(request, filter_slug):
     return response
 
 
+def export_excel_reja(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 3  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_vault_id(request):
+        ws.write_merge(0, 0, 0, 55, f'{request.user.district}, Cвод режа', cell_title)
+        ws.write_merge(1, 2, 0, 6, 'Режа (ҳисобот даври)', cell_style)
+        ws.write_merge(1, 2, 7, 13, 'Режага нисбатан ишга тушган', cell_style)
+        ws.write_merge(1, 2, 14, 19, 'Ишга тушмаган', cell_style)
+        ws.write_merge(1, 1, 20, 34, 'шундан', cell_style)
+        ws.write_merge(1, 2, 35, 41, 'Муддатидан аввал ишга тушган лойиҳалар', cell_style)
+        ws.write_merge(1, 2, 42, 48, 'Қўшимча (резерв) лойиҳалар', cell_style)
+        ws.write_merge(1, 2, 49, 55, 'Жами ишга тушган лойиҳалар', cell_style)
+
+        ws.write_merge(2, 2, 20, 26, 'Истиқболсиз', cell_style)
+        ws.write_merge(2, 2, 27, 34, 'Муддатини узайтириш', cell_style)
+
+    else:
+        ws.write_merge(0, 0, 0, 56, 'Cвод режа', cell_title)
+
+        ws.write_merge(1, 2, 1, 7, 'Режа (ҳисобот даври)', cell_style)
+        ws.write_merge(1, 2, 8, 14, 'Режага нисбатан ишга тушган', cell_style)
+        ws.write_merge(1, 2, 15, 20, 'Ишга тушмаган', cell_style)
+        ws.write_merge(1, 1, 21, 35, 'шундан', cell_style)
+        ws.write_merge(1, 2, 36, 42, 'Муддатидан аввал ишга тушган лойиҳалар', cell_style)
+        ws.write_merge(1, 2, 43, 49, 'Қўшимча (резерв) лойиҳалар', cell_style)
+        ws.write_merge(1, 2, 50, 56, 'Жами ишга тушган лойиҳалар', cell_style)
+
+        ws.write_merge(2, 2, 21, 27, 'Истиқболсиз', cell_style)
+        ws.write_merge(2, 2, 28, 35, 'Муддатини узайтириш', cell_style)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = [
+        "Лойиҳа сони",
+        "Лойиҳа қиймати, (млн.сўм)",
+        "ўз маблағлари млн.сўм",
+        "банк кредитлари млн.сўм",
+        "хорижий кредитлар минг.долл",
+        "хорижий инвестициялар минг.долл",
+        "Иш ўрни",
+        "Лойиҳа сони",
+        "Лойиҳа қиймати, (млн.сўм)",
+        "ўз маблағлари млн.сўм",
+        "банк кредитлари млн.сўм",
+        "хорижий кредитлар минг.долл",
+        "хорижий инвестициялар минг.долл",
+        "Иш ўрни",
+        "Лойиҳа сони",
+        "Лойиҳа қиймати, (млн.сўм)",
+        "ўз маблағлари млн.сўм",
+        "банк кредитлари млн.сўм",
+        "хорижий кредитлар минг.долл",
+        "хорижий инвестициялар минг.долл",
+        "Иш ўрни",
+        "Лойиҳа сони",
+        "Лойиҳа қиймати, (млн.сўм)",
+        "ўз маблағлари млн.сўм",
+        "банк кредитлари млн.сўм",
+        "хорижий кредитлар минг.долл",
+        "хорижий инвестициялар минг.долл",
+        "Иш ўрни",
+        "Лойиҳа сони",
+        "Лойиҳа қиймати, (млн.сўм)",
+        "ўз маблағлари млн.сўм",
+        "банк кредитлари млн.сўм",
+        "хорижий кредитлар минг.долл",
+        "хорижий инвестициялар минг.долл",
+        "Иш ўрни",
+        "Лойиҳа сони",
+        "Лойиҳа қиймати, (млн.сўм)",
+        "ўз маблағлари млн.сўм",
+        "банк кредитлари млн.сўм",
+        "хорижий кредитлар минг.долл",
+        "хорижий инвестициялар минг.долл",
+        "Иш ўрни",
+        "Лойиҳа сони",
+        "Лойиҳа қиймати, (млн.сўм)",
+        "ўз маблағлари млн.сўм",
+        "банк кредитлари млн.сўм",
+        "хорижий кредитлар минг.долл",
+        "хорижий инвестициялар минг.долл",
+        "Иш ўрни",
+        "Лойиҳа сони",
+        "Лойиҳа қиймати, (млн.сўм)",
+        "ўз маблағлари млн.сўм",
+        "банк кредитлари млн.сўм",
+        "хорижий кредитлар минг.долл",
+        "хорижий инвестициялар минг.долл",
+        "Иш ўрни",
+    ]
+
+    if not get_group_vault_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'reja_loiha_soni',
+        'reja_loiha_kiymati',
+        'reja_mablag',
+        'reja_kredit',
+        'reja_xorijiy_kredit',
+        'reja_xorijiy_invest',
+        'reja_ish',
+
+        'nisbatan_loiha_soni',
+        'nisbatan_loiha_kiymati',
+        'nisbatan_mablag',
+        'nisbatan_kredit',
+        'nisbatan_xorijiy_kredit',
+        'nisbatan_xorijiy_invest',
+        'nisbatan_ish',
+
+        'ish_loiha_soni',
+        'ish_loiha_kiymati',
+        'ish_mablag',
+        'ish_kredit',
+        'ish_xorijiy_kredit',
+        'ish_xorijiy_invest',
+
+        'istik_ish',
+        'istik_loiha_soni',
+        'istik_loiha_kiymati',
+        'istik_mablag',
+        'istik_kredit',
+        'istik_xorijiy_kredit',
+        'istik_xorijiy_invest',
+
+        'mud_ish',
+        'mud_loiha_soni',
+        'mud_loiha_kiymati',
+        'mud_mablag',
+        'mud_kredit',
+        'mud_xorijiy_kredit',
+        'mud_xorijiy_invest',
+        'mud_ish_second',
+
+        'aval_loiha_soni',
+        'aval_loiha_kiymati',
+        'aval_mablag',
+        'aval_kredit',
+        'aval_xorijiy_kredit',
+        'aval_xorijiy_invest',
+        'aval_ish',
+
+        'reserve_loiha_soni',
+        'reserve_loiha_kiymati',
+        'reserve_mablag',
+        'reserve_kredit',
+        'reserve_xorijiy_kredit',
+        'reserve_xorijiy_invest',
+        'reserve_ish',
+
+        'total_loiha_soni',
+        'total_loiha_kiymati',
+        'total_mablag',
+        'total_kredit',
+        'total_xorijiy_kredit',
+        'total_xorijiy_invest',
+        'total_ish',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_vault_tables(request, filter_slug, RejaVault, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+# TODO Сделать поля Select
+def export_excel_tarmok(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 3  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_vault_id(request):
+        ws.write_merge(0, 0, 0, 23, f'{request.user.district}, Cвод тармок', cell_title)
+        ws.write_merge(1, 2, 2, 3, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 2, 4, 5, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(1, 1, 6, 13, 'шундан', cell_style)
+        ws.write_merge(1, 2, 14, 15, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(1, 1, 16, 23, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(2, 2, 6, 7, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 8, 9, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 10, 11, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(2, 2, 12, 13, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(2, 2, 16, 17, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 18, 19, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(2, 2, 20, 21, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(2, 2, 22, 23, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 24, 'Cвод тармок', cell_title)
+        ws.write_merge(1, 2, 3, 4, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 2, 5, 6, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(1, 1, 7, 14, 'шундан', cell_style)
+        ws.write_merge(1, 2, 15, 16, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(1, 1, 17, 24, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(2, 2, 7, 8, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 9, 10, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 11, 12, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(2, 2, 13, 14, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(2, 2, 17, 18, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 19, 20, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(2, 2, 21, 22, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(2, 2, 23, 24, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = [
+        "Категория",
+        "Тармоқлар номи",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+    ]
+
+    if not get_group_vault_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    # tarmok_model = show_data_table(request, TarmokVault)
+    #
+    # fields_with_choices = [f.name for f in TarmokVault._meta.get_fields() if f.choices]
+    #
+    # # Create a new list of fields that includes the choice values
+    # new_fields = []
+    # for field_name in fields_with_choices:
+    #     # Get the field instance
+    #     field = TarmokVault._meta.get_field(field_name)
+    #
+    #     # Get the choices as a list of tuples
+    #     choices = field.choices
+    #
+    #     # Create a new list of choice values
+    #     choice_values = [choice[1] for choice in choices]
+    #
+    #     # Add the choice values to the field list
+    #     new_fields.append(field_name)
+    #     new_fields.extend(choice_values)
+
+    fields = [
+        'category',
+        'industry',
+
+        'loiha_soni_reja',
+        'loiha_soni_amalda',
+        'umumiy_kiymati_reja',
+        'umumiy_kiymati_amalda',
+        'uz_mablag_reja',
+        'uz_mablag_amalda',
+        'bank_kredit_reja',
+        'bank_kredit_amalda',
+        'xorijiy_kredit_reja',
+        'xorijiy_kredit_amalda',
+        'xorijiy_invest_reja',
+        'xorijiy_invest_amalda',
+
+        'yangi_ish_reja',
+        'yangi_ish_amalda',
+        'ishlab_chiqarish_reja',
+        'ishlab_chiqarish_amalda',
+        'import_reja',
+        'import_amalda',
+        'export_reja',
+        'export_amalda',
+        'budget_reja',
+        'budget_amalda',
+    ]
+    # fields.extend(new_fields)
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_vault_tables(request, filter_slug, TarmokVault, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_quarter(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 4  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_vault_id(request):
+        ws.write_merge(0, 0, 0, 87, f'{request.user.district}, Cвод чорак', cell_title)
+        ws.write_merge(1, 3, 0, 1, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 1, 2, 21, '1-Чорак', cell_style)
+
+        ws.write_merge(1, 3, 22, 23, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 1, 24, 43, '2-Чорак', cell_style)
+
+        ws.write_merge(1, 3, 44, 45, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 1, 46, 65, '3-Чорак', cell_style)
+
+        ws.write_merge(1, 3, 66, 67, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 1, 68, 87, '4-Чорак', cell_style)
+
+        ws.write_merge(2, 3, 2, 3, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 4, 11, 'шундан', cell_style)
+        ws.write_merge(2, 3, 12, 13, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(2, 2, 14, 21, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(3, 3, 4, 5, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 6, 7, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 8, 9, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(3, 3, 10, 11, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(3, 3, 14, 15, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(3, 3, 16, 17, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(3, 3, 18, 19, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(3, 3, 20, 21, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+        ws.write_merge(2, 3, 24, 25, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 26, 33, 'шундан', cell_style)
+        ws.write_merge(2, 3, 34, 35, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(2, 2, 36, 43, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(3, 3, 26, 27, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 28, 29, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 30, 31, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(3, 3, 32, 33, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(3, 3, 36, 37, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(3, 3, 38, 39, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(3, 3, 40, 41, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(3, 3, 42, 43, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+        ws.write_merge(2, 3, 46, 47, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 48, 55, 'шундан', cell_style)
+        ws.write_merge(2, 3, 56, 57, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(2, 2, 58, 65, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(3, 3, 48, 49, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 50, 51, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 52, 53, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(3, 3, 54, 55, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(3, 3, 58, 59, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(3, 3, 60, 61, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(3, 3, 62, 63, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(3, 3, 64, 65, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+        ws.write_merge(2, 3, 68, 69, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 70, 77, 'шундан', cell_style)
+        ws.write_merge(2, 3, 78, 79, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(2, 2, 80, 87, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(3, 3, 70, 71, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 72, 73, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 74, 75, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(3, 3, 76, 77, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(3, 3, 80, 81, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(3, 3, 82, 83, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(3, 3, 84, 85, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(3, 3, 86, 87, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+    else:
+        ws.write_merge(0, 0, 0, 88, 'Cвод чорак', cell_title)
+
+        ws.write_merge(1, 3, 1, 2, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 1, 3, 22, '1-Чорак', cell_style)
+
+        ws.write_merge(1, 3, 23, 24, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 1, 25, 44, '2-Чорак', cell_style)
+
+        ws.write_merge(1, 3, 45, 46, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 1, 47, 66, '3-Чорак', cell_style)
+
+        ws.write_merge(1, 3, 67, 68, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 1, 69, 88, '4-Чорак', cell_style)
+
+        ws.write_merge(2, 3, 3, 4, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 5, 12, 'шундан', cell_style)
+        ws.write_merge(2, 3, 13, 14, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(2, 2, 15, 22, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(3, 3, 5, 6, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 7, 8, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 9, 10, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(3, 3, 11, 12, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(3, 3, 15, 16, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(3, 3, 17, 18, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(3, 3, 19, 20, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(3, 3, 21, 22, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+        ws.write_merge(2, 3, 25, 26, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 27, 34, 'шундан', cell_style)
+        ws.write_merge(2, 3, 35, 36, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(2, 2, 37, 44, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(3, 3, 27, 28, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 29, 30, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 31, 32, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(3, 3, 33, 34, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(3, 3, 37, 38, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(3, 3, 39, 40, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(3, 3, 41, 42, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(3, 3, 43, 44, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+        ws.write_merge(2, 3, 47, 48, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 49, 56, 'шундан', cell_style)
+        ws.write_merge(2, 3, 57, 58, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(2, 2, 59, 66, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(3, 3, 49, 50, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 51, 52, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 53, 54, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(3, 3, 55, 56, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(3, 3, 59, 60, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(3, 3, 61, 62, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(3, 3, 63, 64, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(3, 3, 65, 66, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+        ws.write_merge(2, 3, 69, 70, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 71, 78, 'шундан', cell_style)
+        ws.write_merge(2, 3, 79, 80, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(2, 2, 81, 88, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(3, 3, 71, 72, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 73, 74, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(3, 3, 75, 76, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(3, 3, 77, 78, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(3, 3, 81, 82, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(3, 3, 83, 84, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(3, 3, 85, 86, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(3, 3, 87, 88, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = [
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+        'Режa',
+        'Амалда',
+    ]
+
+    if not get_group_vault_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'loiha_soni_reja',
+        'loiha_soni_amalda',
+        'umumiy_kiymati_reja',
+        'umumiy_kiymati_amalda',
+        'uz_mablag_reja',
+        'uz_mablag_amalda',
+        'bank_kredit_reja',
+        'bank_kredit_amalda',
+        'xorijiy_kredit_reja',
+        'xorijiy_kredit_amalda',
+        'xorijiy_invest_reja',
+        'xorijiy_invest_amalda',
+        'first_quarter_yangi_ish_reja',
+        'first_quarter_yangi_ish_amalda',
+        'first_quarter_ishlab_chiqarish_reja',
+        'first_quarter_ishlab_chiqarish_amalda',
+        'first_quarter_import_reja',
+        'first_quarter_import_amalda',
+        'first_quarter_export_reja',
+        'first_quarter_export_amalda',
+        'first_quarter_budget_reja',
+        'first_quarter_budget_amalda',
+
+        'second_quarter_loiha_soni_reja',
+        'second_quarter_loiha_soni_amalda',
+        'second_quarter_umumiy_kiymati_reja',
+        'second_quarter_umumiy_kiymati_amalda',
+        'second_quarter_uz_mablag_reja',
+        'second_quarter_uz_mablag_amalda',
+        'second_quarter_bank_kredit_reja',
+        'second_quarter_bank_kredit_amalda',
+        'second_quarter_xorijiy_kredit_reja',
+        'second_quarter_xorijiy_kredit_amalda',
+        'second_quarter_xorijiy_invest_reja',
+        'second_quarter_xorijiy_invest_amalda',
+        'second_quarter_yangi_ish_reja',
+        'second_quarter_yangi_ish_amalda',
+        'second_quarter_ishlab_chiqarish_reja',
+        'second_quarter_ishlab_chiqarish_amalda',
+        'second_quarter_import_reja',
+        'second_quarter_import_amalda',
+        'second_quarter_export_reja',
+        'second_quarter_export_amalda',
+        'second_quarter_budget_reja',
+        'second_quarter_budget_amalda',
+
+        'third_quarter_loiha_soni_reja',
+        'third_quarter_loiha_soni_amalda',
+        'third_quarter_umumiy_kiymati_reja',
+        'third_quarter_umumiy_kiymati_amalda',
+        'third_quarter_uz_mablag_reja',
+        'third_quarter_uz_mablag_amalda',
+        'third_quarter_bank_kredit_reja',
+        'third_quarter_bank_kredit_amalda',
+        'third_quarter_xorijiy_kredit_reja',
+        'third_quarter_xorijiy_kredit_amalda',
+        'third_quarter_xorijiy_invest_reja',
+        'third_quarter_xorijiy_invest_amalda',
+        'third_quarter_yangi_ish_reja',
+        'third_quarter_yangi_ish_amalda',
+        'third_quarter_ishlab_chiqarish_reja',
+        'third_quarter_ishlab_chiqarish_amalda',
+        'third_quarter_import_reja',
+        'third_quarter_import_amalda',
+        'third_quarter_export_reja',
+        'third_quarter_export_amalda',
+        'third_quarter_budget_reja',
+        'third_quarter_budget_amalda',
+
+        'fourth_quarter_loiha_soni_reja',
+        'fourth_quarter_loiha_soni_amalda',
+        'fourth_quarter_umumiy_kiymati_reja',
+        'fourth_quarter_umumiy_kiymati_amalda',
+        'fourth_quarter_uz_mablag_reja',
+        'fourth_quarter_uz_mablag_amalda',
+        'fourth_quarter_bank_kredit_reja',
+        'fourth_quarter_bank_kredit_amalda',
+        'fourth_quarter_xorijiy_kredit_reja',
+        'fourth_quarter_xorijiy_kredit_amalda',
+        'fourth_quarter_xorijiy_invest_reja',
+        'fourth_quarter_xorijiy_invest_amalda',
+        'fourth_quarter_yangi_ish_reja',
+        'fourth_quarter_yangi_ish_amalda',
+        'fourth_quarter_ishlab_chiqarish_reja',
+        'fourth_quarter_ishlab_chiqarish_amalda',
+        'fourth_quarter_import_reja',
+        'fourth_quarter_import_amalda',
+        'fourth_quarter_export_reja',
+        'fourth_quarter_export_amalda',
+        'fourth_quarter_budget_reja',
+        'fourth_quarter_budget_amalda',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_vault_tables(request, filter_slug, QuarterVault, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
 def get_data_table(request, model_name, page_title):
     model = loiha_models.get(model_name, None)
     if not model:

@@ -33,6 +33,9 @@ urlpatterns = [
     # 2 department (vault)
     path('export-excel-bank/<slug:filter_slug>', export_excel_bank, name='export-excel-bank'),
     path('export-excel-jami/<slug:filter_slug>', export_excel_jami, name='export-excel-jami'),
+    path('export-excel-reja/<slug:filter_slug>', export_excel_reja, name='export-excel-reja'),
+    path('export-excel-tarmok/<slug:filter_slug>', export_excel_tarmok, name='export-excel-tarmok'),
+    path('export-excel-quarter/<slug:filter_slug>', export_excel_quarter, name='export-excel-quarter'),
 
 
 
