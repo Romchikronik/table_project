@@ -87,7 +87,7 @@ def get_department_exports(request):
         return redirect('/')
     else:
         context = {
-            'title': 'Отдел экспорта',       # Отдел - 2
+            'title': 'Отдел экспорта',  # Отдел - 2
             'second_department_tables_menu': second_department_tables_menu
         }
         return render(request, 'mainapp/departments/exports_department.html', context)
@@ -101,7 +101,7 @@ def get_department_3(request):
         return redirect('/')
     else:
         context = {
-            'title': 'Сводный отдел',     # Отдел - 3
+            'title': 'Сводный отдел',  # Отдел - 3
             'third_department_tables_menu': third_department_tables_menu
         }
         return render(request, 'mainapp/departments/department_3.html', context)
@@ -206,7 +206,7 @@ def export_excel_loiha41(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -314,7 +314,7 @@ def export_excel_loiha52(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -365,7 +365,7 @@ def export_excel_loiha14(request, filter_slug):
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
-    row_num = 3 # с какой строки начинается наша таблица
+    row_num = 3  # с какой строки начинается наша таблица
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
@@ -417,7 +417,7 @@ def export_excel_loiha14(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -467,7 +467,7 @@ def export_excel_loiha131(request, filter_slug):
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
-    row_num = 2 # с какой строки начинается наша таблица
+    row_num = 2  # с какой строки начинается наша таблица
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
@@ -485,17 +485,17 @@ def export_excel_loiha131(request, filter_slug):
 
     # "Район",
     columns_list = [
-                    "Известные проблемы",
-                    "Банк",
-                    "Земля и здание",
-                    "Коммунальные",
-                    "Таможня",
-                    "Налог",
-                    "Разрешения",
-                    "Бюрокартический барьер",
-                    "Другое",
-                    "Решенные проблемы"
-                    ]
+        "Известные проблемы",
+        "Банк",
+        "Земля и здание",
+        "Коммунальные",
+        "Таможня",
+        "Налог",
+        "Разрешения",
+        "Бюрокартический барьер",
+        "Другое",
+        "Решенные проблемы"
+    ]
 
     if not get_group_loiha_id(request):
         columns = [
@@ -503,7 +503,7 @@ def export_excel_loiha131(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -550,7 +550,7 @@ def export_excel_loiha122(request, filter_slug):
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
-    row_num = 3 # с какой строки начинается наша таблица
+    row_num = 3  # с какой строки начинается наша таблица
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
@@ -576,19 +576,19 @@ def export_excel_loiha122(request, filter_slug):
 
     # "Район",
     columns_list = [
-                    "Сформированные советы",
-                    "Проекты",
-                    "Производсвенные мощности",
-                    "Оценка",
-                    "Собственные средства",
-                    "Банковский кредит",
-                    "Иностранные инвестиции",
-                    "Уровнь работы",
-                    "Обьем экспорта",
-                    "Название банка",
-                    "Название страны",
-                    "название организации",
-                    ]
+        "Сформированные советы",
+        "Проекты",
+        "Производсвенные мощности",
+        "Оценка",
+        "Собственные средства",
+        "Банковский кредит",
+        "Иностранные инвестиции",
+        "Уровнь работы",
+        "Обьем экспорта",
+        "Название банка",
+        "Название страны",
+        "название организации",
+    ]
 
     if not get_group_loiha_id(request):
         columns = [
@@ -596,7 +596,7 @@ def export_excel_loiha122(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -645,7 +645,7 @@ def export_excel_loiha121(request, filter_slug):
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
-    row_num = 2 # с какой строки начинается наша таблица
+    row_num = 2  # с какой строки начинается наша таблица
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
@@ -664,18 +664,18 @@ def export_excel_loiha121(request, filter_slug):
         ws.write_merge(1, 1, 5, 11, 'Заявленные результаты', cell_style)
     # "Район",
     columns_list = [
-                    "Утвержденные холдинговые компании количество",
-                    "Предложения предпринимателей(ф.и.о)",
-                    "Название организации",
-                    "Тип деятельности",
-                    "Проекты",
-                    "Производственная мощность",
-                    "Оценка",
-                    "Рабочее место",
-                    "Экспорт",
-                    "Другое",
-                    "Финансирование",
-                    ]
+        "Утвержденные холдинговые компании количество",
+        "Предложения предпринимателей(ф.и.о)",
+        "Название организации",
+        "Тип деятельности",
+        "Проекты",
+        "Производственная мощность",
+        "Оценка",
+        "Рабочее место",
+        "Экспорт",
+        "Другое",
+        "Финансирование",
+    ]
 
     if not get_group_loiha_id(request):
         columns = [
@@ -683,7 +683,7 @@ def export_excel_loiha121(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -731,7 +731,7 @@ def export_excel_loiha12(request, filter_slug):
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
-    row_num = 3 # с какой строки начинается наша таблица
+    row_num = 3  # с какой строки начинается наша таблица
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
@@ -756,19 +756,19 @@ def export_excel_loiha12(request, filter_slug):
         ws.write_merge(2, 2, 10, 12, 'Будут завершены к концу года', cell_style)
     # "Район",
     columns_list = [
-                    "Все проекты",
-                    "Оценка(млрд долл)",
-                    "Рабочее место",
-                    "Проекты",
-                    "Оценка",
-                    "Рабочее место",
-                    "Проекты",
-                    "Оценка (млрд долл)",
-                    "Рабочее место",
-                    "Проекты",
-                    "Оценка (млрд долл)",
-                    "Рабочее место",
-                    ]
+        "Все проекты",
+        "Оценка(млрд долл)",
+        "Рабочее место",
+        "Проекты",
+        "Оценка",
+        "Рабочее место",
+        "Проекты",
+        "Оценка (млрд долл)",
+        "Рабочее место",
+        "Проекты",
+        "Оценка (млрд долл)",
+        "Рабочее место",
+    ]
 
     if not get_group_loiha_id(request):
         columns = [
@@ -776,7 +776,7 @@ def export_excel_loiha12(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -825,7 +825,7 @@ def export_excel_loiha10(request, filter_slug):
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
-    row_num = 2 # с какой строки начинается наша таблица
+    row_num = 2  # с какой строки начинается наша таблица
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
@@ -845,27 +845,27 @@ def export_excel_loiha10(request, filter_slug):
         ws.write_merge(1, 1, 6, 17, 'Специализация', cell_style)
     # "Район",
     columns_list = [
-                    "насленный пункт (количество)",
-                    "Жилые дома (количество)",
-                    "Желающие заняться предпринимательством (количество)",
-                    "процентное соотношение",
-                    "дома занятые в секторе",
-                    "животноводство",
-                    "птицеводство",
-                    "кроликоведение",
-                    "пчеловодство",
-                    "фермерство",
-                    "садоводство",
-                    "парники",
-                    "преподование",
-                    "мелькое производство",
-                    "туризм",
-                    "услуги",
-                    "другие",
-                    "железная тетрадь оставшиеся",
-                    "молодёжная тетрадь оставшиеся",
-                    "женская тетрадь оставшиеся",
-                    ]
+        "насленный пункт (количество)",
+        "Жилые дома (количество)",
+        "Желающие заняться предпринимательством (количество)",
+        "процентное соотношение",
+        "дома занятые в секторе",
+        "животноводство",
+        "птицеводство",
+        "кроликоведение",
+        "пчеловодство",
+        "фермерство",
+        "садоводство",
+        "парники",
+        "преподование",
+        "мелькое производство",
+        "туризм",
+        "услуги",
+        "другие",
+        "железная тетрадь оставшиеся",
+        "молодёжная тетрадь оставшиеся",
+        "женская тетрадь оставшиеся",
+    ]
 
     if not get_group_loiha_id(request):
         columns = [
@@ -873,7 +873,7 @@ def export_excel_loiha10(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -930,7 +930,7 @@ def export_excel_loiha6(request, filter_slug):
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
-    row_num = 2 # с какой строки начинается наша таблица
+    row_num = 2  # с какой строки начинается наша таблица
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
@@ -952,18 +952,18 @@ def export_excel_loiha6(request, filter_slug):
 
     # "Район",
     columns_list = [
-                    "Пустующие объекты",
-                    "адрес",
-                    "владелец",
-                    "государственное имущество (количество)",
-                    "частное имущуство (количество)",
-                    "Неиспользуемые производственные площадки(Га)",
-                    "ориентированное на сельское хозяйство(Га)",
-                    "ориентированное на производство(Га)",
-                    "Предложения по инвестициям (источники)",
-                    "Предварительная стоимость проекта(млн.долл)",
-                    "количество созданных навых рабочих мест",
-                    ]
+        "Пустующие объекты",
+        "адрес",
+        "владелец",
+        "государственное имущество (количество)",
+        "частное имущуство (количество)",
+        "Неиспользуемые производственные площадки(Га)",
+        "ориентированное на сельское хозяйство(Га)",
+        "ориентированное на производство(Га)",
+        "Предложения по инвестициям (источники)",
+        "Предварительная стоимость проекта(млн.долл)",
+        "количество созданных навых рабочих мест",
+    ]
 
     if not get_group_loiha_id(request):
         columns = [
@@ -971,7 +971,7 @@ def export_excel_loiha6(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -1019,7 +1019,7 @@ def export_excel_loiha13(request, filter_slug):
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
-    row_num = 2 # с какой строки начинается наша таблица
+    row_num = 2  # с какой строки начинается наша таблица
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
@@ -1038,14 +1038,14 @@ def export_excel_loiha13(request, filter_slug):
 
     # "Район",
     columns_list = [
-                    "Название проекта",
-                    "Проектная деятельность",
-                    "Проектная мощность",
-                    "Оценка в миллиардах долларах",
-                    "Иностранные инвестиции",
-                    "Cозданные новые рабочие места",
-                    "Источники",
-                    ]
+        "Название проекта",
+        "Проектная деятельность",
+        "Проектная мощность",
+        "Оценка в миллиардах долларах",
+        "Иностранные инвестиции",
+        "Cозданные новые рабочие места",
+        "Источники",
+    ]
 
     if not get_group_loiha_id(request):
         columns = [
@@ -1053,7 +1053,7 @@ def export_excel_loiha13(request, filter_slug):
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -1095,12 +1095,10 @@ def export_excel_loiha13(request, filter_slug):
 def export_excel_sanoat(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
-    # response['Content-Disposition'] = 'attachment; filename=table' + \
-    #                                   str(datetime.now()) + '.xls'
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('table', cell_overwrite_ok=True)
-    row_num = 2  # с какой строки начинается наша таблица
+    row_num = 1  # с какой строки начинается наша таблица
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
@@ -1109,67 +1107,44 @@ def export_excel_sanoat(request, filter_slug):
     # cell_style = xlwt.easyxf("align: vert centre, horiz center")
 
     # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
-    if not get_group_loiha_id(request):
-        ws.write_merge(0, 0, 0, 25, f'{request.user.district}, Илова-4.1', cell_title)
-        ws.write_merge(1, 1, 0, 3, 'SANOAT', cell_style)
-        ws.write_merge(1, 1, 4, 7, 'QISHLOQ', cell_style)
-        ws.write_merge(1, 1, 8, 11, 'QURILISH', cell_style)
-        ws.write_merge(1, 1, 12, 15, 'XIZMATLAR', cell_style)
-        ws.write_merge(1, 1, 16, 19, 'CHAKANA SAVDO', cell_style)
-        ws.write_merge(1, 1, 20, 21, 'TASHQI SAVDO AYLANMASI', cell_style)
-        ws.write_merge(1, 1, 22, 23, 'EKSPORT', cell_style)
-        ws.write_merge(1, 1, 24, 25, 'IMPORT', cell_style)
+    if not get_group_export_id(request):
+        ws.write_merge(0, 0, 0, 18, f'{request.user.district}, Sanoat', cell_title)
     else:
-        ws.write_merge(0, 0, 0, 26, 'Илова-4.1', cell_title)
-        # ws.write_merge(1, 2, 0, 1, 'Район', cell_style)
-        ws.write_merge(1, 1, 1, 4, 'SANOAT', cell_style)
-        ws.write_merge(1, 1, 5, 8, 'QISHLOQ', cell_style)
-        ws.write_merge(1, 1, 9, 12, 'QURILISH', cell_style)
-        ws.write_merge(1, 1, 13, 16, 'XIZMATLAR', cell_style)
-        ws.write_merge(1, 1, 17, 20, 'CHAKANA SAVDO', cell_style)
-        ws.write_merge(1, 1, 21, 22, 'TASHQI SAVDO AYLANMASI', cell_style)
-        ws.write_merge(1, 1, 23, 24, 'EKSPORT', cell_style)
-        ws.write_merge(1, 1, 25, 26, 'IMPORT', cell_style)
+        ws.write_merge(0, 0, 0, 19, 'Sanoat', cell_title)
 
     # ws.col(0).width = 4500
     # ws.col(21).width = 5000
 
     # "Район",
-    columns_list = ["mlrd. so'm",
-                    "o'shish sur'ti %",
-                    "prognoz",
-                    "farqi (-;+)",
-                    "mlrd. so'm",
-                    "o'shish sur'ti %",
-                    "prognoz",
-                    "farqi (-;+)",
-                    "mlrd. so'm",
-                    "o'shish sur'ti%",
-                    "prognoz",
-                    "farqi (-;+)",
-                    "mlrd. so'm",
-                    "o'shish sur'ti%",
-                    "prognoz",
-                    "farqi (-;+)",
-                    "mlrd. so'm",
-                    "o'shish sur'ti%",
-                    "prognoz",
-                    "farqi (-;+)",
-                    "ming. AQSh doll",
-                    "o'shish sur'ti%",
-                    "ming. AQSh doll",
-                    "o'shish sur'ti%",
-                    "ming. AQSh doll",
-                    "o'shish sur'ti%"
-                    ]
+    columns_list = [
+        "ИНН отправ./получ.",
+        "ИНН",
+        "Наим. отправителя",
+        "Адрес отправителя",
+        "Наим. получателя",
+        "Адрес получателя",
+        "Инн лица отв. за финансовое урегулирование",
+        "лицо отв. за финансовое урегулирование",
+        "Адрес лица отв. за финансовое урегулирование",
+        "Валюта контракта",
+        "Фактурная стоимость",
+        "Код товара",
+        "Наим. товара",
+        "Вес. нетто",
+        "Стат. стоимость",
+        "Номер и дата контракта",
+        "ИДН",
+        "Страна отправления/назначения",
+        "Дата выпуска",
+    ]
 
-    if not get_group_loiha_id(request):
+    if not get_group_export_id(request):
         columns = [
             *columns_list
         ]
     else:
         columns = [
-            "Район",
+            "Ҳудудлар",
             *columns_list
         ]
 
@@ -1181,34 +1156,25 @@ def export_excel_sanoat(request, filter_slug):
     # date_style = xlwt.XFStyle()
     # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
     fields = [
-        # 'district__district',
-        'bill_sum_industry',
-        'picture_of_growth_industry',
-        'forecast_industry',
-        'difference_industry',
-        'bill_sum_locality',
-        'picture_of_growth_locality',
-        'forecast_locality',
-        'difference_locality',
-        'bill_sum_construction',
-        'picture_of_growth_construction',
-        'forecast_construction',
-        'difference_construction',
-        'bill_sum_services',
-        'picture_of_growth_services',
-        'forecast_services',
-        'difference_services',
-        'bill_sum_retail',
-        'picture_of_growth_retail',
-        'forecast_retail',
-        'difference_retail',
-        'thousand_dollar_international_trade',
-        'picture_of_growth_international_trade',
-        'thousand_dollar_export',
-        'picture_of_growth_export',
-        'thousand_dollar_import',
-        'picture_of_growth_import',
-        # 'time_create'
+        'inn_of_sender_or_recipient',
+        'inn',
+        'name_of_sender',
+        'address_of_sender',
+        'name_of_recipient',
+        'address_of_recipient',
+        'financial_responsible_inn',
+        'face_responsible_for_finance',
+        'address_of_face_responsible_for_finance',
+        'currency_of_contract',
+        'invoice_value',
+        'code_of_goods',
+        'name_of_goods',
+        'weight_netto',
+        'stat_price',
+        'number_and_date_of_contract',
+        'idn',
+        'destination_country',
+        'date_of_issue'
     ]
 
     department_fields = [
@@ -1216,7 +1182,7 @@ def export_excel_sanoat(request, filter_slug):
         *fields
     ]
 
-    rows = filter_export_loiha_tables(request, filter_slug, Loiha41, fields, department_fields)
+    rows = filter_export_export_tables(request, filter_slug, Sanoat, fields, department_fields)
 
     for row in rows:
         row_num += 1
@@ -1227,6 +1193,669 @@ def export_excel_sanoat(request, filter_slug):
     wb.save(response)
     return response
 
+
+def export_excel_kx(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 1  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_export_id(request):
+        ws.write_merge(0, 0, 0, 19, f'{request.user.district}, KX', cell_title)
+    else:
+        ws.write_merge(0, 0, 0, 20, 'KX', cell_title)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = [
+        "ИНН отправ./получ.",
+        "ИНН",
+        "Наим. отправителя",
+        "Адрес отправителя",
+        "Наим. получателя",
+        "Адрес получателя",
+        "Инн лица отв. за финансовое урегулирование",
+        "лицо отв. за финансовое урегулирование",
+        "Адрес лица отв. за финансовое урегулирование",
+        "Валюта контракта",
+        "Фактурная стоимость",
+        "Код товара",
+        "Наим. товара",
+        "Вес. нетто",
+        "Тонна",
+        "Стат. стоимость",
+        "Номер и дата контракта",
+        "ИДН",
+        "Страна отправления/назначения",
+        "Дата выпуска",
+    ]
+
+    if not get_group_export_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'inn_of_sender_or_recipient',
+        'inn',
+        'name_of_sender',
+        'address_of_sender',
+        'name_of_recipient',
+        'address_of_recipient',
+        'financial_responsible_inn',
+        'face_responsible_for_finance',
+        'address_of_face_responsible_for_finance',
+        'currency_of_contract',
+        'invoice_value',
+        'code_of_goods',
+        'name_of_goods',
+        'weight_netto',
+        'ton',
+        'stat_price',
+        'number_and_date_of_contract',
+        'idn',
+        'destination_country',
+        'date_of_issue'
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_export_tables(request, filter_slug, KH, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_table1(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 3  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_export_id(request):
+        ws.write_merge(0, 0, 0, 45, f'{request.user.district}, Таблица 1', cell_title)
+        ws.write_merge(1, 1, 5, 8, 'Всего', cell_style)
+        ws.write_merge(1, 1, 9, 11, 'Январь-март', cell_style)
+        ws.write_merge(1, 1, 12, 14, 'Январь', cell_style)
+        ws.write_merge(1, 1, 15, 17, 'Февраль', cell_style)
+        ws.write_merge(1, 1, 18, 20, 'Март', cell_style)
+        ws.write_merge(1, 1, 21, 23, 'Январь-Апрель', cell_style)
+        ws.write_merge(1, 1, 24, 26, 'Январь-Май', cell_style)
+        ws.write_merge(1, 1, 27, 29, 'Январь-Июнь', cell_style)
+        ws.write_merge(1, 1, 30, 32, 'Январь-Июль', cell_style)
+        ws.write_merge(1, 1, 33, 35, 'Январь-Август', cell_style)
+        ws.write_merge(1, 1, 36, 38, 'Январь-Сентябрь', cell_style)
+        ws.write_merge(1, 1, 39, 41, '24-окт', cell_style)
+        ws.write_merge(1, 1, 42, 44, 'Октябрь', cell_style)
+
+        ws.write_merge(2, 2, 7, 8, 'плод', cell_style)
+        ws.write_merge(2, 2, 10, 11, 'плод', cell_style)
+        ws.write_merge(2, 2, 13, 14, 'плод', cell_style)
+        ws.write_merge(2, 2, 16, 17, 'плод', cell_style)
+        ws.write_merge(2, 2, 19, 20, 'плод', cell_style)
+        ws.write_merge(2, 2, 22, 23, 'плод', cell_style)
+        ws.write_merge(2, 2, 25, 26, 'плод', cell_style)
+        ws.write_merge(2, 2, 28, 29, 'плод', cell_style)
+        ws.write_merge(2, 2, 31, 32, 'плод', cell_style)
+        ws.write_merge(2, 2, 34, 35, 'плод', cell_style)
+        ws.write_merge(2, 2, 37, 38, 'плод', cell_style)
+        ws.write_merge(2, 2, 40, 41, 'плод', cell_style)
+        ws.write_merge(2, 2, 43, 44, 'плод', cell_style)
+
+    else:
+        ws.write_merge(0, 0, 0, 46, 'Таблица 1', cell_title)
+        ws.write_merge(1, 1, 6, 9, 'Всего', cell_style)
+        ws.write_merge(1, 1, 10, 12, 'Январь-март', cell_style)
+        ws.write_merge(1, 1, 13, 15, 'Январь', cell_style)
+        ws.write_merge(1, 1, 16, 18, 'Февраль', cell_style)
+        ws.write_merge(1, 1, 19, 21, 'Март', cell_style)
+
+        ws.write_merge(1, 1, 22, 24, 'Январь-Апрель', cell_style)
+        ws.write_merge(1, 1, 25, 27, 'Январь-Май', cell_style)
+        ws.write_merge(1, 1, 28, 30, 'Январь-Июнь', cell_style)
+        ws.write_merge(1, 1, 31, 33, 'Январь-Июль', cell_style)
+        ws.write_merge(1, 1, 34, 36, 'Январь-Август', cell_style)
+        ws.write_merge(1, 1, 37, 39, 'Январь-Сентябрь', cell_style)
+        ws.write_merge(1, 1, 40, 42, '24-окт', cell_style)
+        ws.write_merge(1, 1, 43, 45, 'Октябрь', cell_style)
+
+        ws.write_merge(2, 2, 8, 9, 'плод', cell_style)
+        ws.write_merge(2, 2, 11, 12, 'плод', cell_style)
+        ws.write_merge(2, 2, 14, 15, 'плод', cell_style)
+        ws.write_merge(2, 2, 17, 18, 'плод', cell_style)
+        ws.write_merge(2, 2, 20, 21, 'плод', cell_style)
+        ws.write_merge(2, 2, 23, 24, 'плод', cell_style)
+        ws.write_merge(2, 2, 26, 27, 'плод', cell_style)
+        ws.write_merge(2, 2, 29, 30, 'плод', cell_style)
+        ws.write_merge(2, 2, 32, 33, 'плод', cell_style)
+        ws.write_merge(2, 2, 35, 36, 'плод', cell_style)
+        ws.write_merge(2, 2, 38, 39, 'плод', cell_style)
+        ws.write_merge(2, 2, 41, 42, 'плод', cell_style)
+        ws.write_merge(2, 2, 44, 45, 'плод', cell_style)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = [
+        "",
+        "",
+        "Область",
+        "",
+        "Наименование организаций в разрезе регионов республики",
+        "Всего",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "пром",
+        "тонна",
+        "сумма",
+        "Ички экспорт",
+    ]
+
+    if not get_group_export_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'table_id',
+        'cell_name',
+        'region',
+        'date',
+        'total',
+        'total_total',
+        'total_prom',
+        'total_ton',
+        'total_sum',
+        'january_march_prom',
+        'january_march_ton',
+        'january_march_sum',
+        'january_prom',
+        'january_ton',
+        'january_sum',
+        'february_prom',
+        'february_ton',
+        'february_sum',
+        'march_prom',
+        'march_ton',
+        'march_sum',
+        'january_april_prom',
+        'january_april_ton',
+        'january_april_sum',
+        'january_may_prom',
+        'january_may_ton',
+        'january_may_sum',
+        'january_june_prom',
+        'january_june_ton',
+        'january_june_sum',
+        'january_july_prom',
+        'january_july_ton',
+        'january_july_sum',
+        'january_august_prom',
+        'january_august_ton',
+        'january_august_sum',
+        'january_september_prom',
+        'january_september_ton',
+        'january_september_sum',
+        'october_24_prom',
+        'october_24_ton',
+        'october_24_sum',
+        'october_prom',
+        'october_ton',
+        'october_sum',
+        'export',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_export_tables(request, filter_slug, FirstTable, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_kunliu(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 1  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_export_id(request):
+        ws.write_merge(0, 0, 0, 3, f'{request.user.district}, кунлиу', cell_title)
+    else:
+        ws.write_merge(0, 0, 0, 4, 'кунлиу', cell_title)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = [
+        "Дата прогноза",
+        "Всего",
+        "саноат маҳсулотлари",
+        "мева-сабзавотлар",
+    ]
+
+    if not get_group_export_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'sanoat',
+        'meva_sabz',
+        'overall',
+        'date_of_forecast',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_export_tables(request, filter_slug, Kunliu, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+# export third department
+def export_excel_bank(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 3  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_vault_id(request):
+        ws.write_merge(0, 0, 0, 22, f'{request.user.district}, Cвод банк', cell_title)
+        ws.write_merge(1, 2, 1, 2, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 2, 3, 4, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(1, 1, 5, 12, 'шундан', cell_style)
+        ws.write_merge(1, 2, 13, 14, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(1, 1, 15, 22, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(2, 2, 5, 6, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 7, 8, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 9, 10, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(2, 2, 11, 12, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(2, 2, 15, 16, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 17, 18, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(2, 2, 19, 20, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(2, 2, 21, 22, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 23, 'Cвод банк', cell_title)
+        ws.write_merge(1, 2, 2, 3, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 2, 4, 5, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(1, 1, 6, 13, 'шундан', cell_style)
+        ws.write_merge(1, 2, 14, 15, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(1, 1, 16, 23, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(2, 2, 6, 7, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 8, 9, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 10, 11, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(2, 2, 12, 13, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(2, 2, 16, 17, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 18, 19, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(2, 2, 20, 21, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(2, 2, 22, 23, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = [
+        "Banklar nomi",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+    ]
+
+    if not get_group_vault_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'bank_name',
+        'loiha_soni_reja',
+        'loiha_soni_amalda',
+        'umumiy_kiymati_reja',
+        'umumiy_kiymati_amalda',
+        'uz_mablag_reja',
+        'uz_mablag_amalda',
+        'bank_kredit_reja',
+        'bank_kredit_amalda',
+        'xorijiy_kredit_reja',
+        'xorijiy_kredit_amalda',
+        'xorijiy_invest_reja',
+        'xorijiy_invest_amalda',
+
+        'yangi_ish_reja',
+        'yangi_ish_amalda',
+        'ishlab_chiqarish_reja',
+        'ishlab_chiqarish_amalda',
+        'import_reja',
+        'import_amalda',
+        'export_reja',
+        'export_amalda',
+        'budget_reja',
+        'budget_amalda',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_vault_tables(request, filter_slug, BankVault, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_excel_jami(request, filter_slug):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('table', cell_overwrite_ok=True)
+    row_num = 3  # с какой строки начинается наша таблица
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    cell_style = xlwt.easyxf("font: bold on; align: vert center, horiz center")
+    cell_title = xlwt.easyxf("font: bold on, height 280; align: vert center, horiz left")
+    # cell_style = xlwt.easyxf("align: vert centre, horiz center")
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_vault_id(request):
+        ws.write_merge(0, 0, 0, 21, f'{request.user.district}, Жами свод', cell_title)
+        ws.write_merge(1, 2, 0, 1, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 2, 2, 3, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(1, 1, 4, 11, 'шундан', cell_style)
+        ws.write_merge(1, 2, 12, 13, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(1, 1, 14, 21, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(2, 2, 4, 5, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 6, 7, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 8, 9, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(2, 2, 10, 11, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(2, 2, 14, 15, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 16, 17, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(2, 2, 18, 19, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(2, 2, 20, 21, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+    else:
+        ws.write_merge(0, 0, 0, 22, 'Жами свод', cell_title)
+        ws.write_merge(1, 2, 1, 2, 'Лойиҳа сони', cell_style)
+        ws.write_merge(1, 2, 3, 4, 'Умумий қиймати млн.сўм', cell_style)
+        ws.write_merge(1, 1, 5, 12, 'шундан', cell_style)
+        ws.write_merge(1, 2, 13, 14, 'Янги иш ўринлари сони', cell_style)
+        ws.write_merge(1, 1, 15, 22, 'Иқтисодий самарадорлик', cell_style)
+
+        ws.write_merge(2, 2, 5, 6, 'ўз маблағлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 7, 8, 'банк кредитлари млн.сўм', cell_style)
+        ws.write_merge(2, 2, 9, 10, 'хорижий кредитлар минг.долл', cell_style)
+        ws.write_merge(2, 2, 11, 12, 'хорижий инвестициялар минг.долл', cell_style)
+        ws.write_merge(2, 2, 15, 16, 'Ишлаб чиқариш қуввати млн.сўм', cell_style)
+        ws.write_merge(2, 2, 17, 18, 'Импорт урнини босиш минг.долл', cell_style)
+        ws.write_merge(2, 2, 19, 20, 'Экспорт ҳажми минг.долл', cell_style)
+        ws.write_merge(2, 2, 21, 22, 'Бюджетга қўшимча тушум млн.сўм', cell_style)
+
+    # ws.col(0).width = 4500
+    # ws.col(21).width = 5000
+
+    # "Район",
+    columns_list = [
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+        "Режа",
+        "Амалда",
+    ]
+
+    if not get_group_vault_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        ws.col(col_num).width = 3800
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    # date_style = xlwt.XFStyle()
+    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    fields = [
+        'loiha_soni_reja',
+        'loiha_soni_amalda',
+        'umumiy_kiymati_reja',
+        'umumiy_kiymati_amalda',
+        'uz_mablag_reja',
+        'uz_mablag_amalda',
+        'bank_kredit_reja',
+        'bank_kredit_amalda',
+        'xorijiy_kredit_reja',
+        'xorijiy_kredit_amalda',
+        'xorijiy_invest_reja',
+        'xorijiy_invest_amalda',
+        'yangi_ish_reja',
+        'yangi_ish_amalda',
+        'ishlab_chiqarish_reja',
+        'ishlab_chiqarish_amalda',
+        'import_reja',
+        'import_amalda',
+        'export_reja',
+        'export_amalda',
+        'budget_reja',
+        'budget_amalda',
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_vault_tables(request, filter_slug, JamiVault, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
 
 
 def get_data_table(request, model_name, page_title):
@@ -1283,6 +1912,7 @@ def get_data_table_Loiha6(request):
 
 def get_data_table_Loiha13(request):
     return get_data_table(request, 'loiha13', 'Илова-13')
+
 
 # All copied elements located in tests.py
 
@@ -1556,6 +2186,7 @@ def get_data_table_reja(request):
 def get_data_table_tarmok(request):
     return get_data_table_3(request, 'tarmok', 'Cвод тармок')
 
+
 # Жами Свод
 
 
@@ -1729,7 +2360,8 @@ def table_filter_table_addressed(request, filter_slug):
 
 
 def table_filter_table_networkAdministrations(request, filter_slug):
-    return get_data_table_filter_fourth_departament(request, 'networkAdministrations', 'Тармоқ бошқармалари', filter_slug)
+    return get_data_table_filter_fourth_departament(request, 'networkAdministrations', 'Тармоқ бошқармалари',
+                                                    filter_slug)
 
 
 def table_filter_table_totalCleaning(request, filter_slug):
@@ -1745,7 +2377,8 @@ def table_filter_table_totalDone(request, filter_slug):
 
 
 def table_filter_table_totalCompletedNetwork(request, filter_slug):
-    return get_data_table_filter_fourth_departament(request, 'totalCompletedNetwork', 'ЖАМИ бажарилган тармоқ', filter_slug)
+    return get_data_table_filter_fourth_departament(request, 'totalCompletedNetwork', 'ЖАМИ бажарилган тармоқ',
+                                                    filter_slug)
 
 
 def table_filter_table_totalProblem(request, filter_slug):
@@ -1780,7 +2413,8 @@ def add_data_table_manzil(request):
 
 
 def add_data_table_subtotals(request):
-    return add_data_table_fourth_department(request, 'subtotals', TableSubtotalsForm, 'table_subtotals', 'Промежуточный итоги')
+    return add_data_table_fourth_department(request, 'subtotals', TableSubtotalsForm, 'table_subtotals',
+                                            'Промежуточный итоги')
 
 
 def add_data_table_addressed(request):
@@ -1788,28 +2422,35 @@ def add_data_table_addressed(request):
 
 
 def add_data_table_networkAdministrations(request):
-    return add_data_table_fourth_department(request, 'networkAdministrations', TableNetworkAdministrationsForm, 'table_networkAdministrations', 'Тармоқ бошқармалари')
+    return add_data_table_fourth_department(request, 'networkAdministrations', TableNetworkAdministrationsForm,
+                                            'table_networkAdministrations', 'Тармоқ бошқармалари')
 
 
 def add_data_table_totalCleaning(request):
-    return add_data_table_fourth_department(request, 'totalCleaning', TableTotalCleaningForm, 'table_totalCleaning', 'ЖАМИ чистка')
+    return add_data_table_fourth_department(request, 'totalCleaning', TableTotalCleaningForm, 'table_totalCleaning',
+                                            'ЖАМИ чистка')
 
 
 def add_data_table_totalCleaningNetwork(request):
-    return add_data_table_fourth_department(request, 'totalCleaningNetwork', TableTotalCleaningNetworkForm, 'table_totalCleaningNetwork', 'ЖАМИ чистка тармоқ')
+    return add_data_table_fourth_department(request, 'totalCleaningNetwork', TableTotalCleaningNetworkForm,
+                                            'table_totalCleaningNetwork', 'ЖАМИ чистка тармоқ')
 
 
 def add_data_table_totalDone(request):
-    return add_data_table_fourth_department(request, 'totalDone', TableTotalDoneForm, 'table_totalDone', 'ЖАМИ бажарилган')
+    return add_data_table_fourth_department(request, 'totalDone', TableTotalDoneForm, 'table_totalDone',
+                                            'ЖАМИ бажарилган')
 
 
 def add_data_table_totalCompletedNetwork(request):
-    return add_data_table_fourth_department(request, 'totalCompletedNetwork', TableTotalCompletedNetworkForm, 'table_totalCompletedNetwork', 'ЖАМИ бажарилган тармоқ')
+    return add_data_table_fourth_department(request, 'totalCompletedNetwork', TableTotalCompletedNetworkForm,
+                                            'table_totalCompletedNetwork', 'ЖАМИ бажарилган тармоқ')
 
 
 def add_data_table_totalProblem(request):
-    return add_data_table_fourth_department(request, 'totalProblem', TableTotalProblemForm, 'table_totalProblem', 'ЖАМИ муаммо')
+    return add_data_table_fourth_department(request, 'totalProblem', TableTotalProblemForm, 'table_totalProblem',
+                                            'ЖАМИ муаммо')
 
 
 def add_data_table_performanceAddressed(request):
-    return add_data_table_fourth_department(request, 'performanceAddressed', TablePerformanceIsAddressedForm, 'table_performanceAddressed', 'манзилли')
+    return add_data_table_fourth_department(request, 'performanceAddressed', TablePerformanceIsAddressedForm,
+                                            'table_performanceAddressed', 'манзилли')

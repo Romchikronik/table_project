@@ -185,10 +185,16 @@ fourth_department_models = [
 # список моделей отдела -5
 fifth_department_models = []
 
-
+# @login_required
 def show_data_table(request, model):
-    model = model.objects.filter(district=request.user.district)
-    return model
+    if request.user.is_authenticated:
+        queryset = model.objects.filter(district=request.user.district)
+    else:
+        # handle the case when the user is not authenticated
+        return None
+    return queryset
+    # model = model.objects.filter(district=request.user.district)
+    # return model
 
 
 def show_data_table_to_departament(model):
@@ -261,6 +267,8 @@ def make_context_by_form(data, form, menu, page_obj):
 
 
 def paginate_page(request, table_data):
+    if not table_data:
+        return None                   # можно убрать потом
     paginator = Paginator(table_data, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -293,6 +301,50 @@ def filter_export_loiha_tables(request, filter_slug, model, fields, department_f
             rows = show_data_table_to_departament(model).filter(time_create__gte=now).values_list(*department_fields)
     else:
         if not get_group_loiha_id(request):
+            rows = show_data_table(request, model).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).values_list(*department_fields)
+
+    return rows
+
+
+def filter_export_export_tables(request, filter_slug, model, fields, department_fields):
+    if filter_slug == 'week':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+        if not get_group_export_id(request):
+            rows = show_data_table(request, model).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).filter(time_create__gte=now).values_list(*department_fields)
+    elif filter_slug == 'month':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+        if not get_group_export_id(request):
+            rows = show_data_table(request, model).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).filter(time_create__gte=now).values_list(*department_fields)
+    else:
+        if not get_group_export_id(request):
+            rows = show_data_table(request, model).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).values_list(*department_fields)
+
+    return rows
+
+
+def filter_export_vault_tables(request, filter_slug, model, fields, department_fields):
+    if filter_slug == 'week':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+        if not get_group_vault_id(request):
+            rows = show_data_table(request, model).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).filter(time_create__gte=now).values_list(*department_fields)
+    elif filter_slug == 'month':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+        if not get_group_vault_id(request):
+            rows = show_data_table(request, model).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).filter(time_create__gte=now).values_list(*department_fields)
+    else:
+        if not get_group_vault_id(request):
             rows = show_data_table(request, model).values_list(*fields)
         else:
             rows = show_data_table_to_departament(model).values_list(*department_fields)

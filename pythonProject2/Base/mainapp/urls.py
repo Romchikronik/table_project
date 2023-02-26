@@ -24,6 +24,18 @@ urlpatterns = [
     path('export-excel-loiha6/<slug:filter_slug>', export_excel_loiha6, name='export-excel-loiha6'),
     path('export-excel-loiha13/<slug:filter_slug>', export_excel_loiha13, name='export-excel-loiha13'),
 
+    # 2 department (export)
+    path('export-excel-sanoat/<slug:filter_slug>', export_excel_sanoat, name='export-excel-sanoat'),
+    path('export-excel-kx/<slug:filter_slug>', export_excel_kx, name='export-excel-kx'),
+    path('export-excel-table1/<slug:filter_slug>', export_excel_table1, name='export-excel-table1'),
+    path('export-excel-kunliu/<slug:filter_slug>', export_excel_kunliu, name='export-excel-kunliu'),
+
+    # 2 department (vault)
+    path('export-excel-bank/<slug:filter_slug>', export_excel_bank, name='export-excel-bank'),
+    path('export-excel-jami/<slug:filter_slug>', export_excel_jami, name='export-excel-jami'),
+
+
+
     path('login/', loginPage, name='login'),
     path('logout/', logoutUser, name='logout'),
 

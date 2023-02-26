@@ -1746,3 +1746,81 @@ from django.test import TestCase
 #             <th rowspan="3" class="table-primary">HUDUDLAR</th>
 #             {% endif %}
 #             {% endfor %}
+
+
+
+# export html table
+#
+# from openpyxl import Workbook
+# from bs4 import BeautifulSoup
+# import requests
+# from django.core.paginator import Paginator
+#
+# def export_table_to_excel(url, filename):
+#     # Получаем HTML-страницу
+#     response = requests.get(url)
+#
+#     # Create an HttpResponse object with the file content and appropriate headers
+#     soup = BeautifulSoup(response.text, 'html.parser')
+#
+#     print(url)
+#     # Находим таблицу на странице
+#     table = soup.find('table')  # https://www.w3schools.com/html/html_tables.aspz
+#
+#     print(table)
+#
+#     # Создаем новый Excel-файл
+#     wb = Workbook()
+#     ws = wb.active
+#
+#     # Парсим таблицу и записываем ее в Excel-файл
+#     for row in table.find_all('tr'):
+#         # row_data = []
+#         # for cell in row.find_all(['td', 'th']):
+#         #     row_data.append(cell.get_text())
+#         # ws.append(row_data)
+#         row_data = []
+#         next_cell_index = 0
+#         for cell in row.find_all(['td', 'th']):
+#             # Check if the current cell has a rowspan attribute
+#             rowspan = int(cell.get('rowspan', 1))
+#             colspan = int(cell.get('colspan', 1))
+#             if rowspan > 1:
+#                 # If the cell has a rowspan, update the index of the next cell to append to the row
+#                 next_cell_index += colspan
+#
+#             # Add the cell's text to the row data
+#             row_data.append(cell.get_text())
+#
+#             # Update the index of the next cell to append to the row
+#             next_cell_index += 1
+#             if next_cell_index >= len(row_data):
+#                 row_data.append('')
+#
+#         ws.append(row_data)
+#
+#     # Сохраняем Excel-файл
+#     wb.save(filename)
+#
+#     # Create a file response
+#     # with open(filename, 'rb') as f:
+#     #     response = HttpResponse(f.read(), content_type='application/vnd.ms-excel')
+#     #     response['Content-Disposition'] = f'attachment; filename="{filename}"'
+#
+#
+#     # Open and read the file contents
+#     with open(filename, 'rb') as f:
+#         file_contents = f.read()
+#
+#     # Create an HTML response with the file contents
+#     response = HttpResponse(file_contents, content_type='application/vnd.ms-excel')
+#     response['Content-Disposition'] = f'attachment; filename="{filename}"'
+#
+#     return response
+#
+#
+# def export_excel_table1(request):
+#     page_obj = paginate_page(request, show_data_table(request, FirstTable))
+#     for i in range(1, page_obj.paginator.num_pages + 1):  # num_pages - количество страниц в таблице
+#         url = f'http://127.0.0.1:8000/exports-department/table/table_1?page={i}'
+#         return export_table_to_excel(url, 'table.xlsx')  # .html
