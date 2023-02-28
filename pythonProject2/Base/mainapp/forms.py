@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Select
 from .models import *
 
 
@@ -96,8 +96,12 @@ class TableFirstForm(ModelForm):
 class TableKunliuForm(ModelForm):
     class Meta:
         model = Kunliu
-        fields = '__all__'
-        exclude = ['district', 'is_published']
+        fields = [
+            'date_of_forecast',
+            'overall',
+            'sanoat',
+            'meva_sabz',
+        ]
 
 
 class TableJamiForm(ModelForm):

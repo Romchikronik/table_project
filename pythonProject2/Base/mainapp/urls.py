@@ -38,6 +38,10 @@ urlpatterns = [
     path('export-excel-quarter/<slug:filter_slug>', export_excel_quarter, name='export-excel-quarter'),
     path('export-excel-monthly/<slug:filter_slug>', export_excel_monthly, name='export-excel-monthly'),
 
+    # 4 отдел
+    path('export-excel-addressed/<slug:filter_slug>', export_excel_addressed, name='export-excel-addressed'),
+    path('export-excel-subtotals/<slug:filter_slug>', export_excel_subtotals, name='export-excel-subtotals'),
+
 
 
     path('login/', loginPage, name='login'),

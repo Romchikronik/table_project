@@ -1559,10 +1559,10 @@ def export_excel_kunliu(request, filter_slug):
     # date_style = xlwt.XFStyle()
     # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
     fields = [
+        'date_of_forecast',
+        'overall',
         'sanoat',
         'meva_sabz',
-        'overall',
-        'date_of_forecast',
     ]
 
     department_fields = [
@@ -1581,8 +1581,10 @@ def export_excel_kunliu(request, filter_slug):
     wb.save(response)
     return response
 
-
+# Изменить поля всех остальных таблиц на *all_fields
 # export third department
+
+
 def export_excel_bank(request, filter_slug):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xls'
@@ -1678,32 +1680,37 @@ def export_excel_bank(request, filter_slug):
     font_style = xlwt.XFStyle()
     # date_style = xlwt.XFStyle()
     # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    form = TableBankForm()
+    all_fields = form.fields.keys()
     fields = [
-        'bank_name',
-        'loiha_soni_reja',
-        'loiha_soni_amalda',
-        'umumiy_kiymati_reja',
-        'umumiy_kiymati_amalda',
-        'uz_mablag_reja',
-        'uz_mablag_amalda',
-        'bank_kredit_reja',
-        'bank_kredit_amalda',
-        'xorijiy_kredit_reja',
-        'xorijiy_kredit_amalda',
-        'xorijiy_invest_reja',
-        'xorijiy_invest_amalda',
-
-        'yangi_ish_reja',
-        'yangi_ish_amalda',
-        'ishlab_chiqarish_reja',
-        'ishlab_chiqarish_amalda',
-        'import_reja',
-        'import_amalda',
-        'export_reja',
-        'export_amalda',
-        'budget_reja',
-        'budget_amalda',
+        *all_fields
     ]
+    # fieldsn = [
+    #     'bank_name',
+    #     'loiha_soni_reja',
+    #     'loiha_soni_amalda',
+    #     'umumiy_kiymati_reja',
+    #     'umumiy_kiymati_amalda',
+    #     'uz_mablag_reja',
+    #     'uz_mablag_amalda',
+    #     'bank_kredit_reja',
+    #     'bank_kredit_amalda',
+    #     'xorijiy_kredit_reja',
+    #     'xorijiy_kredit_amalda',
+    #     'xorijiy_invest_reja',
+    #     'xorijiy_invest_amalda',
+    #
+    #     'yangi_ish_reja',
+    #     'yangi_ish_amalda',
+    #     'ishlab_chiqarish_reja',
+    #     'ishlab_chiqarish_amalda',
+    #     'import_reja',
+    #     'import_amalda',
+    #     'export_reja',
+    #     'export_amalda',
+    #     'budget_reja',
+    #     'budget_amalda',
+    # ]
 
     department_fields = [
         'district__district',
@@ -1814,32 +1821,37 @@ def export_excel_jami(request, filter_slug):
         ws.write(row_num, col_num, columns[col_num], font_style)
 
     font_style = xlwt.XFStyle()
-    # date_style = xlwt.XFStyle()
-    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+
+    form = TableJamiForm()
+    all_fields = form.fields.keys()
     fields = [
-        'loiha_soni_reja',
-        'loiha_soni_amalda',
-        'umumiy_kiymati_reja',
-        'umumiy_kiymati_amalda',
-        'uz_mablag_reja',
-        'uz_mablag_amalda',
-        'bank_kredit_reja',
-        'bank_kredit_amalda',
-        'xorijiy_kredit_reja',
-        'xorijiy_kredit_amalda',
-        'xorijiy_invest_reja',
-        'xorijiy_invest_amalda',
-        'yangi_ish_reja',
-        'yangi_ish_amalda',
-        'ishlab_chiqarish_reja',
-        'ishlab_chiqarish_amalda',
-        'import_reja',
-        'import_amalda',
-        'export_reja',
-        'export_amalda',
-        'budget_reja',
-        'budget_amalda',
+        *all_fields
     ]
+
+    # fields = [
+    #     'loiha_soni_reja',
+    #     'loiha_soni_amalda',
+    #     'umumiy_kiymati_reja',
+    #     'umumiy_kiymati_amalda',
+    #     'uz_mablag_reja',
+    #     'uz_mablag_amalda',
+    #     'bank_kredit_reja',
+    #     'bank_kredit_amalda',
+    #     'xorijiy_kredit_reja',
+    #     'xorijiy_kredit_amalda',
+    #     'xorijiy_invest_reja',
+    #     'xorijiy_invest_amalda',
+    #     'yangi_ish_reja',
+    #     'yangi_ish_amalda',
+    #     'ishlab_chiqarish_reja',
+    #     'ishlab_chiqarish_amalda',
+    #     'import_reja',
+    #     'import_amalda',
+    #     'export_reja',
+    #     'export_amalda',
+    #     'budget_reja',
+    #     'budget_amalda',
+    # ]
 
     department_fields = [
         'district__district',
@@ -1978,73 +1990,78 @@ def export_excel_reja(request, filter_slug):
         ws.write(row_num, col_num, columns[col_num], font_style)
 
     font_style = xlwt.XFStyle()
-    # date_style = xlwt.XFStyle()
-    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+
+    form = TableRejaForm()
+    all_fields = form.fields.keys()
     fields = [
-        'reja_loiha_soni',
-        'reja_loiha_kiymati',
-        'reja_mablag',
-        'reja_kredit',
-        'reja_xorijiy_kredit',
-        'reja_xorijiy_invest',
-        'reja_ish',
-
-        'nisbatan_loiha_soni',
-        'nisbatan_loiha_kiymati',
-        'nisbatan_mablag',
-        'nisbatan_kredit',
-        'nisbatan_xorijiy_kredit',
-        'nisbatan_xorijiy_invest',
-        'nisbatan_ish',
-
-        'ish_loiha_soni',
-        'ish_loiha_kiymati',
-        'ish_mablag',
-        'ish_kredit',
-        'ish_xorijiy_kredit',
-        'ish_xorijiy_invest',
-
-        'istik_ish',
-        'istik_loiha_soni',
-        'istik_loiha_kiymati',
-        'istik_mablag',
-        'istik_kredit',
-        'istik_xorijiy_kredit',
-        'istik_xorijiy_invest',
-
-        'mud_ish',
-        'mud_loiha_soni',
-        'mud_loiha_kiymati',
-        'mud_mablag',
-        'mud_kredit',
-        'mud_xorijiy_kredit',
-        'mud_xorijiy_invest',
-        'mud_ish_second',
-
-        'aval_loiha_soni',
-        'aval_loiha_kiymati',
-        'aval_mablag',
-        'aval_kredit',
-        'aval_xorijiy_kredit',
-        'aval_xorijiy_invest',
-        'aval_ish',
-
-        'reserve_loiha_soni',
-        'reserve_loiha_kiymati',
-        'reserve_mablag',
-        'reserve_kredit',
-        'reserve_xorijiy_kredit',
-        'reserve_xorijiy_invest',
-        'reserve_ish',
-
-        'total_loiha_soni',
-        'total_loiha_kiymati',
-        'total_mablag',
-        'total_kredit',
-        'total_xorijiy_kredit',
-        'total_xorijiy_invest',
-        'total_ish',
+        *all_fields
     ]
+
+    # fields = [
+    #     'reja_loiha_soni',
+    #     'reja_loiha_kiymati',
+    #     'reja_mablag',
+    #     'reja_kredit',
+    #     'reja_xorijiy_kredit',
+    #     'reja_xorijiy_invest',
+    #     'reja_ish',
+    #
+    #     'nisbatan_loiha_soni',
+    #     'nisbatan_loiha_kiymati',
+    #     'nisbatan_mablag',
+    #     'nisbatan_kredit',
+    #     'nisbatan_xorijiy_kredit',
+    #     'nisbatan_xorijiy_invest',
+    #     'nisbatan_ish',
+    #
+    #     'ish_loiha_soni',
+    #     'ish_loiha_kiymati',
+    #     'ish_mablag',
+    #     'ish_kredit',
+    #     'ish_xorijiy_kredit',
+    #     'ish_xorijiy_invest',
+    #
+    #     'istik_ish',
+    #     'istik_loiha_soni',
+    #     'istik_loiha_kiymati',
+    #     'istik_mablag',
+    #     'istik_kredit',
+    #     'istik_xorijiy_kredit',
+    #     'istik_xorijiy_invest',
+    #
+    #     'mud_ish',
+    #     'mud_loiha_soni',
+    #     'mud_loiha_kiymati',
+    #     'mud_mablag',
+    #     'mud_kredit',
+    #     'mud_xorijiy_kredit',
+    #     'mud_xorijiy_invest',
+    #     'mud_ish_second',
+    #
+    #     'aval_loiha_soni',
+    #     'aval_loiha_kiymati',
+    #     'aval_mablag',
+    #     'aval_kredit',
+    #     'aval_xorijiy_kredit',
+    #     'aval_xorijiy_invest',
+    #     'aval_ish',
+    #
+    #     'reserve_loiha_soni',
+    #     'reserve_loiha_kiymati',
+    #     'reserve_mablag',
+    #     'reserve_kredit',
+    #     'reserve_xorijiy_kredit',
+    #     'reserve_xorijiy_invest',
+    #     'reserve_ish',
+    #
+    #     'total_loiha_soni',
+    #     'total_loiha_kiymati',
+    #     'total_mablag',
+    #     'total_kredit',
+    #     'total_xorijiy_kredit',
+    #     'total_xorijiy_invest',
+    #     'total_ish',
+    # ]
 
     department_fields = [
         'district__district',
@@ -2180,34 +2197,51 @@ def export_excel_tarmok(request, filter_slug):
     #     new_fields.append(field_name)
     #     new_fields.extend(choice_values)
 
+    form = TableTarmokForm()
+    all_fields = form.fields.keys()
     fields = [
-        'category',
-        'industry',
-
-        'loiha_soni_reja',
-        'loiha_soni_amalda',
-        'umumiy_kiymati_reja',
-        'umumiy_kiymati_amalda',
-        'uz_mablag_reja',
-        'uz_mablag_amalda',
-        'bank_kredit_reja',
-        'bank_kredit_amalda',
-        'xorijiy_kredit_reja',
-        'xorijiy_kredit_amalda',
-        'xorijiy_invest_reja',
-        'xorijiy_invest_amalda',
-
-        'yangi_ish_reja',
-        'yangi_ish_amalda',
-        'ishlab_chiqarish_reja',
-        'ishlab_chiqarish_amalda',
-        'import_reja',
-        'import_amalda',
-        'export_reja',
-        'export_amalda',
-        'budget_reja',
-        'budget_amalda',
+        *all_fields
     ]
+
+    # for obj in all_fields:
+    #     row = []
+    #     for field in TarmokVault._meta.fields:
+    #         if field.choices:
+    #             row.append(getattr(obj, f'get_{field.name}_display'))
+    #
+    #     fields.insert(0, row)
+
+    # fields = [
+    #     *all_fields,
+    # ]
+    # fields = [
+    #     'category',
+    #     'industry',
+    #
+    #     'loiha_soni_reja',
+    #     'loiha_soni_amalda',
+    #     'umumiy_kiymati_reja',
+    #     'umumiy_kiymati_amalda',
+    #     'uz_mablag_reja',
+    #     'uz_mablag_amalda',
+    #     'bank_kredit_reja',
+    #     'bank_kredit_amalda',
+    #     'xorijiy_kredit_reja',
+    #     'xorijiy_kredit_amalda',
+    #     'xorijiy_invest_reja',
+    #     'xorijiy_invest_amalda',
+    #
+    #     'yangi_ish_reja',
+    #     'yangi_ish_amalda',
+    #     'ishlab_chiqarish_reja',
+    #     'ishlab_chiqarish_amalda',
+    #     'import_reja',
+    #     'import_amalda',
+    #     'export_reja',
+    #     'export_amalda',
+    #     'budget_reja',
+    #     'budget_amalda',
+    # ]
     # fields.extend(new_fields)
 
     department_fields = [
@@ -2495,99 +2529,105 @@ def export_excel_quarter(request, filter_slug):
     font_style = xlwt.XFStyle()
     # date_style = xlwt.XFStyle()
     # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
+    form = TableQuarterForm()
+    all_fields = form.fields.keys()
     fields = [
-        'loiha_soni_reja',
-        'loiha_soni_amalda',
-        'umumiy_kiymati_reja',
-        'umumiy_kiymati_amalda',
-        'uz_mablag_reja',
-        'uz_mablag_amalda',
-        'bank_kredit_reja',
-        'bank_kredit_amalda',
-        'xorijiy_kredit_reja',
-        'xorijiy_kredit_amalda',
-        'xorijiy_invest_reja',
-        'xorijiy_invest_amalda',
-        'first_quarter_yangi_ish_reja',
-        'first_quarter_yangi_ish_amalda',
-        'first_quarter_ishlab_chiqarish_reja',
-        'first_quarter_ishlab_chiqarish_amalda',
-        'first_quarter_import_reja',
-        'first_quarter_import_amalda',
-        'first_quarter_export_reja',
-        'first_quarter_export_amalda',
-        'first_quarter_budget_reja',
-        'first_quarter_budget_amalda',
-
-        'second_quarter_loiha_soni_reja',
-        'second_quarter_loiha_soni_amalda',
-        'second_quarter_umumiy_kiymati_reja',
-        'second_quarter_umumiy_kiymati_amalda',
-        'second_quarter_uz_mablag_reja',
-        'second_quarter_uz_mablag_amalda',
-        'second_quarter_bank_kredit_reja',
-        'second_quarter_bank_kredit_amalda',
-        'second_quarter_xorijiy_kredit_reja',
-        'second_quarter_xorijiy_kredit_amalda',
-        'second_quarter_xorijiy_invest_reja',
-        'second_quarter_xorijiy_invest_amalda',
-        'second_quarter_yangi_ish_reja',
-        'second_quarter_yangi_ish_amalda',
-        'second_quarter_ishlab_chiqarish_reja',
-        'second_quarter_ishlab_chiqarish_amalda',
-        'second_quarter_import_reja',
-        'second_quarter_import_amalda',
-        'second_quarter_export_reja',
-        'second_quarter_export_amalda',
-        'second_quarter_budget_reja',
-        'second_quarter_budget_amalda',
-
-        'third_quarter_loiha_soni_reja',
-        'third_quarter_loiha_soni_amalda',
-        'third_quarter_umumiy_kiymati_reja',
-        'third_quarter_umumiy_kiymati_amalda',
-        'third_quarter_uz_mablag_reja',
-        'third_quarter_uz_mablag_amalda',
-        'third_quarter_bank_kredit_reja',
-        'third_quarter_bank_kredit_amalda',
-        'third_quarter_xorijiy_kredit_reja',
-        'third_quarter_xorijiy_kredit_amalda',
-        'third_quarter_xorijiy_invest_reja',
-        'third_quarter_xorijiy_invest_amalda',
-        'third_quarter_yangi_ish_reja',
-        'third_quarter_yangi_ish_amalda',
-        'third_quarter_ishlab_chiqarish_reja',
-        'third_quarter_ishlab_chiqarish_amalda',
-        'third_quarter_import_reja',
-        'third_quarter_import_amalda',
-        'third_quarter_export_reja',
-        'third_quarter_export_amalda',
-        'third_quarter_budget_reja',
-        'third_quarter_budget_amalda',
-
-        'fourth_quarter_loiha_soni_reja',
-        'fourth_quarter_loiha_soni_amalda',
-        'fourth_quarter_umumiy_kiymati_reja',
-        'fourth_quarter_umumiy_kiymati_amalda',
-        'fourth_quarter_uz_mablag_reja',
-        'fourth_quarter_uz_mablag_amalda',
-        'fourth_quarter_bank_kredit_reja',
-        'fourth_quarter_bank_kredit_amalda',
-        'fourth_quarter_xorijiy_kredit_reja',
-        'fourth_quarter_xorijiy_kredit_amalda',
-        'fourth_quarter_xorijiy_invest_reja',
-        'fourth_quarter_xorijiy_invest_amalda',
-        'fourth_quarter_yangi_ish_reja',
-        'fourth_quarter_yangi_ish_amalda',
-        'fourth_quarter_ishlab_chiqarish_reja',
-        'fourth_quarter_ishlab_chiqarish_amalda',
-        'fourth_quarter_import_reja',
-        'fourth_quarter_import_amalda',
-        'fourth_quarter_export_reja',
-        'fourth_quarter_export_amalda',
-        'fourth_quarter_budget_reja',
-        'fourth_quarter_budget_amalda',
+        *all_fields
     ]
+
+    # fields = [
+    #     'loiha_soni_reja',
+    #     'loiha_soni_amalda',
+    #     'umumiy_kiymati_reja',
+    #     'umumiy_kiymati_amalda',
+    #     'uz_mablag_reja',
+    #     'uz_mablag_amalda',
+    #     'bank_kredit_reja',
+    #     'bank_kredit_amalda',
+    #     'xorijiy_kredit_reja',
+    #     'xorijiy_kredit_amalda',
+    #     'xorijiy_invest_reja',
+    #     'xorijiy_invest_amalda',
+    #     'first_quarter_yangi_ish_reja',
+    #     'first_quarter_yangi_ish_amalda',
+    #     'first_quarter_ishlab_chiqarish_reja',
+    #     'first_quarter_ishlab_chiqarish_amalda',
+    #     'first_quarter_import_reja',
+    #     'first_quarter_import_amalda',
+    #     'first_quarter_export_reja',
+    #     'first_quarter_export_amalda',
+    #     'first_quarter_budget_reja',
+    #     'first_quarter_budget_amalda',
+    #
+    #     'second_quarter_loiha_soni_reja',
+    #     'second_quarter_loiha_soni_amalda',
+    #     'second_quarter_umumiy_kiymati_reja',
+    #     'second_quarter_umumiy_kiymati_amalda',
+    #     'second_quarter_uz_mablag_reja',
+    #     'second_quarter_uz_mablag_amalda',
+    #     'second_quarter_bank_kredit_reja',
+    #     'second_quarter_bank_kredit_amalda',
+    #     'second_quarter_xorijiy_kredit_reja',
+    #     'second_quarter_xorijiy_kredit_amalda',
+    #     'second_quarter_xorijiy_invest_reja',
+    #     'second_quarter_xorijiy_invest_amalda',
+    #     'second_quarter_yangi_ish_reja',
+    #     'second_quarter_yangi_ish_amalda',
+    #     'second_quarter_ishlab_chiqarish_reja',
+    #     'second_quarter_ishlab_chiqarish_amalda',
+    #     'second_quarter_import_reja',
+    #     'second_quarter_import_amalda',
+    #     'second_quarter_export_reja',
+    #     'second_quarter_export_amalda',
+    #     'second_quarter_budget_reja',
+    #     'second_quarter_budget_amalda',
+    #
+    #     'third_quarter_loiha_soni_reja',
+    #     'third_quarter_loiha_soni_amalda',
+    #     'third_quarter_umumiy_kiymati_reja',
+    #     'third_quarter_umumiy_kiymati_amalda',
+    #     'third_quarter_uz_mablag_reja',
+    #     'third_quarter_uz_mablag_amalda',
+    #     'third_quarter_bank_kredit_reja',
+    #     'third_quarter_bank_kredit_amalda',
+    #     'third_quarter_xorijiy_kredit_reja',
+    #     'third_quarter_xorijiy_kredit_amalda',
+    #     'third_quarter_xorijiy_invest_reja',
+    #     'third_quarter_xorijiy_invest_amalda',
+    #     'third_quarter_yangi_ish_reja',
+    #     'third_quarter_yangi_ish_amalda',
+    #     'third_quarter_ishlab_chiqarish_reja',
+    #     'third_quarter_ishlab_chiqarish_amalda',
+    #     'third_quarter_import_reja',
+    #     'third_quarter_import_amalda',
+    #     'third_quarter_export_reja',
+    #     'third_quarter_export_amalda',
+    #     'third_quarter_budget_reja',
+    #     'third_quarter_budget_amalda',
+    #
+    #     'fourth_quarter_loiha_soni_reja',
+    #     'fourth_quarter_loiha_soni_amalda',
+    #     'fourth_quarter_umumiy_kiymati_reja',
+    #     'fourth_quarter_umumiy_kiymati_amalda',
+    #     'fourth_quarter_uz_mablag_reja',
+    #     'fourth_quarter_uz_mablag_amalda',
+    #     'fourth_quarter_bank_kredit_reja',
+    #     'fourth_quarter_bank_kredit_amalda',
+    #     'fourth_quarter_xorijiy_kredit_reja',
+    #     'fourth_quarter_xorijiy_kredit_amalda',
+    #     'fourth_quarter_xorijiy_invest_reja',
+    #     'fourth_quarter_xorijiy_invest_amalda',
+    #     'fourth_quarter_yangi_ish_reja',
+    #     'fourth_quarter_yangi_ish_amalda',
+    #     'fourth_quarter_ishlab_chiqarish_reja',
+    #     'fourth_quarter_ishlab_chiqarish_amalda',
+    #     'fourth_quarter_import_reja',
+    #     'fourth_quarter_import_amalda',
+    #     'fourth_quarter_export_reja',
+    #     'fourth_quarter_export_amalda',
+    #     'fourth_quarter_budget_reja',
+    #     'fourth_quarter_budget_amalda',
+    # ]
 
     department_fields = [
         'district__district',
@@ -2617,11 +2657,6 @@ def export_excel_monthly(request, filter_slug):
 
     wb = Workbook()
     ws = wb.active
-    row_num = 4
-
-
-    # wb = xlwt.Workbook(encoding='utf-8')
-    # ws = wb.add_sheet('table', cell_overwrite_ok=True)
 
     font_style = NamedStyle(name='font_style')
     font_style.font = Font(bold=True)
@@ -2722,7 +2757,6 @@ def export_excel_monthly(request, filter_slug):
         ws.merge_cells(start_row=3, end_row=3, start_column=37, end_column=44)
         ws.cell(row=3, column=37, value='Иқтисодий самарадорлик').style = cell_style
 
-
         ws.merge_cells(start_row=3, end_row=4, start_column=47, end_column=48)
         ws.cell(row=3, column=47, value='Умумий қиймати млн.сўм').style = cell_style
 
@@ -2734,7 +2768,6 @@ def export_excel_monthly(request, filter_slug):
 
         ws.merge_cells(start_row=3, end_row=3, start_column=59, end_column=66)
         ws.cell(row=3, column=59, value='Иқтисодий самарадорлик').style = cell_style
-
 
         ws.merge_cells(start_row=3, end_row=4, start_column=69, end_column=70)
         ws.cell(row=3, column=69, value='Умумий қиймати млн.сўм').style = cell_style
@@ -2748,14 +2781,761 @@ def export_excel_monthly(request, filter_slug):
         ws.merge_cells(start_row=3, end_row=3, start_column=81, end_column=88)
         ws.cell(row=3, column=81, value='Иқтисодий самарадорлик').style = cell_style
 
-        # это был Апрель
+        ws.merge_cells(start_row=3, end_row=4, start_column=91, end_column=92)
+        ws.cell(row=3, column=91, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=93, end_column=100)
+        ws.cell(row=3, column=93, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=101, end_column=102)
+        ws.cell(row=3, column=101, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=103, end_column=110)
+        ws.cell(row=3, column=103, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=113, end_column=114)
+        ws.cell(row=3, column=113, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=115, end_column=122)
+        ws.cell(row=3, column=115, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=123, end_column=124)
+        ws.cell(row=3, column=123, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=125, end_column=132)
+        ws.cell(row=3, column=125, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=135, end_column=136)
+        ws.cell(row=3, column=135, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=137, end_column=144)
+        ws.cell(row=3, column=137, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=145, end_column=146)
+        ws.cell(row=3, column=145, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=147, end_column=154)
+        ws.cell(row=3, column=147, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=157, end_column=158)
+        ws.cell(row=3, column=157, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=159, end_column=166)
+        ws.cell(row=3, column=159, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=167, end_column=168)
+        ws.cell(row=3, column=167, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=169, end_column=176)
+        ws.cell(row=3, column=169, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=179, end_column=180)
+        ws.cell(row=3, column=179, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=181, end_column=188)
+        ws.cell(row=3, column=181, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=189, end_column=190)
+        ws.cell(row=3, column=189, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=191, end_column=198)
+        ws.cell(row=3, column=191, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=201, end_column=202)
+        ws.cell(row=3, column=201, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=203, end_column=210)
+        ws.cell(row=3, column=203, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=211, end_column=212)
+        ws.cell(row=3, column=211, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=213, end_column=220)
+        ws.cell(row=3, column=213, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=223, end_column=224)
+        ws.cell(row=3, column=223, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=225, end_column=232)
+        ws.cell(row=3, column=225, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=233, end_column=234)
+        ws.cell(row=3, column=233, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=235, end_column=242)
+        ws.cell(row=3, column=235, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=245, end_column=246)
+        ws.cell(row=3, column=245, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=247, end_column=254)
+        ws.cell(row=3, column=247, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=255, end_column=256)
+        ws.cell(row=3, column=255, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=257, end_column=264)
+        ws.cell(row=3, column=257, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=5, end_column=6)
+        ws.cell(row=4, column=5, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=7, end_column=8)
+        ws.cell(row=4, column=7, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=9, end_column=10)
+        ws.cell(row=4, column=9, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=11, end_column=12)
+        ws.cell(row=4, column=11, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=15, end_column=16)
+        ws.cell(row=4, column=15, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=17, end_column=18)
+        ws.cell(row=4, column=17, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=19, end_column=20)
+        ws.cell(row=4, column=19, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=21, end_column=22)
+        ws.cell(row=4, column=21, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+        # Февраль
+        ws.merge_cells(start_row=4, end_row=4, start_column=27, end_column=28)
+        ws.cell(row=4, column=27, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=29, end_column=30)
+        ws.cell(row=4, column=29, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=31, end_column=32)
+        ws.cell(row=4, column=31, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=33, end_column=34)
+        ws.cell(row=4, column=33, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=37, end_column=38)
+        ws.cell(row=4, column=37, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=39, end_column=40)
+        ws.cell(row=4, column=39, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=41, end_column=42)
+        ws.cell(row=4, column=41, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=43, end_column=44)
+        ws.cell(row=4, column=43, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # март
+        ws.merge_cells(start_row=4, end_row=4, start_column=49, end_column=50)
+        ws.cell(row=4, column=49, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=51, end_column=52)
+        ws.cell(row=4, column=51, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=53, end_column=54)
+        ws.cell(row=4, column=53, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=55, end_column=56)
+        ws.cell(row=4, column=55, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=59, end_column=60)
+        ws.cell(row=4, column=59, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=61, end_column=62)
+        ws.cell(row=4, column=61, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=63, end_column=64)
+        ws.cell(row=4, column=63, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=65, end_column=66)
+        ws.cell(row=4, column=65, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # апрель
+        ws.merge_cells(start_row=4, end_row=4, start_column=71, end_column=72)
+        ws.cell(row=4, column=71, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=73, end_column=74)
+        ws.cell(row=4, column=73, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=75, end_column=76)
+        ws.cell(row=4, column=75, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=77, end_column=78)
+        ws.cell(row=4, column=77, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=81, end_column=82)
+        ws.cell(row=4, column=81, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=83, end_column=84)
+        ws.cell(row=4, column=83, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=85, end_column=86)
+        ws.cell(row=4, column=85, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=87, end_column=88)
+        ws.cell(row=4, column=87, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # май
+        ws.merge_cells(start_row=4, end_row=4, start_column=93, end_column=94)
+        ws.cell(row=4, column=93, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=95, end_column=96)
+        ws.cell(row=4, column=95, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=97, end_column=98)
+        ws.cell(row=4, column=97, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=99, end_column=100)
+        ws.cell(row=4, column=99, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=103, end_column=104)
+        ws.cell(row=4, column=103, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=105, end_column=106)
+        ws.cell(row=4, column=105, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=107, end_column=108)
+        ws.cell(row=4, column=107, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=109, end_column=110)
+        ws.cell(row=4, column=109, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # июнь
+        ws.merge_cells(start_row=4, end_row=4, start_column=115, end_column=116)
+        ws.cell(row=4, column=115, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=117, end_column=118)
+        ws.cell(row=4, column=117, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=119, end_column=120)
+        ws.cell(row=4, column=119, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=121, end_column=122)
+        ws.cell(row=4, column=121, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=125, end_column=126)
+        ws.cell(row=4, column=125, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=127, end_column=128)
+        ws.cell(row=4, column=127, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=129, end_column=130)
+        ws.cell(row=4, column=129, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=131, end_column=132)
+        ws.cell(row=4, column=131, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+
+        # июль
+        ws.merge_cells(start_row=4, end_row=4, start_column=137, end_column=138)
+        ws.cell(row=4, column=137, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=139, end_column=140)
+        ws.cell(row=4, column=139, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=141, end_column=142)
+        ws.cell(row=4, column=141, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=143, end_column=144)
+        ws.cell(row=4, column=143, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=147, end_column=148)
+        ws.cell(row=4, column=147, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=149, end_column=150)
+        ws.cell(row=4, column=149, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=151, end_column=152)
+        ws.cell(row=4, column=151, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=153, end_column=154)
+        ws.cell(row=4, column=153, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # Август
+        ws.merge_cells(start_row=4, end_row=4, start_column=159, end_column=160)
+        ws.cell(row=4, column=159, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=161, end_column=162)
+        ws.cell(row=4, column=161, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=163, end_column=164)
+        ws.cell(row=4, column=163, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=165, end_column=166)
+        ws.cell(row=4, column=165, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=169, end_column=170)
+        ws.cell(row=4, column=169, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=171, end_column=172)
+        ws.cell(row=4, column=171, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=173, end_column=174)
+        ws.cell(row=4, column=173, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=175, end_column=176)
+        ws.cell(row=4, column=175, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+
+        # Сентябрь
+        ws.merge_cells(start_row=4, end_row=4, start_column=181, end_column=182)
+        ws.cell(row=4, column=181, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=183, end_column=184)
+        ws.cell(row=4, column=183, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=185, end_column=186)
+        ws.cell(row=4, column=185, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=187, end_column=188)
+        ws.cell(row=4, column=187, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=191, end_column=192)
+        ws.cell(row=4, column=191, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=193, end_column=194)
+        ws.cell(row=4, column=193, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=195, end_column=196)
+        ws.cell(row=4, column=195, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=197, end_column=198)
+        ws.cell(row=4, column=197, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # Октябрь
+        ws.merge_cells(start_row=4, end_row=4, start_column=203, end_column=204)
+        ws.cell(row=4, column=203, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=205, end_column=206)
+        ws.cell(row=4, column=205, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=207, end_column=208)
+        ws.cell(row=4, column=207, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=209, end_column=210)
+        ws.cell(row=4, column=209, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=213, end_column=214)
+        ws.cell(row=4, column=213, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=215, end_column=216)
+        ws.cell(row=4, column=215, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=217, end_column=218)
+        ws.cell(row=4, column=217, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=219, end_column=220)
+        ws.cell(row=4, column=219, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # Ноябрь
+        ws.merge_cells(start_row=4, end_row=4, start_column=225, end_column=226)
+        ws.cell(row=4, column=225, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=227, end_column=228)
+        ws.cell(row=4, column=227, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=229, end_column=230)
+        ws.cell(row=4, column=229, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=231, end_column=232)
+        ws.cell(row=4, column=231, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=235, end_column=236)
+        ws.cell(row=4, column=235, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=237, end_column=238)
+        ws.cell(row=4, column=237, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=239, end_column=240)
+        ws.cell(row=4, column=239, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=241, end_column=242)
+        ws.cell(row=4, column=241, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # Декабрь
+        ws.merge_cells(start_row=4, end_row=4, start_column=247, end_column=248)
+        ws.cell(row=4, column=247, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=249, end_column=250)
+        ws.cell(row=4, column=249, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=251, end_column=252)
+        ws.cell(row=4, column=251, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=253, end_column=254)
+        ws.cell(row=4, column=253, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=257, end_column=258)
+        ws.cell(row=4, column=257, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=259, end_column=260)
+        ws.cell(row=4, column=259, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=261, end_column=262)
+        ws.cell(row=4, column=261, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=263, end_column=264)
+        ws.cell(row=4, column=263, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
         # ws.merge_cells(start_row=2, end_row=2, start_column=21, end_column=35)
 
     else:
-        pass
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=265)
+        ws.cell(row=1, column=1, value='Cвод ойлар').style = cell_title
+        ws.merge_cells(start_row=2, end_row=4, start_column=2, end_column=3)
+        ws.cell(row=2, column=2, value='Лойиҳа сони').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=4, end_column=23)
+        ws.cell(row=2, column=4, value='Январь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=24, end_column=25)
+        ws.cell(row=2, column=24, value='Лойиҳа сони').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=26, end_column=45)
+        ws.cell(row=2, column=26, value='Февраль').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=46, end_column=47)
+        ws.cell(row=2, column=46, value='Лойиҳа сони').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=48, end_column=67)
+        ws.cell(row=2, column=48, value='Март').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=68, end_column=69)
+        ws.cell(row=2, column=68, value='Лойиҳа сони').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=70, end_column=89)
+        ws.cell(row=2, column=70, value='Апрель').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=90, end_column=91)
+        ws.cell(row=2, column=90, value='Лойиҳа сони').style = cell_style
 
-    # ws.col(0).width = 4500
-    # ws.col(21).width = 5000
+        ws.merge_cells(start_row=2, end_row=2, start_column=92, end_column=111)
+        ws.cell(row=2, column=92, value='Май').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=112, end_column=113)
+        ws.cell(row=2, column=112, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=114, end_column=133)
+        ws.cell(row=2, column=114, value='Июль').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=134, end_column=135)
+        ws.cell(row=2, column=134, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=136, end_column=155)
+        ws.cell(row=2, column=136, value='Июнь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=156, end_column=157)
+        ws.cell(row=2, column=156, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=158, end_column=177)
+        ws.cell(row=2, column=158, value='Август').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=178, end_column=179)
+        ws.cell(row=2, column=178, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=180, end_column=199)
+        ws.cell(row=2, column=180, value='Сентябрь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=200, end_column=201)
+        ws.cell(row=2, column=200, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=202, end_column=221)
+        ws.cell(row=2, column=202, value='Октябрь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=222, end_column=223)
+        ws.cell(row=2, column=222, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=224, end_column=243)
+        ws.cell(row=2, column=224, value='Ноябрь').style = cell_style
+        ws.merge_cells(start_row=2, end_row=4, start_column=244, end_column=245)
+        ws.cell(row=2, column=244, value='Лойиҳа сони').style = cell_style
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=246, end_column=265)
+        ws.cell(row=2, column=246, value='Декабрь').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=4, end_column=5)
+        ws.cell(row=3, column=4, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=6, end_column=13)
+        ws.cell(row=3, column=6, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=14, end_column=15)
+        ws.cell(row=3, column=14, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=16, end_column=23)
+        ws.cell(row=3, column=16, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=26, end_column=27)
+        ws.cell(row=3, column=26, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=28, end_column=35)
+        ws.cell(row=3, column=28, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=36, end_column=37)
+        ws.cell(row=3, column=36, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=38, end_column=45)
+        ws.cell(row=3, column=38, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=48, end_column=49)
+        ws.cell(row=3, column=48, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=50, end_column=57)
+        ws.cell(row=3, column=50, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=58, end_column=59)
+        ws.cell(row=3, column=58, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=60, end_column=67)
+        ws.cell(row=3, column=60, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=70, end_column=71)
+        ws.cell(row=3, column=70, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=72, end_column=79)
+        ws.cell(row=3, column=72, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=80, end_column=81)
+        ws.cell(row=3, column=80, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=82, end_column=89)
+        ws.cell(row=3, column=82, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=92, end_column=93)
+        ws.cell(row=3, column=92, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=94, end_column=101)
+        ws.cell(row=3, column=94, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=102, end_column=103)
+        ws.cell(row=3, column=102, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=104, end_column=111)
+        ws.cell(row=3, column=104, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=114, end_column=115)
+        ws.cell(row=3, column=114, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=116, end_column=123)
+        ws.cell(row=3, column=116, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=124, end_column=125)
+        ws.cell(row=3, column=124, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=126, end_column=133)
+        ws.cell(row=3, column=126, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=136, end_column=137)
+        ws.cell(row=3, column=136, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=138, end_column=145)
+        ws.cell(row=3, column=138, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=146, end_column=147)
+        ws.cell(row=3, column=146, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=148, end_column=155)
+        ws.cell(row=3, column=148, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=158, end_column=159)
+        ws.cell(row=3, column=158, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=160, end_column=167)
+        ws.cell(row=3, column=160, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=168, end_column=169)
+        ws.cell(row=3, column=168, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=170, end_column=177)
+        ws.cell(row=3, column=170, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=180, end_column=181)
+        ws.cell(row=3, column=180, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=182, end_column=189)
+        ws.cell(row=3, column=182, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=190, end_column=191)
+        ws.cell(row=3, column=190, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=192, end_column=199)
+        ws.cell(row=3, column=192, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=202, end_column=203)
+        ws.cell(row=3, column=202, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=204, end_column=211)
+        ws.cell(row=3, column=204, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=212, end_column=213)
+        ws.cell(row=3, column=212, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=214, end_column=221)
+        ws.cell(row=3, column=214, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=224, end_column=225)
+        ws.cell(row=3, column=224, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=226, end_column=233)
+        ws.cell(row=3, column=226, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=234, end_column=235)
+        ws.cell(row=3, column=234, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=236, end_column=243)
+        ws.cell(row=3, column=236, value='Иқтисодий самарадорлик').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=246, end_column=247)
+        ws.cell(row=3, column=246, value='Умумий қиймати млн.сўм').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=248, end_column=255)
+        ws.cell(row=3, column=248, value='шундан').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=4, start_column=256, end_column=257)
+        ws.cell(row=3, column=256, value='Янги иш ўринлари сони').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=258, end_column=265)
+        ws.cell(row=3, column=258, value='Иқтисодий самарадорлик').style = cell_style
+
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=6, end_column=7)
+        ws.cell(row=4, column=6, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=8, end_column=9)
+        ws.cell(row=4, column=8, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=10, end_column=11)
+        ws.cell(row=4, column=10, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=12, end_column=13)
+        ws.cell(row=4, column=12, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=16, end_column=17)
+        ws.cell(row=4, column=16, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=18, end_column=19)
+        ws.cell(row=4, column=18, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=20, end_column=21)
+        ws.cell(row=4, column=20, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=22, end_column=23)
+        ws.cell(row=4, column=22, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+        # Февраль
+        ws.merge_cells(start_row=4, end_row=4, start_column=28, end_column=29)
+        ws.cell(row=4, column=28, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=30, end_column=31)
+        ws.cell(row=4, column=30, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=32, end_column=33)
+        ws.cell(row=4, column=32, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=34, end_column=35)
+        ws.cell(row=4, column=34, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=38, end_column=39)
+        ws.cell(row=4, column=38, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=40, end_column=41)
+        ws.cell(row=4, column=40, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=42, end_column=43)
+        ws.cell(row=4, column=42, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=44, end_column=45)
+        ws.cell(row=4, column=44, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # март
+        ws.merge_cells(start_row=4, end_row=4, start_column=50, end_column=51)
+        ws.cell(row=4, column=50, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=52, end_column=53)
+        ws.cell(row=4, column=52, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=54, end_column=55)
+        ws.cell(row=4, column=54, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=56, end_column=57)
+        ws.cell(row=4, column=56, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=60, end_column=61)
+        ws.cell(row=4, column=60, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=62, end_column=63)
+        ws.cell(row=4, column=62, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=64, end_column=65)
+        ws.cell(row=4, column=64, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=66, end_column=67)
+        ws.cell(row=4, column=66, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # апрель
+        ws.merge_cells(start_row=4, end_row=4, start_column=72, end_column=73)
+        ws.cell(row=4, column=72, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=74, end_column=75)
+        ws.cell(row=4, column=74, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=76, end_column=77)
+        ws.cell(row=4, column=76, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=78, end_column=79)
+        ws.cell(row=4, column=78, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=82, end_column=83)
+        ws.cell(row=4, column=82, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=84, end_column=85)
+        ws.cell(row=4, column=84, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=86, end_column=87)
+        ws.cell(row=4, column=86, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=88, end_column=89)
+        ws.cell(row=4, column=88, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # май
+        ws.merge_cells(start_row=4, end_row=4, start_column=94, end_column=95)
+        ws.cell(row=4, column=94, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=96, end_column=97)
+        ws.cell(row=4, column=96, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=98, end_column=99)
+        ws.cell(row=4, column=98, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=100, end_column=101)
+        ws.cell(row=4, column=100, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=104, end_column=105)
+        ws.cell(row=4, column=104, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=106, end_column=107)
+        ws.cell(row=4, column=106, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=108, end_column=109)
+        ws.cell(row=4, column=108, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=110, end_column=111)
+        ws.cell(row=4, column=110, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # июнь
+        ws.merge_cells(start_row=4, end_row=4, start_column=116, end_column=117)
+        ws.cell(row=4, column=116, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=118, end_column=119)
+        ws.cell(row=4, column=118, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=120, end_column=121)
+        ws.cell(row=4, column=120, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=122, end_column=123)
+        ws.cell(row=4, column=122, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=126, end_column=127)
+        ws.cell(row=4, column=126, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=128, end_column=129)
+        ws.cell(row=4, column=128, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=130, end_column=131)
+        ws.cell(row=4, column=130, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=132, end_column=133)
+        ws.cell(row=4, column=132, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # июль
+        ws.merge_cells(start_row=4, end_row=4, start_column=138, end_column=139)
+        ws.cell(row=4, column=138, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=140, end_column=141)
+        ws.cell(row=4, column=140, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=142, end_column=143)
+        ws.cell(row=4, column=142, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=144, end_column=145)
+        ws.cell(row=4, column=144, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=148, end_column=149)
+        ws.cell(row=4, column=148, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=150, end_column=151)
+        ws.cell(row=4, column=150, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=152, end_column=153)
+        ws.cell(row=4, column=152, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=154, end_column=155)
+        ws.cell(row=4, column=154, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # Август
+        ws.merge_cells(start_row=4, end_row=4, start_column=160, end_column=161)
+        ws.cell(row=4, column=160, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=162, end_column=163)
+        ws.cell(row=4, column=162, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=164, end_column=165)
+        ws.cell(row=4, column=164, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=166, end_column=167)
+        ws.cell(row=4, column=166, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=170, end_column=171)
+        ws.cell(row=4, column=170, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=172, end_column=173)
+        ws.cell(row=4, column=172, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=174, end_column=175)
+        ws.cell(row=4, column=174, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=176, end_column=177)
+        ws.cell(row=4, column=176, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # Сентябрь
+        ws.merge_cells(start_row=4, end_row=4, start_column=182, end_column=183)
+        ws.cell(row=4, column=182, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=184, end_column=185)
+        ws.cell(row=4, column=184, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=186, end_column=187)
+        ws.cell(row=4, column=186, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=188, end_column=189)
+        ws.cell(row=4, column=188, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=192, end_column=193)
+        ws.cell(row=4, column=192, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=194, end_column=195)
+        ws.cell(row=4, column=194, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=196, end_column=197)
+        ws.cell(row=4, column=196, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=198, end_column=199)
+        ws.cell(row=4, column=198, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # Октябрь
+        ws.merge_cells(start_row=4, end_row=4, start_column=204, end_column=205)
+        ws.cell(row=4, column=204, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=206, end_column=207)
+        ws.cell(row=4, column=206, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=208, end_column=209)
+        ws.cell(row=4, column=208, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=210, end_column=211)
+        ws.cell(row=4, column=210, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=214, end_column=215)
+        ws.cell(row=4, column=214, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=216, end_column=217)
+        ws.cell(row=4, column=216, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=218, end_column=219)
+        ws.cell(row=4, column=218, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=220, end_column=221)
+        ws.cell(row=4, column=220, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # Ноябрь
+        ws.merge_cells(start_row=4, end_row=4, start_column=226, end_column=227)
+        ws.cell(row=4, column=226, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=228, end_column=229)
+        ws.cell(row=4, column=228, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=230, end_column=231)
+        ws.cell(row=4, column=230, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=232, end_column=233)
+        ws.cell(row=4, column=232, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=236, end_column=237)
+        ws.cell(row=4, column=236, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=238, end_column=239)
+        ws.cell(row=4, column=238, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=240, end_column=241)
+        ws.cell(row=4, column=240, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=242, end_column=243)
+        ws.cell(row=4, column=242, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
+
+        # Декабрь
+        ws.merge_cells(start_row=4, end_row=4, start_column=248, end_column=249)
+        ws.cell(row=4, column=248, value='ўз маблағлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=250, end_column=251)
+        ws.cell(row=4, column=250, value='банк кредитлари млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=252, end_column=253)
+        ws.cell(row=4, column=252, value='хорижий кредитлар минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=254, end_column=255)
+        ws.cell(row=4, column=254, value='хорижий инвестициялар минг.долл').style = cell_style
+
+        ws.merge_cells(start_row=4, end_row=4, start_column=258, end_column=259)
+        ws.cell(row=4, column=258, value='Ишлаб чиқариш қуввати млн.сўм').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=260, end_column=261)
+        ws.cell(row=4, column=260, value='Импорт урнини босиш минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=262, end_column=263)
+        ws.cell(row=4, column=262, value='Экспорт ҳажми минг.долл').style = cell_style
+        ws.merge_cells(start_row=4, end_row=4, start_column=264, end_column=265)
+        ws.cell(row=4, column=264, value='Бюджетга қўшимча тушум млн.сўм').style = cell_style
 
     # "Район",
     columns_list = [
@@ -3037,13 +3817,10 @@ def export_excel_monthly(request, filter_slug):
 
     for col_num in range(len(columns)):
         column_letter = openpyxl.utils.get_column_letter(col_num + 1)
-        ws.column_dimensions[column_letter].width = 27
+        ws.column_dimensions[column_letter].width = 25
         ws.cell(row=row_num, column=col_num + 1, value=columns[col_num])
         ws.cell(row=row_num, column=col_num + 1).style = cell_style
 
-    font_style = openpyxl.styles.Font(bold=False)
-    # date_style = xlwt.XFStyle()
-    # time_create = datetime.strftime('time_create', '%d/%m/%y %h:%m:%s')
     form = TableMonthForm()
     all_fields = form.fields.keys()
     fields = [
@@ -3051,283 +3828,283 @@ def export_excel_monthly(request, filter_slug):
     ]
 
 
-    fieldsm = [
-        'january_loiha_soni_reja',
-        'january_loiha_soni_amalda',
-        'january_umumiy_kiymati_reja',
-        'january_umumiy_kiymati_amalda',
-        'january_uz_mablag_reja',
-        'january_uz_mablag_amalda',
-        'january_bank_kredit_reja',
-        'january_bank_kredit_amalda',
-        'january_xorijiy_kredit_reja',
-        'january_xorijiy_kredit_amalda',
-        'january_xorijiy_invest_reja',
-        'january_xorijiy_invest_amalda',
-        'january_yangi_ish_reja',
-        'january_yangi_ish_amalda',
-        'january_ishlab_chiqarish_reja',
-        'january_ishlab_chiqarish_amalda',
-        'january_import_reja',
-        'january_import_amalda',
-        'january_export_reja',
-        'january_export_amalda',
-        'january_budget_reja',
-        'january_budget_amalda',
-
-        'february_loiha_soni_reja',
-        'february_loiha_soni_amalda',
-        'february_umumiy_kiymati_reja',
-        'february_umumiy_kiymati_amalda',
-        'february_uz_mablag_reja',
-        'february_uz_mablag_amalda',
-        'february_bank_kredit_reja',
-        'february_bank_kredit_amalda',
-        'february_xorijiy_kredit_reja',
-        'february_xorijiy_kredit_amalda',
-        'february_xorijiy_invest_reja',
-        'february_xorijiy_invest_amalda',
-        'february_yangi_ish_reja',
-        'february_yangi_ish_amalda',
-        'february_ishlab_chiqarish_reja',
-        'february_ishlab_chiqarish_amalda',
-        'february_import_reja',
-        'february_import_amalda',
-        'february_export_reja',
-        'february_export_amalda',
-        'february_budget_reja',
-        'february_budget_amalda',
-
-        'march_loiha_soni_reja',
-        'march_loiha_soni_amalda',
-        'march_umumiy_kiymati_reja',
-        'march_umumiy_kiymati_amalda',
-        'march_uz_mablag_reja',
-        'march_uz_mablag_amalda',
-        'march_bank_kredit_reja',
-        'march_bank_kredit_amalda',
-        'march_xorijiy_kredit_reja',
-        'march_xorijiy_kredit_amalda',
-        'march_xorijiy_invest_reja',
-        'march_xorijiy_invest_amalda',
-        'march_yangi_ish_reja',
-        'march_yangi_ish_amalda',
-        'march_ishlab_chiqarish_reja',
-        'march_ishlab_chiqarish_amalda',
-        'march_import_reja',
-        'march_import_amalda',
-        'march_export_reja',
-        'march_export_amalda',
-        'march_budget_reja',
-        'march_budget_amalda',
-
-        'april_loiha_soni_reja',
-        'april_loiha_soni_amalda',
-        'april_umumiy_kiymati_reja',
-        'april_umumiy_kiymati_amalda',
-        'april_uz_mablag_reja',
-        'april_uz_mablag_amalda',
-        'april_bank_kredit_reja',
-        'april_bank_kredit_amalda',
-        'april_xorijiy_kredit_reja',
-        'april_xorijiy_kredit_amalda',
-        'april_xorijiy_invest_reja',
-        'april_xorijiy_invest_amalda',
-        'april_yangi_ish_reja',
-        'april_yangi_ish_amalda',
-        'april_ishlab_chiqarish_reja',
-        'april_ishlab_chiqarish_amalda',
-        'april_import_reja',
-        'april_import_amalda',
-        'april_export_reja',
-        'april_export_amalda',
-        'april_budget_reja',
-        'april_budget_amalda',
-
-        'may_loiha_soni_reja',
-        'may_loiha_soni_amalda',
-        'may_umumiy_kiymati_reja',
-        'may_umumiy_kiymati_amalda',
-        'may_uz_mablag_reja',
-        'may_uz_mablag_amalda',
-        'may_bank_kredit_reja',
-        'may_bank_kredit_amalda',
-        'may_xorijiy_kredit_reja',
-        'may_xorijiy_kredit_amalda',
-        'may_xorijiy_invest_reja',
-        'may_xorijiy_invest_amalda',
-        'may_yangi_ish_reja',
-        'may_yangi_ish_amalda',
-        'may_ishlab_chiqarish_reja',
-        'may_ishlab_chiqarish_amalda',
-        'may_import_reja',
-        'may_import_amalda',
-        'may_export_reja',
-        'may_export_amalda',
-        'may_budget_reja',
-        'may_budget_amalda',
-
-        'june_loiha_soni_reja',
-        'june_loiha_soni_amalda',
-        'june_umumiy_kiymati_reja',
-        'june_umumiy_kiymati_amalda',
-        'june_uz_mablag_reja',
-        'june_uz_mablag_amalda',
-        'june_bank_kredit_reja',
-        'june_bank_kredit_amalda',
-        'june_xorijiy_kredit_reja',
-        'june_xorijiy_kredit_amalda',
-        'june_xorijiy_invest_reja',
-        'june_xorijiy_invest_amalda',
-        'june_yangi_ish_reja',
-        'june_yangi_ish_amalda',
-        'june_ishlab_chiqarish_reja',
-        'june_ishlab_chiqarish_amalda',
-        'june_import_reja',
-        'june_import_amalda',
-        'june_export_reja',
-        'june_export_amalda',
-        'june_budget_reja',
-        'june_budget_amalda',
-
-        'july_loiha_soni_reja',
-        'july_loiha_soni_amalda',
-        'july_umumiy_kiymati_reja',
-        'july_umumiy_kiymati_amalda',
-        'july_uz_mablag_reja',
-        'july_uz_mablag_amalda',
-        'july_bank_kredit_reja',
-        'july_bank_kredit_amalda',
-        'july_xorijiy_kredit_reja',
-        'july_xorijiy_kredit_amalda',
-        'july_xorijiy_invest_reja',
-        'july_xorijiy_invest_amalda',
-        'july_yangi_ish_reja',
-        'july_yangi_ish_amalda',
-        'july_ishlab_chiqarish_reja',
-        'july_ishlab_chiqarish_amalda',
-        'july_import_reja',
-        'july_import_amalda',
-        'july_export_reja',
-        'july_export_amalda',
-        'july_budget_reja',
-        'july_budget_amalda',
-
-        'august_loiha_soni_reja',
-        'august_loiha_soni_amalda',
-        'august_umumiy_kiymati_reja',
-        'august_umumiy_kiymati_amalda',
-        'august_uz_mablag_reja',
-        'august_uz_mablag_amalda',
-        'august_bank_kredit_reja',
-        'august_bank_kredit_amalda',
-        'august_xorijiy_kredit_reja',
-        'august_xorijiy_kredit_amalda',
-        'august_xorijiy_invest_reja',
-        'august_xorijiy_invest_amalda',
-        'august_yangi_ish_reja',
-        'august_yangi_ish_amalda',
-        'august_ishlab_chiqarish_reja',
-        'august_ishlab_chiqarish_amalda',
-        'august_import_reja',
-        'august_import_amalda',
-        'august_export_reja',
-        'august_export_amalda',
-        'august_budget_reja',
-        'august_budget_amalda',
-
-        'september_loiha_soni_reja',
-        'september_loiha_soni_amalda',
-        'september_umumiy_kiymati_reja',
-        'september_umumiy_kiymati_amalda',
-        'september_uz_mablag_reja',
-        'september_uz_mablag_amalda',
-        'september_bank_kredit_reja',
-        'september_bank_kredit_amalda',
-        'september_xorijiy_kredit_reja',
-        'september_xorijiy_kredit_amalda',
-        'september_xorijiy_invest_reja',
-        'september_xorijiy_invest_amalda',
-        'september_yangi_ish_reja',
-        'september_yangi_ish_amalda',
-        'september_ishlab_chiqarish_reja',
-        'september_ishlab_chiqarish_amalda',
-        'september_import_reja',
-        'september_import_amalda',
-        'september_export_reja',
-        'september_export_amalda',
-        'september_budget_reja',
-        'september_budget_amalda',
-
-        'october_loiha_soni_reja',
-        'october_loiha_soni_amalda',
-        'october_umumiy_kiymati_reja',
-        'october_umumiy_kiymati_amalda',
-        'october_uz_mablag_reja',
-        'october_uz_mablag_amalda',
-        'october_bank_kredit_reja',
-        'october_bank_kredit_amalda',
-        'october_xorijiy_kredit_reja',
-        'october_xorijiy_kredit_amalda',
-        'october_xorijiy_invest_reja',
-        'october_xorijiy_invest_amalda',
-        'october_yangi_ish_reja',
-        'october_yangi_ish_amalda',
-        'october_ishlab_chiqarish_reja',
-        'october_ishlab_chiqarish_amalda',
-        'october_import_reja',
-        'october_import_amalda',
-        'october_export_reja',
-        'october_export_amalda',
-        'october_budget_reja',
-        'october_budget_amalda',
-
-        'november_loiha_soni_reja',
-        'november_loiha_soni_amalda',
-        'november_umumiy_kiymati_reja',
-        'november_umumiy_kiymati_amalda',
-        'november_uz_mablag_reja',
-        'november_uz_mablag_amalda',
-        'november_bank_kredit_reja',
-        'november_bank_kredit_amalda',
-        'november_xorijiy_kredit_reja',
-        'november_xorijiy_kredit_amalda',
-        'november_xorijiy_invest_reja',
-        'november_xorijiy_invest_amalda',
-        'november_yangi_ish_reja',
-        'november_yangi_ish_amalda',
-        'november_ishlab_chiqarish_reja',
-        'november_ishlab_chiqarish_amalda',
-        'november_import_reja',
-        'november_import_amalda',
-        'november_export_reja',
-        'november_export_amalda',
-        'november_budget_reja',
-        'november_budget_amalda',
-
-        'december_loiha_soni_reja',
-        'december_loiha_soni_amalda',
-        'december_umumiy_kiymati_reja',
-        'december_umumiy_kiymati_amalda',
-        'december_uz_mablag_reja',
-        'december_uz_mablag_amalda',
-        'december_bank_kredit_reja',
-        'december_bank_kredit_amalda',
-        'december_xorijiy_kredit_reja',
-        'december_xorijiy_kredit_amalda',
-        'december_xorijiy_invest_reja',
-        'december_xorijiy_invest_amalda',
-        'december_yangi_ish_reja',
-        'december_yangi_ish_amalda',
-        'december_ishlab_chiqarish_reja',
-        'december_ishlab_chiqarish_amalda',
-        'december_import_reja',
-        'december_import_amalda',
-        'december_export_reja',
-        'december_export_amalda',
-        'december_budget_reja',
-        'december_budget_amalda',
-    ]
+    # fields = [
+    #     'january_loiha_soni_reja',
+    #     'january_loiha_soni_amalda',
+    #     'january_umumiy_kiymati_reja',
+    #     'january_umumiy_kiymati_amalda',
+    #     'january_uz_mablag_reja',
+    #     'january_uz_mablag_amalda',
+    #     'january_bank_kredit_reja',
+    #     'january_bank_kredit_amalda',
+    #     'january_xorijiy_kredit_reja',
+    #     'january_xorijiy_kredit_amalda',
+    #     'january_xorijiy_invest_reja',
+    #     'january_xorijiy_invest_amalda',
+    #     'january_yangi_ish_reja',
+    #     'january_yangi_ish_amalda',
+    #     'january_ishlab_chiqarish_reja',
+    #     'january_ishlab_chiqarish_amalda',
+    #     'january_import_reja',
+    #     'january_import_amalda',
+    #     'january_export_reja',
+    #     'january_export_amalda',
+    #     'january_budget_reja',
+    #     'january_budget_amalda',
+    #
+    #     'february_loiha_soni_reja',
+    #     'february_loiha_soni_amalda',
+    #     'february_umumiy_kiymati_reja',
+    #     'february_umumiy_kiymati_amalda',
+    #     'february_uz_mablag_reja',
+    #     'february_uz_mablag_amalda',
+    #     'february_bank_kredit_reja',
+    #     'february_bank_kredit_amalda',
+    #     'february_xorijiy_kredit_reja',
+    #     'february_xorijiy_kredit_amalda',
+    #     'february_xorijiy_invest_reja',
+    #     'february_xorijiy_invest_amalda',
+    #     'february_yangi_ish_reja',
+    #     'february_yangi_ish_amalda',
+    #     'february_ishlab_chiqarish_reja',
+    #     'february_ishlab_chiqarish_amalda',
+    #     'february_import_reja',
+    #     'february_import_amalda',
+    #     'february_export_reja',
+    #     'february_export_amalda',
+    #     'february_budget_reja',
+    #     'february_budget_amalda',
+    #
+    #     'march_loiha_soni_reja',
+    #     'march_loiha_soni_amalda',
+    #     'march_umumiy_kiymati_reja',
+    #     'march_umumiy_kiymati_amalda',
+    #     'march_uz_mablag_reja',
+    #     'march_uz_mablag_amalda',
+    #     'march_bank_kredit_reja',
+    #     'march_bank_kredit_amalda',
+    #     'march_xorijiy_kredit_reja',
+    #     'march_xorijiy_kredit_amalda',
+    #     'march_xorijiy_invest_reja',
+    #     'march_xorijiy_invest_amalda',
+    #     'march_yangi_ish_reja',
+    #     'march_yangi_ish_amalda',
+    #     'march_ishlab_chiqarish_reja',
+    #     'march_ishlab_chiqarish_amalda',
+    #     'march_import_reja',
+    #     'march_import_amalda',
+    #     'march_export_reja',
+    #     'march_export_amalda',
+    #     'march_budget_reja',
+    #     'march_budget_amalda',
+    #
+    #     'april_loiha_soni_reja',
+    #     'april_loiha_soni_amalda',
+    #     'april_umumiy_kiymati_reja',
+    #     'april_umumiy_kiymati_amalda',
+    #     'april_uz_mablag_reja',
+    #     'april_uz_mablag_amalda',
+    #     'april_bank_kredit_reja',
+    #     'april_bank_kredit_amalda',
+    #     'april_xorijiy_kredit_reja',
+    #     'april_xorijiy_kredit_amalda',
+    #     'april_xorijiy_invest_reja',
+    #     'april_xorijiy_invest_amalda',
+    #     'april_yangi_ish_reja',
+    #     'april_yangi_ish_amalda',
+    #     'april_ishlab_chiqarish_reja',
+    #     'april_ishlab_chiqarish_amalda',
+    #     'april_import_reja',
+    #     'april_import_amalda',
+    #     'april_export_reja',
+    #     'april_export_amalda',
+    #     'april_budget_reja',
+    #     'april_budget_amalda',
+    #
+    #     'may_loiha_soni_reja',
+    #     'may_loiha_soni_amalda',
+    #     'may_umumiy_kiymati_reja',
+    #     'may_umumiy_kiymati_amalda',
+    #     'may_uz_mablag_reja',
+    #     'may_uz_mablag_amalda',
+    #     'may_bank_kredit_reja',
+    #     'may_bank_kredit_amalda',
+    #     'may_xorijiy_kredit_reja',
+    #     'may_xorijiy_kredit_amalda',
+    #     'may_xorijiy_invest_reja',
+    #     'may_xorijiy_invest_amalda',
+    #     'may_yangi_ish_reja',
+    #     'may_yangi_ish_amalda',
+    #     'may_ishlab_chiqarish_reja',
+    #     'may_ishlab_chiqarish_amalda',
+    #     'may_import_reja',
+    #     'may_import_amalda',
+    #     'may_export_reja',
+    #     'may_export_amalda',
+    #     'may_budget_reja',
+    #     'may_budget_amalda',
+    #
+    #     'june_loiha_soni_reja',
+    #     'june_loiha_soni_amalda',
+    #     'june_umumiy_kiymati_reja',
+    #     'june_umumiy_kiymati_amalda',
+    #     'june_uz_mablag_reja',
+    #     'june_uz_mablag_amalda',
+    #     'june_bank_kredit_reja',
+    #     'june_bank_kredit_amalda',
+    #     'june_xorijiy_kredit_reja',
+    #     'june_xorijiy_kredit_amalda',
+    #     'june_xorijiy_invest_reja',
+    #     'june_xorijiy_invest_amalda',
+    #     'june_yangi_ish_reja',
+    #     'june_yangi_ish_amalda',
+    #     'june_ishlab_chiqarish_reja',
+    #     'june_ishlab_chiqarish_amalda',
+    #     'june_import_reja',
+    #     'june_import_amalda',
+    #     'june_export_reja',
+    #     'june_export_amalda',
+    #     'june_budget_reja',
+    #     'june_budget_amalda',
+    #
+    #     'july_loiha_soni_reja',
+    #     'july_loiha_soni_amalda',
+    #     'july_umumiy_kiymati_reja',
+    #     'july_umumiy_kiymati_amalda',
+    #     'july_uz_mablag_reja',
+    #     'july_uz_mablag_amalda',
+    #     'july_bank_kredit_reja',
+    #     'july_bank_kredit_amalda',
+    #     'july_xorijiy_kredit_reja',
+    #     'july_xorijiy_kredit_amalda',
+    #     'july_xorijiy_invest_reja',
+    #     'july_xorijiy_invest_amalda',
+    #     'july_yangi_ish_reja',
+    #     'july_yangi_ish_amalda',
+    #     'july_ishlab_chiqarish_reja',
+    #     'july_ishlab_chiqarish_amalda',
+    #     'july_import_reja',
+    #     'july_import_amalda',
+    #     'july_export_reja',
+    #     'july_export_amalda',
+    #     'july_budget_reja',
+    #     'july_budget_amalda',
+    #
+    #     'august_loiha_soni_reja',
+    #     'august_loiha_soni_amalda',
+    #     'august_umumiy_kiymati_reja',
+    #     'august_umumiy_kiymati_amalda',
+    #     'august_uz_mablag_reja',
+    #     'august_uz_mablag_amalda',
+    #     'august_bank_kredit_reja',
+    #     'august_bank_kredit_amalda',
+    #     'august_xorijiy_kredit_reja',
+    #     'august_xorijiy_kredit_amalda',
+    #     'august_xorijiy_invest_reja',
+    #     'august_xorijiy_invest_amalda',
+    #     'august_yangi_ish_reja',
+    #     'august_yangi_ish_amalda',
+    #     'august_ishlab_chiqarish_reja',
+    #     'august_ishlab_chiqarish_amalda',
+    #     'august_import_reja',
+    #     'august_import_amalda',
+    #     'august_export_reja',
+    #     'august_export_amalda',
+    #     'august_budget_reja',
+    #     'august_budget_amalda',
+    #
+    #     'september_loiha_soni_reja',
+    #     'september_loiha_soni_amalda',
+    #     'september_umumiy_kiymati_reja',
+    #     'september_umumiy_kiymati_amalda',
+    #     'september_uz_mablag_reja',
+    #     'september_uz_mablag_amalda',
+    #     'september_bank_kredit_reja',
+    #     'september_bank_kredit_amalda',
+    #     'september_xorijiy_kredit_reja',
+    #     'september_xorijiy_kredit_amalda',
+    #     'september_xorijiy_invest_reja',
+    #     'september_xorijiy_invest_amalda',
+    #     'september_yangi_ish_reja',
+    #     'september_yangi_ish_amalda',
+    #     'september_ishlab_chiqarish_reja',
+    #     'september_ishlab_chiqarish_amalda',
+    #     'september_import_reja',
+    #     'september_import_amalda',
+    #     'september_export_reja',
+    #     'september_export_amalda',
+    #     'september_budget_reja',
+    #     'september_budget_amalda',
+    #
+    #     'october_loiha_soni_reja',
+    #     'october_loiha_soni_amalda',
+    #     'october_umumiy_kiymati_reja',
+    #     'october_umumiy_kiymati_amalda',
+    #     'october_uz_mablag_reja',
+    #     'october_uz_mablag_amalda',
+    #     'october_bank_kredit_reja',
+    #     'october_bank_kredit_amalda',
+    #     'october_xorijiy_kredit_reja',
+    #     'october_xorijiy_kredit_amalda',
+    #     'october_xorijiy_invest_reja',
+    #     'october_xorijiy_invest_amalda',
+    #     'october_yangi_ish_reja',
+    #     'october_yangi_ish_amalda',
+    #     'october_ishlab_chiqarish_reja',
+    #     'october_ishlab_chiqarish_amalda',
+    #     'october_import_reja',
+    #     'october_import_amalda',
+    #     'october_export_reja',
+    #     'october_export_amalda',
+    #     'october_budget_reja',
+    #     'october_budget_amalda',
+    #
+    #     'november_loiha_soni_reja',
+    #     'november_loiha_soni_amalda',
+    #     'november_umumiy_kiymati_reja',
+    #     'november_umumiy_kiymati_amalda',
+    #     'november_uz_mablag_reja',
+    #     'november_uz_mablag_amalda',
+    #     'november_bank_kredit_reja',
+    #     'november_bank_kredit_amalda',
+    #     'november_xorijiy_kredit_reja',
+    #     'november_xorijiy_kredit_amalda',
+    #     'november_xorijiy_invest_reja',
+    #     'november_xorijiy_invest_amalda',
+    #     'november_yangi_ish_reja',
+    #     'november_yangi_ish_amalda',
+    #     'november_ishlab_chiqarish_reja',
+    #     'november_ishlab_chiqarish_amalda',
+    #     'november_import_reja',
+    #     'november_import_amalda',
+    #     'november_export_reja',
+    #     'november_export_amalda',
+    #     'november_budget_reja',
+    #     'november_budget_amalda',
+    #
+    #     'december_loiha_soni_reja',
+    #     'december_loiha_soni_amalda',
+    #     'december_umumiy_kiymati_reja',
+    #     'december_umumiy_kiymati_amalda',
+    #     'december_uz_mablag_reja',
+    #     'december_uz_mablag_amalda',
+    #     'december_bank_kredit_reja',
+    #     'december_bank_kredit_amalda',
+    #     'december_xorijiy_kredit_reja',
+    #     'december_xorijiy_kredit_amalda',
+    #     'december_xorijiy_invest_reja',
+    #     'december_xorijiy_invest_amalda',
+    #     'december_yangi_ish_reja',
+    #     'december_yangi_ish_amalda',
+    #     'december_ishlab_chiqarish_reja',
+    #     'december_ishlab_chiqarish_amalda',
+    #     'december_import_reja',
+    #     'december_import_amalda',
+    #     'december_export_reja',
+    #     'december_export_amalda',
+    #     'december_budget_reja',
+    #     'december_budget_amalda',
+    # ]
 
     department_fields = [
         'district__district',
@@ -3344,6 +4121,316 @@ def export_excel_monthly(request, filter_slug):
 
     wb.save(response)
     return response
+
+# 4 отдел постмонитлоринга
+
+def export_excel_addressed(request, filter_slug):
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xlsx'
+
+    wb = Workbook()
+    ws = wb.active
+
+    font_style = NamedStyle(name='font_style')
+    font_style.font = Font(bold=True)
+
+    cell_style = NamedStyle(name='cell_style')
+    cell_style.font = Font(bold=True)
+    cell_style.alignment = Alignment(vertical='center', horizontal='left')
+
+    cell_title = NamedStyle(name='cell_title')
+    cell_title.font = Font(bold=True, size=16)
+    cell_title.alignment = Alignment(vertical='center', horizontal='left')
+
+    row_num = 3  # с какой строки начинается наша таблица
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_post_monitoring_id(request):
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=36)
+        ws.cell(row=1, column=1, value=f'{request.user.district}, Манзилли').style = cell_title
+        ws.merge_cells(start_row=2, end_row=2, start_column=14, end_column=15)
+        ws.cell(row=2, column=14, value='Хорижий ҳамкор').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=18, end_column=19)
+        ws.cell(row=2, column=18, value='Йиллик қуввати (ТИА/бизнес режа бўйича)').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=21, end_column=22)
+        ws.cell(row=2, column=21, value='2023 йил январь ойида режалаштирилган ишлаб чиқариш ҳажмлар').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=23, end_column=24)
+        ws.cell(row=2, column=23, value='2023 йил январь ойида ишлаб чиқарилган маҳсулот ҳажми').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=25, end_column=26)
+        ws.cell(row=2, column=25, value='2023 йил январь ойида экспорт ҳажми').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=27, end_column=28)
+        ws.cell(row=2, column=27, value='2023 йил январь ойида бюджет тушумлари ҳажми').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=29, end_column=30)
+        ws.cell(row=2, column=29, value='Иш ўринлари бандлиги').style = cell_style
+
+        # ws.merge_cells(start_row=2, end_row=2, start_column=21, end_column=35)
+
+    else:
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=37)
+        ws.cell(row=1, column=1, value='Манзилли').style = cell_title
+
+        ws.merge_cells(start_row=2, end_row=2, start_column=15, end_column=16)
+        ws.cell(row=2, column=15, value='Хорижий ҳамкор').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=19, end_column=20)
+        ws.cell(row=2, column=19, value='Йиллик қуввати (ТИА/бизнес режа бўйича)').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=22, end_column=23)
+        ws.cell(row=2, column=22, value='2023 йил январь ойида режалаштирилган ишлаб чиқариш ҳажмлар').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=24, end_column=25)
+        ws.cell(row=2, column=24, value='2023 йил январь ойида ишлаб чиқарилган маҳсулот ҳажми').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=26, end_column=27)
+        ws.cell(row=2, column=26, value='2023 йил январь ойида экспорт ҳажми').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=28, end_column=29)
+        ws.cell(row=2, column=28, value='2023 йил январь ойида бюджет тушумлари ҳажми').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=30, end_column=31)
+        ws.cell(row=2, column=30, value='Иш ўринлари бандлиги').style = cell_style
+
+
+    # "Район",
+    columns_list = [
+        'Туман номи',
+        'Масъул ташкилот',
+        'Корхона номи',
+        'ТЕГМА',
+        'Лойиҳа қиймати млн.долл.',
+        'лойиҳа ташкил этилиши (янгидан, модернизация, кенгайтириш)',
+        'Йўналишлар номи',
+        'Тармоқлар номи',
+        'ИНН рақами',
+        'Юридик (жойлашган) манзил',
+        'Корхона раҳбари',
+        'Телефон рақами',
+        'Кафолатлилиги (Давлат, Тўғридан-тўғри хорижий инвестиция, хорижий кредит, ўз маблағи)',
+        'Давлат',
+        'Компания номи',
+        'Йил',
+        'Лойиҳа ишга тушган даври (кун, ой, йил)',
+        '(натурада)',
+        '(млн. сўмда)',
+        'Яратилган иш ўрни сони',
+        'натурада',
+        'млн.сўм',
+        'натурада',
+        'млн.сўм',
+        'Режа (минг доллар)',
+        'Амалда (минг доллар)',
+        'Режа (млн сўм)',
+        'Амалда (млн сўм)',
+        'Ишчилар сони',
+        'Вакансия сони',
+        'Хизмат кўрсатувчи банк',
+        'Корхона холати (Инфратузилма объекти, Мавсумий, Вақтинча ишламаяпти, Тугатилган, Тўлиқ қувват (80-100%), Ўрта қувват (40-79%), Паст қувват (0-39,9%))',
+        'Кам қувватда ишлаш сабаби (бу устунда фақат паст қувват бўлса ёзилади)',
+        'Муаммо мавжудлиги (бўлмаса бўш қолсин, мавжуд эмас)',
+        'Муаммони бартараф этиш бўйича таклиф',
+        'Муаммони ҳал этишга масъул ташкилот',
+    ]
+
+    if not get_group_post_monitoring_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        column_letter = openpyxl.utils.get_column_letter(col_num + 1)
+        ws.column_dimensions[column_letter].width = 25
+        ws.cell(row=row_num, column=col_num + 1, value=columns[col_num])
+        ws.cell(row=row_num, column=col_num + 1).style = cell_style
+
+    form = TableAddressedForm()
+    all_fields = form.fields.keys()
+    fields = [
+        *all_fields
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_postmonitoring_tables(request, filter_slug, Addressed, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.cell(row=row_num, column=col_num + 1, value=str(row[col_num]))
+
+    wb.save(response)
+    return response
+
+
+def export_excel_subtotals(request, filter_slug):
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xlsx'
+
+    wb = Workbook()
+    ws = wb.active
+
+    font_style = NamedStyle(name='font_style')
+    font_style.font = Font(bold=True)
+
+    cell_style = NamedStyle(name='cell_style')
+    cell_style.font = Font(bold=True)
+    cell_style.alignment = Alignment(vertical='center', horizontal='left')
+
+    cell_title = NamedStyle(name='cell_title')
+    cell_title.font = Font(bold=True, size=16)
+    cell_title.alignment = Alignment(vertical='center', horizontal='left')
+
+    row_num = 3  # с какой строки начинается наша таблица
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_post_monitoring_id(request):
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=8)
+        ws.cell(row=1, column=1, value=f'{request.user.district}, Промежуточный итоги').style = cell_title
+        ws.merge_cells(start_row=2, end_row=2, start_column=2, end_column=8)
+        ws.cell(row=2, column=2, value='Январь ойи').style = cell_style
+    else:
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=9)
+        ws.cell(row=1, column=1, value='Промежуточный итоги').style = cell_title
+        ws.merge_cells(start_row=2, end_row=2, start_column=3, end_column=9)
+        ws.cell(row=2, column=3, value='Хорижий ҳамкор').style = cell_style
+
+
+    # "Район",
+    columns_list = [
+        'Умумий корхоналар сони',
+        'Тўлиқ қувват (80-100%)',
+        'Ўрта қувват (51-79%)',
+        'Паст қувват (0-50%)',
+        'Вақтинча ишламаяпти',
+        'Тугатилган',
+        'Мавсумий',
+        'Бошқа',
+    ]
+
+    if not get_group_post_monitoring_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        column_letter = openpyxl.utils.get_column_letter(col_num + 1)
+        ws.column_dimensions[column_letter].width = 25
+        ws.cell(row=row_num, column=col_num + 1, value=columns[col_num])
+        ws.cell(row=row_num, column=col_num + 1).style = cell_style
+
+    form = TableSubtotalsForm()
+    all_fields = form.fields.keys()
+    fields = [
+        *all_fields
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_postmonitoring_tables(request, filter_slug, Subtotals, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.cell(row=row_num, column=col_num + 1, value=str(row[col_num]))
+
+    wb.save(response)
+    return response
+
+
+def export_excel_(request, filter_slug):
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xlsx'
+
+    wb = Workbook()
+    ws = wb.active
+
+    font_style = NamedStyle(name='font_style')
+    font_style.font = Font(bold=True)
+
+    cell_style = NamedStyle(name='cell_style')
+    cell_style.font = Font(bold=True)
+    cell_style.alignment = Alignment(vertical='center', horizontal='left')
+
+    cell_title = NamedStyle(name='cell_title')
+    cell_title.font = Font(bold=True, size=16)
+    cell_title.alignment = Alignment(vertical='center', horizontal='left')
+
+    row_num = 3  # с какой строки начинается наша таблица
+
+    # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
+    if not get_group_post_monitoring_id(request):
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=8)
+        ws.cell(row=1, column=1, value=f'{request.user.district}, Промежуточный итоги').style = cell_title
+        ws.merge_cells(start_row=2, end_row=2, start_column=2, end_column=8)
+        ws.cell(row=2, column=2, value='Январь ойи').style = cell_style
+    else:
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=9)
+        ws.cell(row=1, column=1, value='Промежуточный итоги').style = cell_title
+        ws.merge_cells(start_row=2, end_row=2, start_column=3, end_column=9)
+        ws.cell(row=2, column=3, value='Хорижий ҳамкор').style = cell_style
+
+
+    # "Район",
+    columns_list = [
+        'Умумий корхоналар сони',
+        'Тўлиқ қувват (80-100%)',
+        'Ўрта қувват (51-79%)',
+        'Паст қувват (0-50%)',
+        'Вақтинча ишламаяпти',
+        'Тугатилган',
+        'Мавсумий',
+        'Бошқа',
+    ]
+
+    if not get_group_post_monitoring_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        column_letter = openpyxl.utils.get_column_letter(col_num + 1)
+        ws.column_dimensions[column_letter].width = 25
+        ws.cell(row=row_num, column=col_num + 1, value=columns[col_num])
+        ws.cell(row=row_num, column=col_num + 1).style = cell_style
+
+    form = TableSubtotalsForm()
+    all_fields = form.fields.keys()
+    fields = [
+        *all_fields
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_postmonitoring_tables(request, filter_slug, Subtotals, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.cell(row=row_num, column=col_num + 1, value=str(row[col_num]))
+
+    wb.save(response)
+    return response
+
 
 
 def get_data_table(request, model_name, page_title):

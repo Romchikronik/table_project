@@ -352,6 +352,28 @@ def filter_export_vault_tables(request, filter_slug, model, fields, department_f
     return rows
 
 
+def filter_export_postmonitoring_tables(request, filter_slug, model, fields, department_fields):
+    if filter_slug == 'week':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 7)
+        if not get_group_post_monitoring_id(request):
+            rows = show_data_table(request, model).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).filter(time_create__gte=now).values_list(*department_fields)
+    elif filter_slug == 'month':
+        now = timezone.now() - timedelta(minutes=60 * 24 * 30)
+        if not get_group_post_monitoring_id(request):
+            rows = show_data_table(request, model).filter(time_create__gte=now).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).filter(time_create__gte=now).values_list(*department_fields)
+    else:
+        if not get_group_post_monitoring_id(request):
+            rows = show_data_table(request, model).values_list(*fields)
+        else:
+            rows = show_data_table_to_departament(model).values_list(*department_fields)
+
+    return rows
+
+
 # def get_export_fields(get_form):
 #     form = get_form()
 #     all_fields = form.fields.keys()
