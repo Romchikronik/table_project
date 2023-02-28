@@ -41,6 +41,8 @@ urlpatterns = [
     # 4 отдел
     path('export-excel-addressed/<slug:filter_slug>', export_excel_addressed, name='export-excel-addressed'),
     path('export-excel-subtotals/<slug:filter_slug>', export_excel_subtotals, name='export-excel-subtotals'),
+    path('export-excel-performanceAddressed/<slug:filter_slug>', export_excel_performanceAddressed, name='export-excel-performanceAddressed'),
+    path('export-excel-manzil/<slug:filter_slug>', export_excel_manzil, name='export-excel-manzil'),
 
 
 

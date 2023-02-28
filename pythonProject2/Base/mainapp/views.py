@@ -4294,7 +4294,7 @@ def export_excel_subtotals(request, filter_slug):
         ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=9)
         ws.cell(row=1, column=1, value='Промежуточный итоги').style = cell_title
         ws.merge_cells(start_row=2, end_row=2, start_column=3, end_column=9)
-        ws.cell(row=2, column=3, value='Хорижий ҳамкор').style = cell_style
+        ws.cell(row=2, column=3, value='Январь ойи').style = cell_style
 
 
     # "Район",
@@ -4348,7 +4348,7 @@ def export_excel_subtotals(request, filter_slug):
     return response
 
 
-def export_excel_(request, filter_slug):
+def export_excel_performanceAddressed(request, filter_slug):
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xlsx'
 
@@ -4370,27 +4370,50 @@ def export_excel_(request, filter_slug):
 
     # ws.title = 'Илова-4.1' Поменять на один если добавлять столбик в начале
     if not get_group_post_monitoring_id(request):
-        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=8)
-        ws.cell(row=1, column=1, value=f'{request.user.district}, Промежуточный итоги').style = cell_title
-        ws.merge_cells(start_row=2, end_row=2, start_column=2, end_column=8)
-        ws.cell(row=2, column=2, value='Январь ойи').style = cell_style
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=27)
+        ws.cell(row=1, column=1, value=f'{request.user.district}, манзилли').style = cell_title
+        ws.merge_cells(start_row=2, end_row=2, start_column=13, end_column=14)
+        ws.cell(row=2, column=13, value='Йиллик қуввати (ТИА/бизнес режа бўйича)').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=23, end_column=27)
+        ws.cell(row=2, column=23, value='').style = cell_style
     else:
-        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=9)
-        ws.cell(row=1, column=1, value='Промежуточный итоги').style = cell_title
-        ws.merge_cells(start_row=2, end_row=2, start_column=3, end_column=9)
-        ws.cell(row=2, column=3, value='Хорижий ҳамкор').style = cell_style
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=28)
+        ws.cell(row=1, column=1, value='манзилли').style = cell_title
+        ws.merge_cells(start_row=2, end_row=2, start_column=14, end_column=15)
+        ws.cell(row=2, column=14, value='Йиллик қуввати (ТИА/бизнес режа бўйича)').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=24, end_column=28)
+        ws.cell(row=2, column=24, value='').style = cell_style
 
 
     # "Район",
     columns_list = [
-        'Умумий корхоналар сони',
-        'Тўлиқ қувват (80-100%)',
-        'Ўрта қувват (51-79%)',
-        'Паст қувват (0-50%)',
-        'Вақтинча ишламаяпти',
-        'Тугатилган',
-        'Мавсумий',
-        'Бошқа',
+        'Йўналиш',
+        'Асос Гип, Рип',
+        'Асос Гип, Рип (Муаммолар сони бўйича)',
+        'Тармоқлар',
+        'Тармоқлар',
+        'ЙИЛ',
+        'Корхона номи ва ишлаб чиқариш йўналиши',
+        'Муаммоли масалалар мазмуни',
+        'Муаммоли масалаларни бартараф этиш механизми',
+        'Ижро муддати',
+        'Ижро учун маъсуллар',
+        'Лойиҳа қиймати млн.сум.',
+        '(натурада)',
+        '(млн. сўмда)',
+        'Яратилган иш ўрни сони',
+        'Бажарилиши',
+        'Ҳолати қисқа',
+        'ҳудуд номи',
+        'Муаммо тури',
+        'Ҳудуд сони',
+        'масуллар бўйича',
+        'Банк кредити ва пролонгация млн сўм',
+        'И/ч млн.сўм',
+        'Иш ўрни (тикланади)',
+        'Иш ўрни (янги)',
+        'Экспорт минг долл',
+        'Солиқ млн.сўм',
     ]
 
     if not get_group_post_monitoring_id(request):
@@ -4409,7 +4432,7 @@ def export_excel_(request, filter_slug):
         ws.cell(row=row_num, column=col_num + 1, value=columns[col_num])
         ws.cell(row=row_num, column=col_num + 1).style = cell_style
 
-    form = TableSubtotalsForm()
+    form = TablePerformanceIsAddressedForm()
     all_fields = form.fields.keys()
     fields = [
         *all_fields
@@ -4420,7 +4443,7 @@ def export_excel_(request, filter_slug):
         *fields
     ]
 
-    rows = filter_export_postmonitoring_tables(request, filter_slug, Subtotals, fields, department_fields)
+    rows = filter_export_postmonitoring_tables(request, filter_slug, PerformanceIsAddressed, fields, department_fields)
 
     for row in rows:
         row_num += 1
@@ -4431,6 +4454,120 @@ def export_excel_(request, filter_slug):
     wb.save(response)
     return response
 
+
+def export_excel_manzil(request, filter_slug):
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = f'attachment; filename=table{str(datetime.now())}.xlsx'
+
+    wb = Workbook()
+    ws = wb.active
+
+    font_style = NamedStyle(name='font_style')
+    font_style.font = Font(bold=True)
+
+    cell_style = NamedStyle(name='cell_style')
+    cell_style.font = Font(bold=True)
+    cell_style.alignment = Alignment(vertical='center', horizontal='left')
+
+    cell_title = NamedStyle(name='cell_title')
+    cell_title.font = Font(bold=True, size=16)
+    cell_title.alignment = Alignment(vertical='center', horizontal='left')
+
+    row_num = 4  # с какой строки начинается наша таблица
+
+    if not get_group_post_monitoring_id(request):
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=19)
+        ws.cell(row=1, column=1, value=f'{request.user.district}, 2017-2020 манзилли').style = cell_title
+
+        ws.merge_cells(start_row=2, end_row=3, start_column=4, end_column=5)
+        ws.cell(row=2, column=4, value='Йиллик қуввати (ТИА/бизнес режа бўйича)').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=13, end_column=19)
+        ws.cell(row=2, column=13, value='Муаммолар бартараф этилганда эришиладиган натижа:').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=14, end_column=15)
+        ws.cell(row=3, column=14, value='Иш ўрни').style = cell_style
+        ws.merge_cells(start_row=3, end_row=3, start_column=16, end_column=17)
+        ws.cell(row=3, column=16, value='Экспорт').style = cell_style
+        ws.merge_cells(start_row=3, end_row=3, start_column=18, end_column=19)
+        ws.cell(row=3, column=18, value='Бюджет тушумлари (солиқ)').style = cell_style
+
+    else:
+        ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=20)
+        ws.cell(row=1, column=1, value='2017-2020 манзилли').style = cell_title
+
+        ws.merge_cells(start_row=2, end_row=3, start_column=5, end_column=6)
+        ws.cell(row=2, column=5, value='Йиллик қуввати (ТИА/бизнес режа бўйича)').style = cell_style
+        ws.merge_cells(start_row=2, end_row=2, start_column=14, end_column=20)
+        ws.cell(row=2, column=14, value='Муаммолар бартараф этилганда эришиладиган натижа:').style = cell_style
+
+        ws.merge_cells(start_row=3, end_row=3, start_column=15, end_column=16)
+        ws.cell(row=3, column=15, value='Иш ўрни').style = cell_style
+        ws.merge_cells(start_row=3, end_row=3, start_column=17, end_column=18)
+        ws.cell(row=3, column=17, value='Экспорт').style = cell_style
+        ws.merge_cells(start_row=3, end_row=3, start_column=19, end_column=20)
+        ws.cell(row=3, column=19, value='Бюджет тушумлари (солиқ)').style = cell_style
+
+
+    # "Район",
+    columns_list = [
+        'Шаҳар (туман) номи',
+        'Лойиҳа ташаббускори',
+        'Лойиҳа номи',
+        '(натурада)',
+        '(млн. сўмда)',
+        'Иш ўринлари',
+        'Корхона холати(Инфратузилма объекти, Мавсумий, Вақтинча ишламаяпти, Тугатилган, Тўлиқ қувват (80-100%), Ўрта қувват (51-79%), Паст қувват (0-50%))',
+        'Изоҳ',
+        'Кам қувватда ишлаш сабаби (бу устунда фақат паст қувват бўлса ёзилади)',
+        'Муаммо мавжудлиги (бўлмаса бўш қолсин, мавжуд эмас)',
+        'Муаммони бартараф этиш бўйича таклиф',
+        'Муаммони ҳал этишга масъул ташкилот',
+        'Корхонада тикланадиган қувватлар (млн сўмда)',
+        'Тикланадиган иш ўрни (та)',
+        'Қўшимча иш ўрни (та)',
+        'Тикланадиган экспорт (минг доллар)',
+        'Қўшимча экспорт (минг доллар)',
+        'Тикланадиган тушум (млн сўм)',
+        'Қўшимча тушум (млн сўм)',
+    ]
+
+    if not get_group_post_monitoring_id(request):
+        columns = [
+            *columns_list
+        ]
+    else:
+        columns = [
+            "Ҳудудлар",
+            *columns_list
+        ]
+
+    for col_num in range(len(columns)):
+        column_letter = openpyxl.utils.get_column_letter(col_num + 1)
+        ws.column_dimensions[column_letter].width = 25
+        ws.cell(row=row_num, column=col_num + 1, value=columns[col_num])
+        ws.cell(row=row_num, column=col_num + 1).style = cell_style
+
+    form = TableManzilForm()
+    all_fields = form.fields.keys()
+    fields = [
+        *all_fields
+    ]
+
+    department_fields = [
+        'district__district',
+        *fields
+    ]
+
+    rows = filter_export_postmonitoring_tables(request, filter_slug, Manzil, fields, department_fields)
+
+    for row in rows:
+        row_num += 1
+
+        for col_num in range(len(row)):
+            ws.cell(row=row_num, column=col_num + 1, value=str(row[col_num]))
+
+    wb.save(response)
+    return response
 
 
 def get_data_table(request, model_name, page_title):
