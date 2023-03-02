@@ -43,6 +43,12 @@ urlpatterns = [
     path('export-excel-subtotals/<slug:filter_slug>', export_excel_subtotals, name='export-excel-subtotals'),
     path('export-excel-performanceAddressed/<slug:filter_slug>', export_excel_performanceAddressed, name='export-excel-performanceAddressed'),
     path('export-excel-manzil/<slug:filter_slug>', export_excel_manzil, name='export-excel-manzil'),
+    path('export-excel-totalCleaning/<slug:filter_slug>', export_excel_totalCleaning, name='export-excel-totalCleaning'),
+    path('export-excel-totalCleaningNetwork/<slug:filter_slug>', export_excel_totalCleaningNetwork, name='export-excel-totalCleaningNetwork'),
+    path('export-excel-totalDone/<slug:filter_slug>', export_excel_totalDone, name='export-excel-totalDone'),
+    path('export-excel-totalCompletedNetwork/<slug:filter_slug>', export_excel_totalCompletedNetwork, name='export-excel-totalCompletedNetwork'),
+    path('export-excel-totalProblem/<slug:filter_slug>', export_excel_totalProblem, name='export-excel-totalProblem'),
+    path('export-excel-networkAdministrations/<slug:filter_slug>', export_excel_networkAdministrations, name='export-excel-networkAdministrations'),
 
 
 

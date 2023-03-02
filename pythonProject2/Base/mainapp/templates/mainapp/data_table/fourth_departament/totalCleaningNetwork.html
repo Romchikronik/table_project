@@ -106,9 +106,19 @@
 {% include 'mainapp/pagination.html' %}
 {% endblock %}
 
-{% block export_table %}
-<a class="btn btn-primary mb-5" href="#">Экспорт таблицы</a>
-{% endblock %}
+{% if not 'week' in request.get_full_path and not 'month' in request.get_full_path %}
+    {% block export_table %}
+        <a class="btn btn-primary mb-5" href="{% url 'export-excel-totalCleaningNetwork' filter_slug='all' %}">Экспорт таблицы excel</a>
+    {% endblock %}
+{% elif 'week' in request.get_full_path %}
+    {% block export_table_week %}
+        <a class="btn btn-primary mb-5" href="{% url 'export-excel-totalCleaningNetwork' filter_slug='week' %}">Экспорт таблицы excel</a>
+    {% endblock %}
+{% elif 'month' in request.get_full_path %}
+    {% block export_table_month %}
+        <a class="btn btn-primary mb-5" href="{% url 'export-excel-totalCleaningNetwork' filter_slug='month' %}">Экспорт таблицы excel</a>
+    {% endblock %}
+{% endif %}
 
 
 {% block add_data %}

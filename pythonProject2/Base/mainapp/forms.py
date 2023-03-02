@@ -1,4 +1,5 @@
-from django.forms import ModelForm, Select
+from django.core.exceptions import ValidationError
+from django.forms import ModelForm, Select, ChoiceField
 from .models import *
 
 
@@ -139,11 +140,50 @@ class TableRejaForm(ModelForm):
         exclude = ['district', 'is_published']
 
 
+class CustomChoiceField(ChoiceField):
+    def __init__(self, choices, **kwargs):
+        super().__init__(choices=choices, **kwargs)
+
+    def to_python(self, value):
+        # Override to_python to return the display value instead of the key
+        if value in self.empty_values:
+            return None
+        for key, display in self.choices:
+            if key == value:
+                return display
+        raise ValidationError(
+            self.error_messages['invalid_choice'], code='invalid_choice',
+            params={'value': value},
+        )
+
+
+class CustomSelect(Select):
+    def __init__(self, *args, **kwargs):
+        self.choices = kwargs.pop('choices', [])
+        super().__init__(*args, **kwargs)
+
+    def create_option(self, *args, **kwargs):
+        option = super().create_option(*args, **kwargs)
+        for opt in option:
+            if opt['value']:
+                opt['display_name'] = dict(self.choices).get(int(opt['value']))
+        return option
+
+
 class TableTarmokForm(ModelForm):
+    # category = CustomChoiceField(choices=CATEGORY_CHOICES, widget=CustomSelect)
+    # industry = CustomChoiceField(choices=INDUSTRY_CHOICES, widget=CustomSelect)
     class Meta:
         model = TarmokVault
         fields = '__all__'
-        exclude = ['district', 'is_published']
+        exclude = ['district', 'is_published']  # , 'category'
+        # widgets = {
+        #     'category': Select(choices=CATEGORY_CHOICES)
+        # }
+    category = CustomChoiceField(choices=CATEGORY_CHOICES, widget=Select(choices=CATEGORY_CHOICES))
+    industry = CustomChoiceField(choices=INDUSTRY_CHOICES, widget=Select(choices=INDUSTRY_CHOICES))
+
+    # category = ChoiceField(choices=CATEGORY_CHOICES)
 
 
 class TableManzilForm(ModelForm):
