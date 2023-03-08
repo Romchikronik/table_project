@@ -183,8 +183,6 @@ class TableTarmokForm(ModelForm):
     category = CustomChoiceField(choices=CATEGORY_CHOICES, widget=Select(choices=CATEGORY_CHOICES))
     industry = CustomChoiceField(choices=INDUSTRY_CHOICES, widget=Select(choices=INDUSTRY_CHOICES))
 
-    # category = ChoiceField(choices=CATEGORY_CHOICES)
-
 
 class TableManzilForm(ModelForm):
     class Meta:

@@ -1581,7 +1581,7 @@ def export_excel_kunliu(request, filter_slug):
     wb.save(response)
     return response
 
-# Изменить поля всех остальных таблиц на *all_fields
+# TODO Изменить поля всех остальных таблиц на *all_fields
 # export third department
 
 
@@ -2199,6 +2199,7 @@ def export_excel_tarmok(request, filter_slug):
 
     form = TableTarmokForm()
     all_fields = form.fields.keys()
+
     # fields = list(all_fields)
     fields = [
         *all_fields
